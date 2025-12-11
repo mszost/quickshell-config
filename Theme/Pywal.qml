@@ -1,0 +1,1 @@
+/home/msz/.cache/wal/Colors.qml
