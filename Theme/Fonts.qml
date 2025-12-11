@@ -6,7 +6,7 @@ QtObject {
   id: root
 
   // semantic properties
-  readonly property font barIcon: _lucide
+  readonly property font barIcon: _tabler
   readonly property font barText: _sfProRounded
 
 
@@ -15,6 +15,11 @@ QtObject {
     family: _lucideLoader.name,
     pixelSize: 14,
     weight: 900
+  })
+
+  readonly property font _tabler: Qt.font({
+    family: _tablerLoader.name,
+    pixelSize: 20,
   })
 
   readonly property font _sfProRounded: Qt.font({
@@ -26,4 +31,7 @@ QtObject {
 
   // loading local fonts
   readonly property FontLoader _lucideLoader: FontLoader { source: "/home/msz/.config/quickshell/assets/fonts/lucide.ttf" }  
+  readonly property FontLoader _tablerLoader: FontLoader { source: "/home/msz/.config/quickshell/assets/fonts/tabler-icons.ttf" }  
 }
+
+
