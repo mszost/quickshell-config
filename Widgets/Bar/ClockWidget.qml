@@ -4,7 +4,8 @@ import Quickshell
 import qs.Components
 import qs.Services 
 
-BarWidget {
+
+BarWidgetLite {
   id: root
   text: ClockService.datetime  
 }

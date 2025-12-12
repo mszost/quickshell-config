@@ -4,18 +4,12 @@ import Quickshell
 import Quickshell.Services.Pipewire
 import Quickshell.Widgets
 
-import qs.Themes
-import qs.Themes.Icons
+import qs.Theme
 import qs.Components
 
 
 Scope {
 	id: root
-
-	// Bind the pipewire node so its volume will be tracked
-	PwObjectTracker {
-		objects: [ Pipewire.defaultAudioSink ]
-	}
 
 	Connections {
 		target: Pipewire.defaultAudioSink?.audio
@@ -58,7 +52,7 @@ Scope {
 			Rectangle {
 				anchors.fill: parent
 				radius: height / 2
-				color: Colors.applyAlpha(Colors.background, 0.5)
+				color: Colors.applyAlpha(Colors.background, 0.3)
 
 				RowLayout {
 					anchors {
@@ -97,8 +91,3 @@ Scope {
 	}
 }
 
-// Image {
-//     width: 130; height: 100
-//     fillMode: Image.PreserveAspectFit
-//     source: 'qtlogo.png'
-// }

@@ -4,7 +4,7 @@ import qs.Windows
 
 Scope {
   Bar {}
-  // OsdVolume {}
+  OsdVolume {}
   // Overview {}
 }
 

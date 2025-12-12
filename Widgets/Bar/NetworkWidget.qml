@@ -4,11 +4,9 @@ import Quickshell
 import qs.Components
 
 
-BarWidgetRow {
+BarWidget {
     text: 'Red5Blue'
-    icon: '\uE1AE' // network icon 
-    iconWeight: 600
-    iconSize: 15
-    // layoutDirection: Qt.RightToLeft
+    icon: '\uEB52' 
+    iconSize: 18
     onClicked: console.log(Quickshell.screens[2]) 
 }
