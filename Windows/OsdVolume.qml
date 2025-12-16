@@ -1,11 +1,13 @@
 import QtQuick
 import QtQuick.Layouts
+
 import Quickshell
 import Quickshell.Services.Pipewire
 import Quickshell.Widgets
 
 import qs.Theme
 import qs.Components
+import qs.Services
 
 
 Scope {
@@ -51,7 +53,7 @@ Scope {
 
 			Rectangle {
 				anchors.fill: parent
-				radius: height / 2
+				radius: 12
 				color: Colors.applyAlpha(Colors.background, 0.3)
 
 				RowLayout {
@@ -61,8 +63,17 @@ Scope {
 						rightMargin: 15
 					}
 
-          BarWidget {  // absolutely insane temporary placeholder lol
-            text: ""
+          Text {
+            color: Colors.foreground
+            font: Fonts.barIcon
+            // `text` should match `icon` in Widgets/Bar/VolumeWidget.qml, but I couldn't get a
+            // reference to work, so this is just a duplicated block for now.
+            text: {  
+              if (AudioService.isMuted) return '\uF1C3'
+              if (AudioService.volumeAsInt > 45) return '\uEB51'
+              if (AudioService.volumeAsInt > 0)  return '\uEB4F'
+              else return '\uEB50'
+            } 
           }
           
 					Rectangle {

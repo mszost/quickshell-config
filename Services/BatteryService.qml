@@ -5,7 +5,7 @@ import Quickshell
 import Quickshell.Services.UPower
 
 
-QtObject {
+Singleton {
   id: root
 
   readonly property UPowerDevice device: UPower.displayDevice

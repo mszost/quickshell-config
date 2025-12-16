@@ -1,9 +1,9 @@
 import QtQuick
+
 import Quickshell
 
 import qs.Services
 import qs.Theme
-import qs.Theme.Icons
 import qs.Components
 
 
@@ -11,13 +11,12 @@ BarWidget {
   id: root
   text: BatteryService.isAvailable ? BatteryService.percentage + '%' : ""
   iconSize: 20
-  iconWeight: 200
   animationSpeed: BatteryService.isCritical ? 300 : defaultDuration 
 
   animatedColor: {
       if (!BatteryService.isAvailable) return Colors.red
       if (BatteryService.isCharging)   return '#4eed8e'
-      if (BatteryService.isCritical)   return blinker.visibleState ? Colors.red : Colors.applyAlpha(Colors.red, 0.35)
+      if (BatteryService.isCritical)   return blinker.state ? Colors.red : Colors.applyAlpha(Colors.red, 0.35)
       return containsMouse ? Colors.color8 : Colors.foreground
   }
 

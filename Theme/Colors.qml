@@ -5,6 +5,8 @@ import QtQuick
 QtObject {
   id: root
 
+  property color debug: "#ff00ff"
+
   // Gruvbox Material theme
   property color red: "#EA6962"
   property color orange: "#E78A4E"

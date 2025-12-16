@@ -1,12 +1,15 @@
 import QtQuick
+
 import Quickshell
 
 import qs.Components
+import qs.Services
 
 
 BarWidget {
-    text: 'Red5Blue'
+    text: 'Wi-Fi' 
     icon: '\uEB52' 
-    iconSize: 18
+    iconSize: 20
     onClicked: console.log(Quickshell.screens[2]) 
 }
+

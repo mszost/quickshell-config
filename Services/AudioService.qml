@@ -14,9 +14,10 @@ Scope {
   }
   
   property PwNode node: Pipewire.defaultAudioSink
-  property real volume: node.audio.volume
-  property bool isMuted: node.audio.muted
-  property bool isHeadphones: node
+  property real volume: Pipewire.defaultAudioSink.audio.volume
+  property bool isMuted: Pipewire.defaultAudioSink.audio.muted
+  // property bool isHeadphones: 
+  property int volumeAsInt: Math.round(Pipewire.defaultAudioSink.audio.volume * 100)
 
 }
 

@@ -1,4 +1,5 @@
 import QtQuick
+
 import Quickshell.Hyprland
 
 import qs.Components
@@ -11,7 +12,7 @@ BarWidgetLite {
   id: root
   text: filterState ? '\ueaf8' : "\ueb30"
   textFamily: Fonts.tabler.family
-  textSize: 18
+  textSize: 17
   onClicked: filterState = toggleFilter()
 
   property bool filterState: false
@@ -19,11 +20,10 @@ BarWidgetLite {
   function toggleFilter(): bool {
     if (filterState) {
       Hyprland.dispatch('exec killall hyprsunset');
-      return false;
     } else {
       Hyprland.dispatch('exec hyprsunset -t 3700');
-      return true;
     }
+    return !filterState
   }
 }
 

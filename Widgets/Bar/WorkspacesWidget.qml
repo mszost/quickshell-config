@@ -21,7 +21,7 @@ Item {
     }
 
     radius: 8
-    color: Colors.applyAlpha(Colors.background,0.4)
+    color: Colors.applyAlpha(Colors.background,0.3)
     // border.width: 1
     // border.color: Theme.background
 
@@ -43,7 +43,7 @@ Item {
           property color workspaceStateColor: {
             if (HyprlandService.isWorkspaceFocused(index + 1)) return Colors.color2  
             if (HyprlandService.isWorkspaceOccupied(index + 1)) return Colors.applyAlpha(Colors.color2, 0.25)
-            else return Colors.applyAlpha(Colors.background, 0.5)
+            else return Colors.applyAlpha(Colors.background, 0.75)
           }
 
           Behavior on color {

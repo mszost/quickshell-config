@@ -1,4 +1,5 @@
 import QtQuick
+
 import Quickshell
 import Quickshell.Hyprland
 
@@ -13,6 +14,8 @@ BarWidgetLite {
   textFamily: Fonts.lucide.family
   textSize: Fonts.lucide.pixelSize
   hoverColor: Colors.red 
-  onClicked: Hyprland.dispatch('exec wlogout')
+  onClicked: console.log('SessionWidget clicked!')//Hyprland.dispatch('')
+
+
 }
 
