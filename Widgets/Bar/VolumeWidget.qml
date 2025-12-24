@@ -48,19 +48,28 @@ BarWidget {
       bgHoverColor: "transparent"
     }
 
-    Rectangle {  // wrapper
-      height: menu.rowHeight + 5
-      width: parent.width 
-      color: "transparent"
+    
+    RowLayout {  // wrapper
+      id: wrapper
+      Layout.preferredHeight: menu.rowHeight + 5 
+      Layout.fillWidth: true
       Layout.alignment: Qt.AlignBottom
+      spacing: 5
+
+      Item {Layout.preferredWidth: wrapper.width * 0.08}  // left margin
+
+      Text {
+        text: AudioService.isMuted ? 'Muted' : AudioService.volumeAsInt + '%'
+        font: Fonts.barText
+        color: Colors.foreground
+      }
 
       Rectangle {  // volume slider container
-        height: 8
-        width: parent.width * 0.77
+        Layout.preferredHeight: 8
+        Layout.fillWidth: true
         radius: height/2
-        anchors.centerIn: parent
         color: Colors.applyAlpha(Colors.foreground,0.2)
-
+        
         Rectangle { // volume slider -- this is not yet interactable. 
           height: parent.height
           width: parent.width * (AudioService.volumeAsInt / 100)
@@ -68,7 +77,11 @@ BarWidget {
           color: Colors.foreground
         }
       }
+
+
+      Item {Layout.preferredWidth: wrapper.width * 0.1}  // right margin
     }
+
 
     Rectangle {  // wrapper
       height: menu.rowHeight

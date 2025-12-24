@@ -10,8 +10,8 @@ import qs.Theme
 Item {
   id: root
   required property var boundItem  // the widget that this menu should appear under
-  property int rowHeight: 21       // the height of each item in the ColumnLayout
   property bool menuIsOpen: false
+  property int rowHeight: 21       // the height of each item in the ColumnLayout
   // property ShellScreen screen   // for calculating the screen width
   default property alias menuItems: content.data  // feeds into the ColumnLayout, defined by the widget implementing the template
 
@@ -38,7 +38,7 @@ Item {
       border.width: 1
 
       focus: true
-      Keys.onEscapePressed : { root.menuIsOpen = false }
+      Keys.onEscapePressed: { root.menuIsOpen = false }
 
       // sliding in/out animation
       y: root.menuIsOpen ? 0 : -50
