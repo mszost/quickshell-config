@@ -29,7 +29,7 @@ Scope {
 
         RowLayout {
           anchors {fill: parent; leftMargin: 16; rightMargin: 16}
-          spacing: 12
+          spacing: 8
 
           ClockWidget {} //{ Layout.alignment: Qt.AlignLeft }
 

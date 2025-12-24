@@ -5,19 +5,44 @@ import Quickshell
 import Quickshell.Services.Pipewire
 
 
-Scope {
+Singleton {
   id: root
+
+  property var availableSinks: {
+    let nodes = Pipewire.nodes.values
+    let deviceList = []
+    for (let i=0; i<nodes.length; i++) {
+      if (nodes[i].isSink && nodes[i].description) deviceList.push(nodes[i])
+    }
+    return deviceList
+  }
+
+  // property var availableSources: {
+  //   let nodes = Pipewire.nodes.values
+  //   let deviceList = []
+  //   for (let i=0; i<nodes.length; i++) {
+  //     if (!nodes[i].isSink && nodes[i].id) console.log(nodes[i].id)//deviceList.push(nodes[i])
+  //   }
+  //   return deviceList
+  // }
   
-  // Bind the pipewire node so its volume will be tracked
+  property PwNode activeSink: Pipewire.defaultAudioSink
+  property string activeSinkId: Pipewire.defaultAudioSink?.id ?? ''
+
+  property PwNode activeSource: Pipewire.defaultAudioSource
+  property string activeSourceId: Pipewire.defaultAudioSource?.id ?? ''
+
+  
+  property real volume: Pipewire.defaultAudioSink?.audio?.volume ?? 0
+  property int volumeAsInt: Math.round(volume * 100)
+  
+
 	PwObjectTracker {
 		objects: [ Pipewire.defaultAudioSink ]
   }
-  
-  property PwNode node: Pipewire.defaultAudioSink
-  property real volume: Pipewire.defaultAudioSink.audio.volume
-  property bool isMuted: Pipewire.defaultAudioSink.audio.muted
-  // property bool isHeadphones: 
-  property int volumeAsInt: Math.round(Pipewire.defaultAudioSink.audio.volume * 100)
 
-}
+  function setVolume(val) {
+    Pipewire.defaultAudioSink.audio.volume = Math.max(0, Math.min(1, val))
+  }
+ }
 

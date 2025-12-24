@@ -25,6 +25,7 @@ BarWidget {
     if (BatteryService.isCharging)   return '\uEA33'
     if (BatteryService.isCritical)   return '\uFF1D'
     if (BatteryService.isPlugged)    return '\uEF3B' // AC Power
+    
     const p = BatteryService.percentage
     if (p >= 75) return '\uEA32'
     if (p >= 60) return '\uEA31'

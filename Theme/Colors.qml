@@ -5,6 +5,8 @@ import QtQuick
 QtObject {
   id: root
 
+  property alias accent: root.color2
+
   property color debug: "#ff00ff"
 
   // Gruvbox Material theme

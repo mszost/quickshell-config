@@ -12,6 +12,8 @@ Item {
   implicitWidth: content.implicitWidth
   implicitHeight: content.implicitHeight
 
+  // TODO: This is inconsistent, some things are aliases and others 
+  // are not. Pick one approach and refactor. 
   property alias spacing: content.spacing
   property alias layoutDirection: content.layoutDirection
   
