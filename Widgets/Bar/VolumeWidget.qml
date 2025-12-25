@@ -15,11 +15,10 @@ BarWidget {
   // text: AudioService.isMuted ? 'Muted' : AudioService.volumeAsInt + '%'
   iconSize: 18
   spacing: 1
-  onClicked: menuState = !menuState // Hyprland.dispatch("exec pavucontrol") 
+  onClicked: menuState = !menuState 
   normalColor: AudioService.volumeAsInt > 100 ? Colors.red : Colors.foreground
   
   icon: {
-    // if (<sink connected is headphones>) return '\uFA3C' || '\uEABD'
     if (AudioService.isMuted) return '\uF1C3'
     if (AudioService.volumeAsInt > 45) return '\uEB51'
     if (AudioService.volumeAsInt > 0)  return '\uEB4F'
@@ -32,7 +31,6 @@ BarWidget {
     if (wheelEvent.angleDelta.y > 0) AudioService.setVolume(AudioService.volume + step)
     if (wheelEvent.angleDelta.y < 0) AudioService.setVolume(AudioService.volume - step)
   }
-
 
   // Menu
   property alias menuState: menu.menuIsOpen
@@ -47,7 +45,6 @@ BarWidget {
       textHoverColor: Colors.foreground  // item remains hoverable but this prevents the appearance from changing
       bgHoverColor: "transparent"
     }
-
     
     RowLayout {  // wrapper
       id: wrapper
@@ -58,7 +55,7 @@ BarWidget {
 
       Item {Layout.preferredWidth: wrapper.width * 0.08}  // left margin
 
-      Text {
+      Text {  // volume percentage
         text: AudioService.isMuted ? 'Muted' : AudioService.volumeAsInt + '%'
         font: Fonts.barText
         color: Colors.foreground
@@ -77,11 +74,8 @@ BarWidget {
           color: Colors.foreground
         }
       }
-
-
-      Item {Layout.preferredWidth: wrapper.width * 0.1}  // right margin
+      Item {Layout.preferredWidth: wrapper.width * 0.08}  // right margin
     }
-
 
     Rectangle {  // wrapper
       height: menu.rowHeight
@@ -107,14 +101,11 @@ BarWidget {
       
       MenuItemAlt {
         property bool sinkIsActive: modelData.id == AudioService.activeSinkId
-
         property color entryColor: {
           if (m.containsMouse) return Colors.color2
           else if (sinkIsActive) return Colors.foreground
           else return Colors.applyAlpha(Colors.foreground, 0.5)
-          // m.containsMouse ? Colors.color2 : 
         }
-
         Behavior on entryColor {
           ColorAnimation { duration: 100; easing.type: Easing.InOutQuad }
         }
@@ -122,7 +113,7 @@ BarWidget {
         RowLayout {
           id: row
           spacing: 6
-          
+
           Text { 
             text: {
               switch (modelData.description) {
@@ -157,7 +148,6 @@ BarWidget {
         }
       }
     }
-
     
     Rectangle {  // wrapper
       height: menu.rowHeight
@@ -179,6 +169,5 @@ BarWidget {
       } 
     }
   }
-
  }
 

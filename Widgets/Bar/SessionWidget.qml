@@ -10,12 +10,10 @@ import qs.Components
 BarWidgetLite {
   id: root
   // text: '\uEB0D' // tabler
-  text: '\uE140' // lucide
+  text: '\uE140'
   textFamily: Fonts.lucide.family
   textSize: Fonts.lucide.pixelSize
   hoverColor: Colors.red 
-  onClicked: console.log('SessionWidget clicked!')//Hyprland.dispatch('')
-
-
+  onClicked: console.log('SessionWidget clicked!')
 }
 

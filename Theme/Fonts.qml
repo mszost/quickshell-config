@@ -32,7 +32,5 @@ QtObject {
   // loading local fonts
   readonly property FontLoader _lucideLoader: FontLoader { source: "/home/msz/.config/quickshell/assets/fonts/lucide.ttf" }  
   readonly property FontLoader _tablerLoader: FontLoader { source: "/home/msz/.config/quickshell/assets/fonts/tabler-icons-300.ttf" }  
-  // readonly property FontLoader _tablerLoader: FontLoader { source: "/home/msz/.config/quickshell/assets/fonts/tabler-icons.ttf" }  
 }
-
 

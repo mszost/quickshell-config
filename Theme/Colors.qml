@@ -41,6 +41,5 @@ QtObject {
   function applyAlpha(baseColor, alpha) {
     return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, alpha)
   }
-
 }
 

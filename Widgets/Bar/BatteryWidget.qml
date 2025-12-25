@@ -31,7 +31,7 @@ BarWidget {
     if (p >= 60) return '\uEA31'
     if (p >= 35) return '\uEA30'
     if (p >= 20) return '\uEA2F'
-    return '\uEA34' // Fallback/Low
+    return '\uEA34'  // Fallback/Low
   }
 
   Timer {

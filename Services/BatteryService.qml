@@ -21,3 +21,4 @@ Singleton {
   //  device.state === UPowerDeviceState.Discharging ? device.timeToEmpty : device.timeToFull
   //}
 }
+
