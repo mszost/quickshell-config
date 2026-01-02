@@ -15,14 +15,14 @@ Scope {
 
     PanelWindow {
       id: barWindow
-      anchors {top: true; left: true; right: true}
+      anchors { top: true; left: true; right: true }
       screen: modelData
       implicitHeight: 29
       color: 'transparent' 
       property var modelData
       
       Rectangle {  
-        anchors {fill: parent; leftMargin: 10; rightMargin: 10}
+        anchors { fill: parent; leftMargin: 10; rightMargin: 10 }
         color: Colors.applyAlpha(Colors.background, 0.5)  
         radius: 9
         antialiasing: true

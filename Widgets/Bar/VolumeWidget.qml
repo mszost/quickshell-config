@@ -15,7 +15,7 @@ BarWidget {
   // text: AudioService.isMuted ? 'Muted' : AudioService.volumeAsInt + '%'
   iconSize: 18
   spacing: 1
-  onClicked: menuState = !menuState 
+  onClicked: menuState = true 
   normalColor: AudioService.volumeAsInt > 100 ? Colors.red : Colors.foreground
   
   icon: {
@@ -46,7 +46,7 @@ BarWidget {
       bgHoverColor: "transparent"
     }
     
-    RowLayout {  // wrapper
+    RowLayout {  // wrapper  // TODO: This throws an error: "Qt Quick Layouts: Detected recursive rearrange. Aborting after two iterations."
       id: wrapper
       Layout.preferredHeight: menu.rowHeight + 5 
       Layout.fillWidth: true
@@ -110,7 +110,7 @@ BarWidget {
           ColorAnimation { duration: 100; easing.type: Easing.InOutQuad }
         }
         
-        RowLayout {
+        Row {
           id: row
           spacing: 6
 

@@ -45,3 +45,6 @@ BarWidget {
   }
 }
 
+
+// Menu: use a Loader for fetching the active power profile. We only need to fetch it when the menu
+//       is open, not on some x seconds interval. Saves some memory.

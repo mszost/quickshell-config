@@ -7,5 +7,6 @@ import qs.Windows
 Scope {
   Bar {}
   OsdVolume {}
+  Dock {}
 }
 
