@@ -8,6 +8,7 @@ import qs.Theme
 
 Item {
   id: root
+  // anchors.verticalCenter: parent.verticalCenter
   implicitWidth: wsRow.implicitWidth
   implicitHeight: wsRow.implicitHeight
 
@@ -16,12 +17,12 @@ Item {
     anchors {
       fill: parent
       margins: -10
-      topMargin: -7
-      bottomMargin: -7
+      topMargin: -5
+      bottomMargin: -5
     }
 
     radius: 8
-    color: Colors.applyAlpha(Colors.background,0.3)
+    color: Colors.applyAlpha(Colors.background,0.5)
     // border.width: 1
     // border.color: Theme.background
 
@@ -32,12 +33,15 @@ Item {
 
       Repeater {
         model: [1,2,3,4,5,6]  //HyprlandService.workspaceIds
-        Rectangle { // workspace icon
-          id: wsBox
-          height: 11
-          width: 11
+        Rectangle { 
+          id: wsIcon
+          height: 12
+          width: 12
           radius: width/2 
-          color: workspaceStateColor 
+          color: workspaceStateColor
+          border.width: 1
+          border.color: Colors.applyAlpha(Colors.foreground, 0.15)
+          antialiasing: true
         
           // using modelData will reference the list contents instead of just the index. 
           property color workspaceStateColor: {

@@ -46,14 +46,14 @@ Singleton {
         updateWorkspaces();
     }
 
-    function biggestWindowForWorkspace(workspaceId) {
-        const windowsInThisWorkspace = root.windowList.filter(w => w.workspace.id == workspaceId);
-        return windowsInThisWorkspace.reduce((maxWin, win) => {
-            const maxArea = (maxWin?.size?.[0] ?? 0) * (maxWin?.size?.[1] ?? 0);
-            const winArea = (win?.size?.[0] ?? 0) * (win?.size?.[1] ?? 0);
-            return winArea > maxArea ? win : maxWin;
-        }, null);
-    }
+    // function biggestWindowForWorkspace(workspaceId) {
+    //     const windowsInThisWorkspace = root.windowList.filter(w => w.workspace.id == workspaceId);
+    //     return windowsInThisWorkspace.reduce((maxWin, win) => {
+    //         const maxArea = (maxWin?.size?.[0] ?? 0) * (maxWin?.size?.[1] ?? 0);
+    //         const winArea = (win?.size?.[0] ?? 0) * (win?.size?.[1] ?? 0);
+    //         return winArea > maxArea ? win : maxWin;
+    //     }, null);
+    // }
 
     // performs a check if the workspace exists then 
     function isWorkspaceFocused(workspaceId: int): bool {

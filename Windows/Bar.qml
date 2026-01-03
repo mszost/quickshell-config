@@ -31,7 +31,7 @@ Scope {
           anchors {fill: parent; leftMargin: 16; rightMargin: 16}
           spacing: 8
 
-          ClockWidget {} //{ Layout.alignment: Qt.AlignLeft }
+          WorkspacesWidget {} 
 
           Item { Layout.fillWidth: true } // Spacer 
           
@@ -44,7 +44,7 @@ Scope {
 
         // This item is a child of Rectangle, outside of RowLayout, so that it can be 
         // positioned in the absolute center and independently of any other items in the row.
-          WorkspacesWidget {id:workspaces; anchors.centerIn: parent}
+          ClockWidget {id:workspaces; anchors.centerIn: parent}
       }
     }
   }
