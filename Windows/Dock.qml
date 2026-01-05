@@ -1,8 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
-// import QtQuick.Effects
+import QtQuick.Effects
 
 import Quickshell
+import Quickshell.Widgets
+import Quickshell.Hyprland
 
 import qs.Theme
 import qs.Services
@@ -10,8 +12,19 @@ import qs.Services
 
 Scope {
   id: root
-  property int offset: 5   // y-height offset from the bottom edge of the screen 
-  property int buffer: 32  // so the exitArea can be slightly larger than the dock itself
+  readonly property int offset: 6   // height offset from the bottom edge of the screen
+  readonly property int buffer: 16  // used as padding for popup and DockRect
+  readonly property list<string> dockApps: [
+     'kitty',
+     'org.gnome.Nautilus',
+     'firefox',
+     'vivaldi-stable',
+     'obsidian',
+     'code-oss',
+     'vesktop',
+     'steam',
+     'org.keepassxc.KeePassXC',
+  ]
   
   Variants {
     model: Quickshell.screens
@@ -20,108 +33,115 @@ Scope {
       id: panel
       anchors.bottom: true
       implicitHeight: 0
-      implicitWidth: dock.width * 0.75 
+      implicitWidth: dockRect.width 
       color: 'transparent'
       exclusiveZone: 0
       screen: modelData
       
       required property var modelData
 
+      property bool dockIsVisible: {  // Must be a child of panel so that the state is not shared between screens.
+        if (!isFocused) return false
+        if (!isOccupied) return true
+        return isHovered
+      }
       
-      property var monitorObj: { // find the monitor object that matches the current screen's name
+      property bool isHovered: enterArea.hovered || exitArea.hovered
+      property bool isFocused: Hyprland.focusedMonitor?.name == modelData?.name
+      property bool isOccupied: HyprlandService.isWorkspaceOccupied(Hyprland.focusedWorkspace.id)
+
+      // TODO: this block may be unnecessary, find a way to optimize without errors/warnings 
+      property var monitor: {  // find the monitor that matches the current screen's name
         var monitors = HyprlandService.monitors
         for (let i=0; i<monitors.length; i++) {
           if (monitors[i].name == modelData.name) {
-            return monitors[i]
+            return monitors[i].name
           }
         }
-        return null
       }
-
-      property bool monitorIsFocused: {
-        const thisWsId = monitorObj.activeWorkspace.id
-        const focusedWsId = HyprlandService.activeWorkspace.id
-        return thisWsId == focusedWsId
-      }
-
-      property bool wsHasWindow: HyprlandService.isWorkspaceOccupied(HyprlandService.activeWorkspace.id) 
-
-      property bool dockIsVisible: { false
-      }
-      // this must be a chid of panel, not root, so that the state is not shared between screens.
       
-      MouseArea {
-        id: enterArea  // hovering this MouseArea triggers the dock to appear
-        anchors.fill: parent
-        hoverEnabled: true
-        onEntered: panel.dockIsVisible = true
-      }
+      HoverHandler { id: enterArea }  // triggers the dock to open
 
-      PopupWindow {  // container window
+      PopupWindow { 
         id: popup
         anchor {
           window: panel
-          rect.x: panel.width/2 - width/2 // center horizontally
+          rect.x: panel.width/2 - width/2  // center horizontally
           adjustment: PopupAdjustment.None
           edges: Edges.Top | Edges.Center
           gravity: Edges.Top | Edges.Right
         }
-        implicitHeight: dock.height + offset + buffer
-        implicitWidth: dock.width + buffer 
-        visible: dock.y <= height 
-        
-        color: 'transparent' //Colors.applyAlpha(Colors.debug, 0.1)
+        // popup is slightly larger than the visible dockRect
+        // in order to avoid clipping exitArea
+        implicitWidth: dockRect.width + buffer 
+        implicitHeight: dockRect.height + offset + buffer 
+        visible: dockRect.y <= height 
+        color: 'transparent'
 
-        MouseArea {
-          id: exitArea // leaving this MouseArea triggers the dock to disappear
-          anchors.fill: parent
-          hoverEnabled: true
-          onExited: panel.dockIsVisible = false
-        }
-
+        // Visual component of the dock
         Rectangle {
-          id: dock
+          id: dockRect
           anchors.horizontalCenter: parent.horizontalCenter
-          width: content.width + height
+          width: content.width + buffer*2
           height: 72
           radius: height * 0.3
-          color: Colors.applyAlpha(Colors.background, 0.5)
-          border.color: Colors.applyAlpha(Colors.foreground, 0.33)
+          color: Colors.applyAlpha(Colors.background, 0.4)
+          border.color: Colors.applyAlpha(Colors.foreground, 0.1)
           border.width: 1
           antialiasing: true
           
-          // sliding in/out animation
+          // Sliding in/out animation
+          // This expression for `y` allows the height of the PopupWindow (and thus the MouseArea 
+          // which fills it) to be slightly taller than the maximum point which the dock slides up to.
           y: panel.dockIsVisible ? (parent.height - height - offset) : parent.height
-          Behavior on y {
-            NumberAnimation { duration: 500; easing.type: Easing.OutQuint }
-          }
-          
-        // MultiEffect {
-        //   source: dock
-        //   anchors.fill: dock
-        //   shadowBlur: 1.0
-        //   shadowEnabled: true
-        //   shadowColor: "black"
-        //   shadowVerticalOffset: 20
-        //   shadowHorizontalOffset: 20
-        // }
+          Behavior on y { NumberAnimation { duration: 350; easing.type: Easing.OutBack } }
 
+          HoverHandler { id: exitArea; margin: buffer } // triggers the dock to close
+          
           RowLayout {
             id: content
             anchors.centerIn: parent
-            spacing: 64
-            Text {text:'foo'; color: 'white'}
-            Text {text:'bar'; color: 'white'}
-            Text {text:'fiz'; color: 'white'}
-            Text {text:'buz'; color: 'white'}
-            Text {text:'baz'; color: 'white'}
-            Text {text:'baz'; color: 'white'}
-            Text {text:'baz'; color: 'white'}
-            Text {text:'baz'; color: 'white'}
-            Text {text:'baz'; color: 'white'}
+            spacing: 8
+            
+            Repeater {
+              model: root.dockApps
+                             
+              WrapperMouseArea {
+                id: iconArea
+                child: appIcon
+                resizeChild: false
+                Layout.preferredWidth: 55  // actual rendered pixel size, downscaled from appIcon.sourceSize
+                Layout.preferredHeight: 55
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+                onClicked: DesktopEntries.byId(modelData).execute() // TODO: additional animation on click 
+
+                Image {
+                  id: appIcon
+                  anchors.fill: parent
+                  source: (DesktopEntries.applications.values, DesktopEntries.byId(modelData)?.icon ?? '')  // prevents a race condition
+                  sourceSize.width: 128
+                  mipmap: true
+                  scale: iconArea.containsMouse ? 1.15 : 1.0
+                  Behavior on scale { NumberAnimation { duration: 100 } }  
+                  visible: true
+                }
+
+                // MultiEffect {  // drop shadow effect for each icon
+                //   anchors.fill: parent
+                //   source: appIcon
+                //   shadowEnabled: true
+                //   shadowBlur: 0
+                //   shadowColor: "black"
+                //   shadowVerticalOffset: 5
+                //   shadowHorizontalOffset: 5
+                // }
+              }
+            }
           }
         }
       }
     }
   }
 }
+

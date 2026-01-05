@@ -80,8 +80,8 @@ Scope {
 						// Stretches to fill all left-over space
 						Layout.fillWidth: true
 
-						implicitHeight: 8
-						radius: 20
+						implicitHeight: 10
+						radius: height/2
 						color: Colors.applyAlpha(Colors.foreground,0.5) 
 
 						Rectangle {
@@ -91,9 +91,10 @@ Scope {
 								bottom: parent.bottom
 							}
 
-							implicitWidth: parent.width * (Pipewire.defaultAudioSink?.audio.volume ?? 0)
+							width: parent.width * (Pipewire.defaultAudioSink?.audio.volume ?? 0)
               radius: parent.radius
               color: Colors.foreground
+              Behavior on width { NumberAnimation { duration: 200; easing.type: Linear } }
 						}
 					}
 				}

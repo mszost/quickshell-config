@@ -20,6 +20,7 @@ Scope {
       implicitHeight: 29
       color: 'transparent' 
       property var modelData
+      visible: modelData.name == 'eDP-2' || modelData.name == 'DP-10' || modelData.name == "HDMI-1"
       
       Rectangle {  
         anchors { fill: parent; leftMargin: 10; rightMargin: 10 }
@@ -35,6 +36,7 @@ Scope {
 
           Item { Layout.fillWidth: true } // Spacer 
           
+          Picker { Layout.alignment: Qt.AlignRight }
           Sunset { Layout.alignment: Qt.AlignRight }
           VolumeWidget { Layout.alignment: Qt.AlignRight }
           NetworkWidget { Layout.alignment: Qt.AlignRight }

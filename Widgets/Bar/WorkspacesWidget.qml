@@ -22,7 +22,8 @@ Item {
     }
 
     radius: 8
-    color: Colors.applyAlpha(Colors.background,0.5)
+    color: 'transparent' //Colors.applyAlpha(Colors.background,0.5)
+
     // border.width: 1
     // border.color: Theme.background
 
@@ -40,7 +41,7 @@ Item {
           radius: width/2 
           color: workspaceStateColor
           border.width: 1
-          border.color: Colors.applyAlpha(Colors.foreground, 0.15)
+          border.color: Colors.applyAlpha(Colors.background, 0.15)
           antialiasing: true
         
           // using modelData will reference the list contents instead of just the index. 

@@ -53,7 +53,7 @@ BarWidget {
       Layout.alignment: Qt.AlignBottom
       spacing: 5
 
-      Item {Layout.preferredWidth: wrapper.width * 0.08}  // left margin
+      Item { Layout.preferredWidth: wrapper.width * 0.08 }  // left margin
 
       Text {  // volume percentage
         text: AudioService.isMuted ? 'Muted' : AudioService.volumeAsInt + '%'
@@ -67,14 +67,15 @@ BarWidget {
         radius: height/2
         color: Colors.applyAlpha(Colors.foreground,0.2)
         
-        Rectangle { // volume slider -- this is not yet interactable. 
+        Rectangle {  // volume slider -- this is not yet interactable. 
           height: parent.height
           width: parent.width * (AudioService.volumeAsInt / 100)
           radius: parent.radius
           color: Colors.foreground
+          Behavior on width { NumberAnimation { duration: 100 } }
         }
       }
-      Item {Layout.preferredWidth: wrapper.width * 0.08}  // right margin
+      Item { Layout.preferredWidth: wrapper.width * 0.08 }  // right margin
     }
 
     Rectangle {  // wrapper
@@ -106,9 +107,7 @@ BarWidget {
           else if (sinkIsActive) return Colors.foreground
           else return Colors.applyAlpha(Colors.foreground, 0.5)
         }
-        Behavior on entryColor {
-          ColorAnimation { duration: 100; easing.type: Easing.InOutQuad }
-        }
+        Behavior on entryColor { ColorAnimation { duration: 300; easing.type: Easing.InOutQuad } }
         
         Row {
           id: row
