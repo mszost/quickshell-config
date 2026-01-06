@@ -54,7 +54,7 @@ Scope {
 			Rectangle {
 				anchors.fill: parent
 				radius: 12
-				color: Colors.applyAlpha(Colors.background, 0.3)
+				color: Colors.alpha(Colors.background, 0.3)
 
 				RowLayout {
 					anchors {
@@ -82,7 +82,7 @@ Scope {
 
 						implicitHeight: 10
 						radius: height/2
-						color: Colors.applyAlpha(Colors.foreground,0.5) 
+						color: Colors.alpha(Colors.foreground,0.5) 
 
 						Rectangle {
 							anchors {

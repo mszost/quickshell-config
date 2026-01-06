@@ -26,4 +26,3 @@ BarWidgetLite {
     return !filterState
   }
 }
-

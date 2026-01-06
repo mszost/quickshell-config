@@ -9,7 +9,7 @@ import qs.Theme
 
 BarWidget {
   id: root
-  icon: '\ueb9d'// '\ueb54' //'\uEB52' 
+  icon: '\ueb52'// '\ueb9d' //'\uEB54' 
   iconSize: 18
   onClicked: menuState = true //console.log(Quickshell.screens[2]) 
 

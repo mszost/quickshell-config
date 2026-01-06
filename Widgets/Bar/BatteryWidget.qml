@@ -16,8 +16,8 @@ BarWidget {
   animatedColor: {
       if (!BatteryService.isAvailable) return Colors.red
       if (BatteryService.isCharging)   return '#4eed8e'
-      if (BatteryService.isCritical)   return blinker.state ? Colors.red : Colors.applyAlpha(Colors.red, 0.35)
-      return containsMouse ? Colors.color8 : Colors.foreground
+      if (BatteryService.isCritical)   return blinker.state ? Colors.red : Colors.alpha(Colors.red, 0.35)
+      return containsMouse ? Colors.alpha(Colors.foreground, 0.5) : Colors.foreground
   }
 
   icon: {

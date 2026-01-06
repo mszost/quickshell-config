@@ -38,7 +38,7 @@ BarWidget {
   Menu {
     id: menu
     boundItem: root
-    menuIsOpen: root.menuState
+    menuIsOpen: root.menuState // TODO: circular delcaration, simplify this
 
     MenuItem {
       text: "Volume"
@@ -65,7 +65,7 @@ BarWidget {
         Layout.preferredHeight: 8
         Layout.fillWidth: true
         radius: height/2
-        color: Colors.applyAlpha(Colors.foreground,0.2)
+        color: Colors.alpha(Colors.foreground,0.2)
         
         Rectangle {  // volume slider -- this is not yet interactable. 
           height: parent.height
@@ -86,11 +86,11 @@ BarWidget {
         height: 1
         width: parent.width * 0.75
         anchors.centerIn: parent
-        color: Colors.applyAlpha(Colors.foreground,0.2)
+        color: Colors.alpha(Colors.foreground,0.2)
       }
     }
 
-    MenuItem {
+    MenuItem { // TODO: can just be Text. no reason to waste memory on another MouseArea like this ...
       text: "Output Device"
       textHoverColor: Colors.foreground  // item remains hoverable but this prevents the appearance from changing
       bgHoverColor: "transparent"
@@ -103,11 +103,11 @@ BarWidget {
       MenuItemAlt {
         property bool sinkIsActive: modelData.id == AudioService.activeSinkId
         property color entryColor: {
-          if (m.containsMouse) return Colors.color2
+          if (m.containsMouse) return Colors.primary
           else if (sinkIsActive) return Colors.foreground
-          else return Colors.applyAlpha(Colors.foreground, 0.5)
+          else return Colors.alpha(Colors.foreground, 0.5)
         }
-        Behavior on entryColor { ColorAnimation { duration: 300; easing.type: Easing.InOutQuad } }
+        Behavior on entryColor { ColorAnimation { duration: 200; easing.type: Easing.InOutQuad } }
         
         Row {
           id: row
@@ -156,7 +156,7 @@ BarWidget {
         height: 1
         width: parent.width * 0.75
         anchors.centerIn: parent
-        color: Colors.applyAlpha(Colors.foreground,0.2)
+        color: Colors.alpha(Colors.foreground,0.2)
       }
     }
 

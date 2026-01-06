@@ -1,0 +1,69 @@
+pragma Singleton
+
+import QtQuick
+
+
+QtObject {
+  id: root
+
+  // property string activeTheme: 'gruvbox-material'
+
+  property alias accent: root.color2
+  property color debug: "#ff00ff"
+
+  // gruvbox-material
+  property color red: "#EA6962"
+  // property color orange: "#E78A4E"
+  // property color yellow: "#D8A657" 
+  // property color green: "#A9B665"
+  // property color aqua: "#89B482"
+  // property color blue: "#7DAEA3" 
+  // property color purple: "#D699B6"
+  
+  // nord
+  // property color red: "#AB575F"
+  // property color orange: "#BA7964"
+  // property color yellow: "#D3B67C" 
+  // property color green: "#91AA7D"
+  // property color aqua: "#80A8A7"
+  // property color blue: "#738FAC" 
+  // property color purple: "#A17F9A"
+  
+  // biscuit
+  // property color background: '#FFF7EB'
+  // property color foreground: '#2D2424'
+  // property color red: '#AE4750'
+  // property color orange: '#C6695D'
+  // property color yellow: '#CD9165'
+  // property color green: '#97916F'
+  // property color aqua: '#629386'
+  // property color blue: '#517894'
+  // property color purple: '#7B3D79'
+  
+  // pywal
+  property color background: Pywal.background
+  property color foreground: Pywal.foreground
+  property color cursor: Pywal.cursor
+  property color color0: Pywal.color0
+  property color color1: Pywal.color1
+  property color color2: Pywal.color2
+  property color color3: Pywal.color3
+  property color color4: Pywal.color4
+  property color color5: Pywal.color5
+  property color color6: Pywal.color6
+  property color color7: Pywal.color7
+  property color color8: Pywal.color8
+  property color color9: Pywal.color9
+  property color color10: Pywal.color10
+  property color color11: Pywal.color11
+  property color color12: Pywal.color12
+  property color color13: Pywal.color13
+  property color color14: Pywal.color14
+  property color color15: Pywal.color15
+
+  // helpers
+  function applyAlpha(baseColor, alpha) {
+    return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, alpha)
+  }
+}
+

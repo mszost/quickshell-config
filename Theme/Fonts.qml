@@ -26,11 +26,17 @@ QtObject {
     family: "SF Pro Rounded",
     pixelSize: 12,
     weight: 600
-     })
+  })
+
+  readonly property font rubik: Qt.font({
+    family: "Rubik",
+    pixelSize: 12,
+    weight: 400
+  })
 
 
   // loading local fonts
-  readonly property FontLoader _lucideLoader: FontLoader { source: "/home/msz/.config/quickshell/assets/fonts/lucide.ttf" }  
-  readonly property FontLoader _tablerLoader: FontLoader { source: "/home/msz/.config/quickshell/assets/fonts/tabler-icons-300.ttf" }  
+  readonly property FontLoader _lucideLoader: FontLoader { source: "../assets/fonts/lucide.ttf" }  
+  readonly property FontLoader _tablerLoader: FontLoader { source: "../assets/fonts/tabler-icons-300.ttf" }  
 }
 

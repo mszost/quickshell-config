@@ -30,7 +30,7 @@ Item {
 
   // Color
   property color normalColor: Colors.foreground
-  property color hoverColor: Colors.applyAlpha(Colors.foreground, 0.5)
+  property color hoverColor: Colors.alpha(Colors.foreground, 0.5)
   property color animatedColor: m.containsMouse ? root.hoverColor : root.normalColor
 
   Behavior on animatedColor {

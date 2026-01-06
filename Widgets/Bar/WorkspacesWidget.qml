@@ -41,14 +41,13 @@ Item {
           radius: width/2 
           color: workspaceStateColor
           border.width: 1
-          border.color: Colors.applyAlpha(Colors.background, 0.15)
+          border.color: Colors.alpha(Colors.background, 0.15)
           antialiasing: true
         
-          // using modelData will reference the list contents instead of just the index. 
           property color workspaceStateColor: {
-            if (HyprlandService.isWorkspaceFocused(index + 1)) return Colors.color2  
-            if (HyprlandService.isWorkspaceOccupied(index + 1)) return Colors.applyAlpha(Colors.color2, 0.25)
-            else return Colors.applyAlpha(Colors.background, 0.75)
+            if (HyprlandService.isWorkspaceFocused(index + 1)) return Colors.primary  
+            if (HyprlandService.isWorkspaceOccupied(index + 1)) return Colors.alpha(Colors.primary, 0.25)
+            else return Colors.alpha(Colors.background, 0.75)
           }
 
           Behavior on color {
