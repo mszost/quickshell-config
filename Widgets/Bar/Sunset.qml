@@ -1,5 +1,3 @@
-import QtQuick
-
 import Quickshell.Hyprland
 
 import qs.Components

@@ -1,11 +1,5 @@
-import QtQuick
-
-import Quickshell
-import Quickshell.Hyprland
-
 import qs.Theme
 import qs.Components
-
 
 BarWidgetLite {
   id: root
