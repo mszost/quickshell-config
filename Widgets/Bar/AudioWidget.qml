@@ -12,18 +12,13 @@ import qs.Services
 
 BarWidget {
   id: root
-  // text: AudioService.isMuted ? 'Muted' : AudioService.volumeAsInt + '%'
+  text: AudioService.isMuted ? 'Muted' : AudioService.volumeAsInt + '%'
+  icon: AudioService.symbol
   iconSize: 18
   spacing: 1
   onClicked: menuState = true 
   normalColor: AudioService.volumeAsInt > 100 ? Colors.red : Colors.foreground
   
-  icon: {
-    if (AudioService.isMuted) return '\uF1C3'
-    if (AudioService.volumeAsInt > 45) return '\uEB51'
-    if (AudioService.volumeAsInt > 0)  return '\uEB4F'
-    else return '\uEB50'
-  }
  
   // Scroll event handler
   mouseArea.onWheel: (wheelEvent) => {
@@ -41,9 +36,9 @@ BarWidget {
     menuIsOpen: root.menuState // TODO: circular delcaration, simplify this
 
     MenuItem {
-      text: "Volume"
+      text: 'Volume'
       textHoverColor: Colors.foreground  // item remains hoverable but this prevents the appearance from changing
-      bgHoverColor: "transparent"
+      bgHoverColor: 'transparent'
     }
     
     RowLayout {  // wrapper  // TODO: This throws an error: "Qt Quick Layouts: Detected recursive rearrange. Aborting after two iterations."
@@ -66,15 +61,16 @@ BarWidget {
         Layout.fillWidth: true
         radius: height/2
         color: Colors.alpha(Colors.foreground,0.2)
-        
+
         Rectangle {  // volume slider -- this is not yet interactable. 
           height: parent.height
           width: parent.width * (AudioService.volumeAsInt / 100)
           radius: parent.radius
           color: Colors.foreground
-          Behavior on width { NumberAnimation { duration: 100 } }
+          Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutBack } }
         }
       }
+      
       Item { Layout.preferredWidth: wrapper.width * 0.08 }  // right margin
     }
 
@@ -91,9 +87,9 @@ BarWidget {
     }
 
     MenuItem { // TODO: can just be Text. no reason to waste memory on another MouseArea like this ...
-      text: "Output Device"
+      text: 'Output Device'
       textHoverColor: Colors.foreground  // item remains hoverable but this prevents the appearance from changing
-      bgHoverColor: "transparent"
+      bgHoverColor: 'transparent'
     }
 
     // Dynamically renders the list of available audio sinks (output devices)
@@ -151,7 +147,7 @@ BarWidget {
     Rectangle {  // wrapper
       height: menu.rowHeight
       width: parent.width 
-      color: "transparent"
+      color: 'transparent'
       Rectangle {  // separator line
         height: 1
         width: parent.width * 0.75
@@ -161,7 +157,7 @@ BarWidget {
     }
 
     MenuItem {
-      text: "Open Mixer"
+      text: 'Open Mixer'
       onClicked: {
         Hyprland.dispatch('exec pavucontrol -t 3')
         root.menuState = false 

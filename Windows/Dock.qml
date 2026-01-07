@@ -14,12 +14,7 @@ Scope {
   id: root
   readonly property int offset: 6   // height offset from the bottom edge of the screen
   readonly property int buffer: 16  // used as padding for popup and DockRect
-
-  readonly property list<string> dockMonitors: [  // list of displays that the dock should appear on
-    'eDP-2',
-    'DP-10',
-    'HDMI-1'
-  ]
+  readonly property list<string> dockMonitors: ['eDP-2', 'DP-10', 'HDMI-1']  // list of displays that the dock should appear on
 
   readonly property list<string> dockApps: [ // names of .desktop files
      'kitty',
@@ -49,10 +44,10 @@ Scope {
       
       // All of the properties below must be chidren of panel so that their states are stored separately for each screen
       property bool dockIsVisible: { 
+        if (!dockMonitors.includes(modelData.name)) return false
         if (!isFocused) return false
         if (!isOccupied) return true
-        if (dockMonitors.includes(modelData.name)) return isHovered
-        else return false
+        return isHovered
       }
       
       property bool isFocused: Hyprland.focusedMonitor?.name == modelData.name
@@ -72,7 +67,8 @@ Scope {
           edges: Edges.Top | Edges.Center
           gravity: Edges.Top | Edges.Right
         }
-        // popup is slightly larger than the visible dockRect in order to avoid clipping the padded exitArea
+        // popup is slightly larger than the visible dockRect in order 
+        // to avoid clipping the animation and exitArea
         implicitWidth: dockRect.width + buffer 
         implicitHeight: dockRect.height + offset + buffer 
         visible: dockRect.y < height 
@@ -84,9 +80,8 @@ Scope {
           height: 72
           width: content.width + buffer*2
           radius: height * 0.3
-          color: Colors.alpha(Colors.background, 0.4)
-          // border.color: Colors.alpha(Colors.foreground, 0.1)
-          border.color: Colors.outlineVariant
+          color: Colors.alpha(Colors.background, 0.5)
+          border.color: Colors.alpha(Colors.outlineVariant, 0.5)
           border.width: 1
           antialiasing: true
           

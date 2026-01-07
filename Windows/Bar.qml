@@ -4,7 +4,7 @@ import QtQuick.Layouts
 
 import qs.Widgets.Bar
 import qs.Theme
-import qs.Services
+
 
 Scope {
   id: root
@@ -15,21 +15,21 @@ Scope {
     PanelWindow {
       id: barWindow
       anchors { top: true; left: true; right: true }
-      implicitHeight: 29
+      implicitHeight: 30
       color: 'transparent' 
-      visible: modelData.name == 'eDP-2' || modelData.name == 'DP-10' || modelData.name == "HDMI-1"
+      visible: ['eDP-2', 'DP-10', 'HDMI-1'].includes(modelData.name)
       
       screen: modelData
       property var modelData
 
       Rectangle {  
         anchors { fill: parent; leftMargin: 10; rightMargin: 10 }
-        color: Colors.alpha(Colors.background, 0.5)  
         radius: 9
+        color: Colors.alpha(Colors.background, 0.7)  
         antialiasing: true
 
         RowLayout {
-          anchors { fill: parent; leftMargin: 16; rightMargin: 16 }
+          anchors { fill: parent; leftMargin: 16; rightMargin: 16; topMargin: 2 }
           spacing: 8
 
           WorkspacesWidget {} 
@@ -37,10 +37,10 @@ Scope {
           Item { Layout.fillWidth: true } // Spacer 
           
           Sunset { Layout.alignment: Qt.AlignRight }
-          VolumeWidget { Layout.alignment: Qt.AlignRight }
+          AudioWidget { Layout.alignment: Qt.AlignRight }
           NetworkWidget { Layout.alignment: Qt.AlignRight }
           BatteryWidget { Layout.alignment: Qt.AlignRight }
-          SessionWidget {Layout.alignment: Qt.AlignRight}
+          SessionWidget { Layout.alignment: Qt.AlignRight }
         }
 
         // This item is a child of Rectangle, outside of RowLayout, so that it can be 

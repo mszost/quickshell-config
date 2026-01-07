@@ -8,6 +8,13 @@ import Quickshell.Services.Pipewire
 Singleton {
   id: root
 
+  readonly property string symbol: {
+    if (AudioService.isMuted) return '\uF1C3'
+    if (AudioService.volumeAsInt > 45) return '\uEB51'
+    if (AudioService.volumeAsInt > 0)  return '\uEB4F'
+    else return '\uEB50'
+  }
+
   property var availableSinks: {
     let nodes = Pipewire.nodes.values
     let deviceList = []

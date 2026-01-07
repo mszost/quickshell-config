@@ -24,38 +24,32 @@ Item {
     radius: 8
     color: 'transparent' //Colors.applyAlpha(Colors.background,0.5)
 
-    // border.width: 1
-    // border.color: Theme.background
-
     Row { 
       id: wsRow
       anchors.centerIn: parent
-      spacing: 6
+      spacing: 5
 
       Repeater {
         model: [1,2,3,4,5,6]  //HyprlandService.workspaceIds
         Rectangle { 
           id: wsIcon
-          height: 12
-          width: 12
-          radius: width/2 
+          height: 13
+          width: HyprlandService.isWorkspaceFocused(index+1) ? height*2 : height
+          radius: width/2
           color: workspaceStateColor
           border.width: 1
-          border.color: Colors.alpha(Colors.background, 0.15)
+          border.color: Colors.alpha(Colors.shadow, 0.1)
           antialiasing: true
         
           property color workspaceStateColor: {
-            if (HyprlandService.isWorkspaceFocused(index + 1)) return Colors.primary  
-            if (HyprlandService.isWorkspaceOccupied(index + 1)) return Colors.alpha(Colors.primary, 0.25)
-            else return Colors.alpha(Colors.background, 0.75)
+            if (HyprlandService.isWorkspaceFocused(index+1)) return Colors.primary  
+            if (HyprlandService.isWorkspaceOccupied(index+1)) return Colors.secondary
+            else return Colors.alpha(Colors.shadow, 0.75)
           }
 
-          Behavior on color {
-            ColorAnimation {
-              duration: 200 
-              easing.type: Easing.InOutQuad
-            }
-          }
+          Behavior on color { ColorAnimation { duration: 150; easing.type: Easing.InOutQuad } }
+          Behavior on width { NumberAnimation { duration: 200; easing.type: Easing.InOutQuad } }
+
         }
       }
     }

@@ -7,7 +7,7 @@ import Quickshell.Hyprland
 import qs.Theme
 
 
-Item {
+Scope {
   id: root
   required property var boundItem  // the widget that this menu should appear under
   property bool menuIsOpen: false
@@ -25,7 +25,7 @@ Item {
     implicitWidth: 230
     implicitHeight: content.height + 40  // height is fitted to content + padding
     color: "transparent"
-    visible: bgRect.y > -49 
+    visible: true //bgRect.y > -49 
 
     Rectangle {
       id: bgRect
@@ -41,9 +41,9 @@ Item {
       Keys.onEscapePressed: { root.menuIsOpen = false }
 
       // sliding in/out animation
-      y: root.menuIsOpen ? 0 : -50
+      y: root.menuIsOpen ? 0 : (-1 * height)
       Behavior on y {
-        NumberAnimation { duration: 200; easing.type: Easing.OutBack}
+        NumberAnimation { duration: 250; easing.type: Easing.OutExpo}
       }
 
       ColumnLayout {

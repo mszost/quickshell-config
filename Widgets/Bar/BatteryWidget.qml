@@ -9,7 +9,8 @@ import qs.Components
 
 BarWidget {
   id: root
-  text: BatteryService.isAvailable ? BatteryService.percentage + '%' : ""
+  text: BatteryService.isAvailable ? BatteryService.percentage + '%' : ''
+  icon: BatteryService.symbol
   iconSize: 20
   animationSpeed: BatteryService.isCritical ? 300 : defaultDuration 
 
@@ -20,20 +21,6 @@ BarWidget {
       return containsMouse ? Colors.alpha(Colors.foreground, 0.5) : Colors.foreground
   }
 
-  icon: {
-    if (!BatteryService.isAvailable) return '\uED1C'
-    if (BatteryService.isCharging)   return '\uEA33'
-    if (BatteryService.isCritical)   return '\uFF1D'
-    if (BatteryService.isPlugged)    return '\uEF3B' // AC Power
-    
-    const p = BatteryService.percentage
-    if (p >= 75) return '\uEA32'
-    if (p >= 60) return '\uEA31'
-    if (p >= 35) return '\uEA30'
-    if (p >= 20) return '\uEA2F'
-    return '\uEA34'  // Fallback/Low
-  }
-
   Timer {
     id: blinker
     property bool state: false
@@ -41,10 +28,7 @@ BarWidget {
     repeat: true
     interval: 350
     onTriggered: state = !state
-    onRunningChanged: if (!running) state = false  // Reset blinker state to 'visible' when timer stops 
+    onRunningChanged: if (!running) state = false
   }
 }
 
-
-// Menu: use a Loader for fetching the active power profile. We only need to fetch it when the menu
-//       is open, not on some x seconds interval. Saves some memory.
