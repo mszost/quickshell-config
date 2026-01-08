@@ -1,4 +1,4 @@
-// A reusable component for a single row in the menu. It handles its own hover state and clicking logic.
+// Represents a single row in the menu. Handles its own hover state and clicking logic.
 
 import QtQuick
 import QtQuick.Layouts

@@ -1,6 +1,5 @@
 // A reusable component for a single row in the menu.
-// "Alt" is a stripped version of the regular MenuItem which makes
-// comparatively minimal assumptions about the item.
+// "Alt" is a stripped version of the regular MenuItem which makes comparatively minimal assumptions about the item.
 
 import QtQuick
 import QtQuick.Layouts

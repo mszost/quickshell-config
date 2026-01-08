@@ -1,3 +1,5 @@
+// Dropdown menu used primarily to expose additional functions related to widgets in the Bar
+
 import QtQuick
 import QtQuick.Layouts
 
@@ -25,7 +27,7 @@ Scope {
     implicitWidth: 230
     implicitHeight: content.height + 40  // height is fitted to content + padding
     color: "transparent"
-    visible: true //bgRect.y > -49 
+    visible: bgRect.y > bgRect.height*-1
 
     Rectangle {
       id: bgRect
