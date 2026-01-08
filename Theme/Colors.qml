@@ -95,7 +95,7 @@ QtObject {
       shadow: '#000000',
       scrim: '#2e3440',
 
-      primary: '#88c0d0'  // nord8
+      primary: '#8fbcbb',  // nord8
     //   mOnPrimary: 
     //   primaryContainer: 
     //   mOnPrimaryContainer: 
@@ -105,7 +105,7 @@ QtObject {
     //   mOnPrimaryFixed: 
     //   mOnPrimaryFixedVariant: 
 
-    //   secondary: 
+      secondary: '#5e81ac' 
     //   mOnSecondary: 
     //   secondaryContainer: 
     //   mOnSecondaryContainer: 
