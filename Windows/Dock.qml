@@ -35,7 +35,7 @@ Scope {
       id: panel
       anchors.bottom: true
       implicitHeight: 0
-      implicitWidth: dockRect.width 
+      implicitWidth: bgRect.width 
       color: 'transparent'
       exclusiveZone: 0
       
@@ -67,15 +67,15 @@ Scope {
           edges: Edges.Top | Edges.Center
           gravity: Edges.Top | Edges.Right
         }
-        // popup is slightly larger than the visible dockRect in order 
+        // popup is slightly larger than the visible bgRect in order 
         // to avoid clipping the animation and exitArea
-        implicitWidth: dockRect.width + buffer 
-        implicitHeight: dockRect.height + offset + buffer 
-        visible: dockRect.y < height 
+        implicitWidth: bgRect.width + buffer 
+        implicitHeight: bgRect.height + offset + buffer 
+        visible: bgRect.y < height 
         color: 'transparent'
 
         Rectangle {
-          id: dockRect
+          id: bgRect
           anchors.horizontalCenter: parent.horizontalCenter
           height: 72
           width: content.width + buffer*2
@@ -92,7 +92,7 @@ Scope {
           y: panel.dockIsVisible ? (parent.height - height - offset) : parent.height
           Behavior on y { NumberAnimation { duration: 350; easing.type: Easing.OutBack } }
 
-          // Leaving the bounds of dockRect dismisses the dock
+          // Leaving the bounds of bgRect dismisses the dock
           HoverHandler { id: exitArea; margin: buffer } 
           
           RowLayout {

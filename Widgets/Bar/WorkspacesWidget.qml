@@ -13,7 +13,7 @@ Item {
   implicitHeight: wsRow.implicitHeight
 
   Rectangle {
-    id: wsBackground
+    id: bgRect
     anchors {
       fill: parent
       margins: -10
@@ -46,7 +46,7 @@ Item {
             else return Colors.alpha(Colors.shadow, 0.75)
           }
 
-          Behavior on color { ColorAnimation { duration: 150; easing.type: Easing.OutInQuad } }
+          Behavior on color { ColorAnimation { duration: 100; easing.type: Easing.OutInQuad } }
           Behavior on width { NumberAnimation { duration: 200; easing.type: Easing.InOutQuad } }
 
         }

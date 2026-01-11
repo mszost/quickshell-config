@@ -13,7 +13,6 @@ Scope {
     model: Quickshell.screens
 
     PanelWindow {
-      id: barWindow
       anchors { top: true; left: true; right: true }
       implicitHeight: 30
       color: 'transparent' 
@@ -36,7 +35,7 @@ Scope {
 
           Item { Layout.fillWidth: true } // Spacer 
           
-          Sunset { Layout.alignment: Qt.AlignRight }
+          Hyprsunset { Layout.alignment: Qt.AlignRight }
           AudioWidget { Layout.alignment: Qt.AlignRight }
           NetworkWidget { Layout.alignment: Qt.AlignRight }
           BatteryWidget { Layout.alignment: Qt.AlignRight }

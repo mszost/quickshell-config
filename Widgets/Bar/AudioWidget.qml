@@ -56,6 +56,10 @@ BarWidget {
         color: Colors.foreground
       }
 
+
+      // TODO:
+      // make the container slightly larger than the children, then set the children's width statically so that the appearance
+      // doesn't jiggle due to the slight changes in font width of volumeAsInt percentage values
       Rectangle {  // volume slider container
         Layout.preferredHeight: 8
         Layout.fillWidth: true

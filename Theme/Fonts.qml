@@ -13,8 +13,8 @@ QtObject {
   // font definitions
   readonly property font lucide: Qt.font({
     family: _lucideLoader.name,
-    pixelSize: 14,
-    weight: 900
+    pixelSize: 15,
+    weight: 600
   })
 
   readonly property font tabler: Qt.font({

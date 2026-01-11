@@ -1,19 +1,14 @@
 import qs.Theme
 import qs.Components
 
-BarWidgetLite {
+BarWidget {
   id: root
-  // text: '\uEB0D' // tabler
-  text: '\uE140'
-  textFamily: Fonts.lucide.family
-  textSize: Fonts.lucide.pixelSize
+  // icon: '\uEB0D' // tabler
+  icon: '\uE140'
+  iconFamily: Fonts.lucide.family
+  iconSize: Fonts.lucide.pixelSize
+  iconWeight: Fonts.lucide.weight
   hoverColor: Colors.red 
-
-  // onClicked: menuState = true
-  // property alias menuState: menu.menuIsOpen
-
-  onClicked: overlayState = true
-  property bool overlayState: false 
 
   // Menu {
   //   id: menu
@@ -54,7 +49,7 @@ BarWidgetLite {
   //   }
   //
   //   MenuItem {
-  //     text: 'Reboot'
+ //     text: 'Reboot'
   //     onClicked: Hyprland.dispatch('exec reboot')
   //   }
   // }

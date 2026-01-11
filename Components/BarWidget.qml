@@ -1,38 +1,42 @@
-// Top-bar item template for two Text items side-by-side.
+// Widget in the bar containing two Text items side-by-side (an icon and a label)
 
 import QtQuick
-import QtQuick.Layouts
 
 import qs.Theme
-
 
 Item {
   id: root
 
-  implicitWidth: content.implicitWidth
+  implicitWidth: content.implicitWidth 
   implicitHeight: content.implicitHeight
 
-  // TODO: This is inconsistent, some things are aliases and others 
-  // are not. Pick one approach and refactor. 
+  // RowLayout
   property alias spacing: content.spacing
   property alias layoutDirection: content.layoutDirection
-  
-  property alias text: labelText.text
-  property alias icon: iconText.text
 
-  property string textFamily: Fonts.barText.family
-  property int textSize: Fonts.barText.pixelSize
-  property int textWeight: Fonts.barText.weight
+  // Text items (label and icon)
+  property alias text: label.text
+  property alias textFamily: label.font.family 
+  property alias textSize: label.font.pixelSize
+  property alias textWeight: label.font.weight
 
-  property string iconFamily: Fonts.barIcon.family
-  property int iconSize: Fonts.barIcon.pixelSize
-  property int iconWeight: Fonts.barIcon.weight
+  property alias icon: icon.text
+  property alias iconFamily: icon.font.family
+  property alias iconSize: icon.font.pixelSize
+  property alias iconWeight: icon.font.weight
 
-  // Color
+  // Mouse
+  property alias mouseArea: ma
+  signal clicked()
+
+  // Colors and animations
   property color normalColor: Colors.foreground
-  property color hoverColor: Colors.alpha(Colors.foreground, 0.5)
-  property color animatedColor: m.containsMouse ? root.hoverColor : root.normalColor
+  property color hoverColor: Colors.alpha(Colors.foreground, 0.66)
+  property color animatedColor: ma.containsMouse ? root.hoverColor : root.normalColor
 
+  property int defaultDuration: 125
+  property alias animationSpeed: anim.duration
+  
   Behavior on animatedColor {
     ColorAnimation {
       id: anim
@@ -40,46 +44,48 @@ Item {
       easing.type: Easing.InOutQuad
     }
   }
-  property int defaultDuration: 150
-  property alias animationSpeed: anim.duration
 
-  // Mouse hitbox
-  property alias mouseArea: m
-  property alias containsMouse: m.containsMouse
-  signal clicked()
+  // Rectangle {
+  //   id: bgRect
+  //   anchors.fill: parent
+  //   anchors.margins: -2
+  //   color: Colors.alpha(Colors.debug, 0.33)
+  //   radius: height/4
+  // }
+
+  Row {
+    id: content
+    anchors.centerIn: parent
+    layoutDirection: Qt.LeftToRight 
+    spacing: 1
+
+    Text {
+      id: label
+      anchors.verticalCenter: parent.verticalCenter
+      font.family: Fonts.barText.family
+      font.pixelSize: Fonts.barText.pixelSize
+      font.weight: Fonts.barText.weight
+      color: root.animatedColor
+    }
+          
+    Text {
+      id: icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.verticalCenterOffset: -1
+      font.family: Fonts.barIcon.family
+      font.pixelSize: Fonts.barIcon.pixelSize
+      font.weight: Fonts.barIcon.weight 
+      color: root.animatedColor
+    }
+  }
 
   MouseArea {
-    id: m
+    id: ma
     anchors.fill: parent
     anchors.margins: -8 
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
     onClicked: root.clicked()
-  }
-
-  // Content
-  RowLayout {
-    id: content
-    anchors.centerIn: parent
-    spacing: 0
-
-    Text {
-      id: labelText
-      font.family: root.textFamily
-      font.weight: root.textWeight
-      font.pixelSize: root.textSize
-      color: root.animatedColor
-      Layout.alignment: Qt.AlignVCenter
-    }
-          
-    Text {
-      id: iconText
-      font.family: root.iconFamily
-      font.weight: root.iconWeight
-      font.pixelSize: root.iconSize
-      color: root.animatedColor
-      Layout.alignment: Qt.AlignVCenter 
-    }
   }
 }
 

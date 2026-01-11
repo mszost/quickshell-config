@@ -1,7 +1,7 @@
 import qs.Components
 import qs.Services 
 
-BarWidgetLite {
+BarWidget {
   id: root
   text: ClockService.datetime  
 }
