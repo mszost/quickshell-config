@@ -14,6 +14,7 @@ Scope {
   id: root
 
   property bool shouldShowOsd: false
+  property bool animating: false
   
   Timer {
 		id: hideTimer
@@ -34,7 +35,7 @@ Scope {
 	// PanelWindow.visible could be set instead of using a loader, but using
 	// a loader will reduce the memory overhead when the window isn't open.
 	LazyLoader {
-		active: root.shouldShowOsd
+		active: root.shouldShowOsd || root.animating
 
 		PanelWindow {
 			// Since the panel's screen is unset, it will be picked by the compositor
@@ -46,12 +47,22 @@ Scope {
 
 			implicitWidth: 250
 			implicitHeight: 40
-			color: 'transparent'
+      color: 'transparent'
 
-			Rectangle {
+      Rectangle {
 				anchors.fill: parent
 				radius: 12
-				color: Colors.alpha(Colors.background, 0.3)
+        color: Colors.alpha(Colors.background, 0.3)
+
+        // pop in/out animation
+        scale: root.shouldShowOsd ? 1 : 0
+        Behavior on scale {
+          NumberAnimation {
+            duration: 200
+            easing.type: Easing.OutExpo
+            onRunningChanged: root.animating = running
+          }
+        }
 
 				RowLayout {
 					anchors {
