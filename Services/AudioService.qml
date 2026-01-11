@@ -10,9 +10,10 @@ Singleton {
 
   readonly property string symbol: {
     if (AudioService.isMuted) return '\uF1C3'
-    if (AudioService.volumeAsInt > 45) return '\uEB51'
-    if (AudioService.volumeAsInt > 0)  return '\uEB4F'
-    else return '\uEB50'
+    if (AudioService.volumeAsInt > 50) return '\ueb51'
+    if (AudioService.volumeAsInt > 20) return '\ueb4f'
+    if (AudioService.volumeAsInt > 0) return String.fromCodePoint(0x1019d)
+    else return '\ueb50'
   }
 
   property var availableSinks: {
