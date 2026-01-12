@@ -19,7 +19,7 @@ QtObject {
 
   readonly property font tabler: Qt.font({
     family: _tablerLoader.name,
-    pixelSize: 24,
+    pixelSize: 18,
   })
 
   readonly property font sfProRounded: Qt.font({
