@@ -13,7 +13,7 @@ import qs.Services
 Scope {
   id: root
   readonly property int offset: 6   // height offset from the bottom edge of the screen
-  readonly property int buffer: 16  // used as padding for popup and DockRect
+  readonly property int buffer: 16  // used as padding for popup and bgRect
   readonly property list<string> dockMonitors: ['eDP-2', 'DP-10', 'HDMI-1']  // list of displays that the dock should appear on
 
   readonly property list<string> dockApps: [ // names of .desktop files

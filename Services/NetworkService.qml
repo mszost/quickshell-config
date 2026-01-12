@@ -33,9 +33,9 @@ Singleton {
     return '\uea06' // alert-triangle
   }
 
-  // re-run all checks on a 15-second interval
+  // re-run all checks on a 30-second interval
   Timer {
-    interval: 15000
+    interval: 30000
     running: true
     repeat: true
     onTriggered: {
