@@ -7,8 +7,6 @@ import Quickshell.Io
 
 // Heavily based on https://github.com/end-4/dots-hyprland/
 
-// TODO: implement a Timer to periodically run the Processes
-
 Singleton {
   id: root
 
@@ -33,6 +31,19 @@ Singleton {
     if (wifiStatus === 'disconnected') return '\uf9eb' // world-x
     if (wifiStatus === 'disabled') return '\uecfa' // wifi-off
     return '\uea06' // alert-triangle
+  }
+
+  // re-run all checks on a 15-second interval
+  Timer {
+    interval: 15000
+    running: true
+    repeat: true
+    onTriggered: {
+      updateConnectionType.startCheck()
+      wifiStatusProcess.running = true
+      updateNetworkName.running = true
+      updateNetworkStrength.running = true
+    }
   }
 
   Process {
@@ -62,11 +73,14 @@ Singleton {
     command: ["sh", "-c", "nmcli -t -f TYPE,STATE d status && nmcli -t -f CONNECTIVITY g"]
     running: true
     stdout: SplitParser { onRead: data => { updateConnectionType.buffer += data + "\n"; } }
+    
     property string buffer
-    // function startCheck() {
-    //   buffer = "";
-    //   updateConnectionType.running = true;
-    // }
+
+    function startCheck() {
+      buffer = "";
+      updateConnectionType.running = true;
+    }
+
     onExited: (exitCode, exitStatus) => {
       const lines = updateConnectionType.buffer.trim().split('\n');
       const connectivity = lines.pop() // none, limited, full
