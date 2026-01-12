@@ -67,14 +67,8 @@ Scope {
           implicitHeight: 10
           radius: height/2
           color: Colors.alpha(Colors.foreground, 0.33) 
-
-          Rectangle {
-            anchors { left: parent.left; top: parent.top; bottom: parent.bottom }
-            width: parent.width * root.level
-            radius: parent.radius
-            color: Colors.foreground
-            Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutBack; } }  
-          }
+          
+          OsdLevelRect { level: root.level }
         }
       }
     }
