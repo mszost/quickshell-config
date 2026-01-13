@@ -44,7 +44,7 @@ Singleton {
  
   property real volume: Pipewire.defaultAudioSink?.audio?.volume ?? 0
   readonly property int volumeAsInt: Math.round(volume * 100)
-  
+
   PwObjectTracker {
 		objects: [ Pipewire.defaultAudioSink ]
   }
@@ -56,5 +56,16 @@ Singleton {
   function setPreferredSink(node) {
     Pipewire.preferredDefaultAudioSink = node
   }
- }
+
+  function getSinkSymbol(description) {
+    switch (description) {
+      case 'Laptop Speakers': return '\ueb64'
+      case 'Aux': return '\uea8b'
+      case 'QC45': return '\ueabd'
+      case 'Buds':
+      case 'Buds2': return '\uf5a9'
+      default: return '\ueb51'
+    }
+  }
+}
 

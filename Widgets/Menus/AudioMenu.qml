@@ -202,14 +202,7 @@ Scope {
 
               Text {
                 anchors.verticalCenter: parent.verticalCenter
-                text: switch (modelData.description) {
-                  case 'Laptop Speakers': return '\ueb64'
-                  case 'Aux': return '\uea8b'
-                  case 'QC45': return '\ueabd'
-                  case 'Buds':
-                  case 'Buds2': return '\uf5a9'
-                  default: return '\ueb51'
-                }
+                text: AudioService.getSinkSymbol(modelData.description)
                 font: Fonts.tabler
                 color: parent.textColor
               }
