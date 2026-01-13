@@ -16,7 +16,7 @@ Singleton {
     else return '\ueb50'
   }
 
-  property var availableSinks: {
+  readonly property list<PwNode> availableSinks: {
     let nodes = Pipewire.nodes.values
     let deviceList = []
     for (let i=0; i<nodes.length; i++) {
@@ -33,24 +33,28 @@ Singleton {
   //   }
   //   return deviceList
   // }
-  
-  property PwNode activeSink: Pipewire.defaultAudioSink
-  property string activeSinkId: Pipewire.defaultAudioSink?.id ?? ''
 
-  property PwNode activeSource: Pipewire.defaultAudioSource
-  property string activeSourceId: Pipewire.defaultAudioSource?.id ?? ''
+  readonly property PwNode activeSink: Pipewire.defaultAudioSink
+  readonly property string activeSinkId: Pipewire.defaultAudioSink?.id ?? ''
 
-  
+  readonly property PwNode activeSource: Pipewire.defaultAudioSource
+  readonly property string activeSourceId: Pipewire.defaultAudioSource?.id ?? ''
+
+  property bool isMuted: Pipewire.defaultAudioSink?.muted ?? false
+ 
   property real volume: Pipewire.defaultAudioSink?.audio?.volume ?? 0
-  property int volumeAsInt: Math.round(volume * 100)
+  readonly property int volumeAsInt: Math.round(volume * 100)
   
-
-	PwObjectTracker {
+  PwObjectTracker {
 		objects: [ Pipewire.defaultAudioSink ]
   }
 
   function setVolume(val) {
     Pipewire.defaultAudioSink.audio.volume = Math.max(0, Math.min(1, val))
+  }
+
+  function setPreferredSink(node) {
+    Pipewire.preferredDefaultAudioSink = node
   }
  }
 
