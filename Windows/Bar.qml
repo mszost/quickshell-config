@@ -33,7 +33,8 @@ Scope {
           anchors { fill: parent; leftMargin: 16; rightMargin: 16 }
           spacing: 8
 
-          WorkspacesWidget {} 
+          WorkspacesWidget {}
+          UpdatesWidget {}
 
           Item { Layout.fillWidth: true } // Spacer 
           

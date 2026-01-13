@@ -1,7 +1,7 @@
-// Widget in the bar containing two Text items side-by-side (an icon and a label)
+// Template for a Widget in the bar containing two Text items side-by-side (an icon and a label)
+// See Widgets/Bar/
 
 import QtQuick
-
 import qs.Theme
 
 Item {

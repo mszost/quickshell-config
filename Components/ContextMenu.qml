@@ -1,7 +1,12 @@
+// Template for a drop-down context menu.
+// Intended to be attached to an instance of BarWidget.
+// See Widgets/Menus/
+
 import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 import qs.Theme
+
 
 Scope {
   id: root
@@ -42,7 +47,7 @@ Scope {
       width: parent.width
       height: column.height + (root.padding * 2)
       radius: 10 
-      color: Colors.alpha(Colors.background, 0.5)
+      color: Colors.surfaceDim //Colors.alpha(Colors.background, 0.75)
       // border.color: Colors.outlineVariant
 
       focus: true 

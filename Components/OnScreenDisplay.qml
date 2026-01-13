@@ -1,5 +1,6 @@
-// Popup indicator that appears when changing values for things like volume and backlight
+// Popup indicator that appears on changes to things like volume and backlight
 // Based on https://github.com/quickshell-mirror/quickshell-examples/volume-osd
+// See Windows/OsdManager.qml
 
 import QtQuick
 import QtQuick.Layouts

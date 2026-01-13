@@ -2,7 +2,6 @@ pragma Singleton
 
 import QtQuick
 
-
 QtObject {
   id: root
 
@@ -130,7 +129,7 @@ QtObject {
 
       surface: '#2e3440',
       mOn_surface: '#d8dee9', 
-      surfaceDim: '#1f242e', // nord0 with 30% shade and slightly boosted saturation
+      surfaceDim: '#1f242e',
       surfaceBright: '#4c566a', // nord3
     //   surfaceContainerLowest: 
     //   surfaceContainerLow: 
@@ -138,7 +137,7 @@ QtObject {
     //   surfaceContainerHigh: 
     //   surfaceContainerHighest: 
     //   surfaceVariant: 
-    //   mOnSurfaceVariant: // TODO: use this instead of alpha for hovering on barWidgets 
+    //   mOnSurfaceVariant: // TODO: use this instead of alpha for hovering on BarWidgets 
     //   inverseSurface: 
     //   inverseOnSurface: 
     },
