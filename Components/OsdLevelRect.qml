@@ -11,7 +11,7 @@ Rectangle {
     top: parent.top
     bottom: parent.bottom 
   }
-  width: parent.width * root.level
+  width: Math.min(parent.width, (parent.width * root.level))
   radius: parent.radius
   color: Colors.foreground
     
