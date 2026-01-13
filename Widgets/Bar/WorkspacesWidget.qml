@@ -37,18 +37,24 @@ Item {
           width: HyprlandService.isWorkspaceFocused(index+1) ? height*2 : height
           radius: width/2
           border.width: 1
-          border.color: Colors.alpha(Colors.shadow, 0.1)
+          border.color: Colors.alpha(Colors.surfaceDim, 0.1)
           antialiasing: true
         
           color: {
             if (HyprlandService.isWorkspaceFocused(index+1)) return Colors.primary  
             if (HyprlandService.isWorkspaceOccupied(index+1)) return Colors.secondary
-            else return Colors.alpha(Colors.shadow, 0.75)
+            else return Colors.surfaceDim
           }
 
-          Behavior on color { ColorAnimation { duration: 100; easing.type: Easing.OutInQuad } }
-          Behavior on width { NumberAnimation { duration: 200; easing.type: Easing.InOutQuad } }
-
+          Behavior on color { ColorAnimation { 
+            duration: 100
+            easing.type: Easing.OutInQuad 
+          }}
+          Behavior on width { NumberAnimation { 
+            duration: 400
+            easing.type: Easing.OutBack 
+            easing.overshoot: 3
+          }}
         }
       }
     }

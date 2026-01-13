@@ -87,9 +87,10 @@ Scope {
               radius: parent.radius
               color: Colors.foreground
                 
-              Behavior on width { 
-                NumberAnimation { duration: 300; easing.type: Easing.OutBack; }
-              }  
+              Behavior on width { NumberAnimation { 
+                duration: 350
+                easing.type: Easing.OutBack
+              }}  
             }
           }
         }

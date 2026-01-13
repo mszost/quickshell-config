@@ -11,7 +11,7 @@ QtObject {
   }
 
   // property list<string> availableThemes: _palettes.keys
-  property string activeTheme: 'gruvbox-material'
+  property string activeTheme: 'nord'
 
   readonly property var _palettes: ({
     'matugen': {
@@ -65,7 +65,7 @@ QtObject {
       mOnErrorContainer: Matugen.mOnErrorContainer,
 
       surface: Matugen.surface,
-      mOn_surface: Matugen.mOn_surface,
+      mOnSurface: Matugen.mOn_surface,
       surfaceDim: Matugen.surfaceDim,
       surfaceBright: Matugen.surfaceBright,
       surfaceContainerLowest: Matugen.surfaceContainerLowest,
@@ -85,7 +85,7 @@ QtObject {
       yellow: '#ebcb8b',
       green: '#a3be8c',
       aqua: '#8fbcbb',
-      blue: '#5e81ac',
+      blue: '#81a1c1',
       purple: '#b48ead',
 
       background: '#2e3440',  // nord1
@@ -105,7 +105,7 @@ QtObject {
     //   mOnPrimaryFixed: 
     //   mOnPrimaryFixedVariant: 
 
-      secondary: '#5e81ac' 
+      secondary: '#a3be8c',
     //   mOnSecondary: 
     //   secondaryContainer: 
     //   mOnSecondaryContainer: 
@@ -128,17 +128,17 @@ QtObject {
     //   errorContainer: 
     //   mOnErrorContainer: 
 
-    //   surface: 
-    //   mOn_surface: 
-    //   surfaceDim: 
-    //   surfaceBright: 
+      surface: '#2e3440',
+      mOn_surface: '#d8dee9', 
+      surfaceDim: '#1f242e', // nord0 with 30% shade and slightly boosted saturation
+      surfaceBright: '#4c566a', // nord3
     //   surfaceContainerLowest: 
     //   surfaceContainerLow: 
     //   surfaceContainer: 
     //   surfaceContainerHigh: 
     //   surfaceContainerHighest: 
     //   surfaceVariant: 
-    //   mOnSurfaceVariant: 
+    //   mOnSurfaceVariant: // TODO: use this instead of alpha for hovering on barWidgets 
     //   inverseSurface: 
     //   inverseOnSurface: 
     },
@@ -193,7 +193,7 @@ QtObject {
     //   mOnErrorContainer: 
 
     //   surface: 
-    //   mOn_surface: 
+    //   mOnSurface: 
     //   surfaceDim: 
     //   surfaceBright: 
     //   surfaceContainerLowest: 
@@ -250,7 +250,7 @@ QtObject {
     //   mOnErrorContainer: 
 
     //   surface: 
-    //   mOn_surface: 
+    //   mOnSurface: 
     //   surfaceDim: 
     //   surfaceBright: 
     //   surfaceContainerLowest: 
@@ -313,9 +313,9 @@ QtObject {
   // readonly property color mOnErrorContainer: _palettes[activeTheme].mOnErrorContainer
   //
   // readonly property color surface: _palettes[activeTheme].surface
-  // readonly property color mOn_surface: _palettes[activeTheme].mOn_surface
-  // readonly property color surfaceDim: _palettes[activeTheme].surfaceDim
-  // readonly property color surfaceBright: _palettes[activeTheme].surfaceBright
+  // readonly property color mOnSurface: _palettes[activeTheme].mOn_surface
+  readonly property color surfaceDim: _palettes[activeTheme].surfaceDim
+  readonly property color surfaceBright: _palettes[activeTheme].surfaceBright
   // readonly property color surfaceContainerLowest: _palettes[activeTheme].surfaceContainerLowest
   // readonly property color surfaceContainerLow: _palettes[activeTheme].surfaceContainerLow
   // readonly property color surfaceContainer: _palettes[activeTheme].surfaceContainer

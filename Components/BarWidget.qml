@@ -62,9 +62,9 @@ Item {
     Text {
       id: label
       anchors.verticalCenter: parent.verticalCenter
-      font.family: Fonts.barText.family
-      font.pixelSize: Fonts.barText.pixelSize
-      font.weight: Fonts.barText.weight
+      font.family: Fonts.barLabel.family
+      font.pixelSize: Fonts.barLabel.pixelSize
+      font.weight: Fonts.barLabel.weight
       color: root.animatedColor
     }
           
