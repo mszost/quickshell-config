@@ -76,7 +76,7 @@ Scope {
             Layout.fillWidth: true
             implicitHeight: 8
             radius: height/2
-            color: Colors.alpha(Colors.foreground, 0.33) 
+            color: Colors.surfaceBright
             
             Rectangle {
               anchors { 

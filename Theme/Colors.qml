@@ -137,7 +137,7 @@ QtObject {
     //   surfaceContainerHigh: 
     //   surfaceContainerHighest: 
     //   surfaceVariant: 
-    //   mOnSurfaceVariant: // TODO: use this instead of alpha for hovering on BarWidgets 
+      mOnSurfaceVariant: '#7b8596',
     //   inverseSurface: 
     //   inverseOnSurface: 
     },
@@ -321,7 +321,7 @@ QtObject {
   // readonly property color surfaceContainerHigh: _palettes[activeTheme].surfaceContainerHigh
   // readonly property color surfaceContainerHighest: _palettes[activeTheme].surfaceContainerHighest
   // readonly property color surfaceVariant: _palettes[activeTheme].surfaceVariant
-  // readonly property color mOnSurfaceVariant: _palettes[activeTheme].mOnSurfaceVariant
+  readonly property color mOnSurfaceVariant: _palettes[activeTheme].mOnSurfaceVariant
   // readonly property color inverseSurface: _palettes[activeTheme].inverseSurface
   // readonly property color inverseOnSurface: _palettes[activeTheme].inverseOnSurface
   //

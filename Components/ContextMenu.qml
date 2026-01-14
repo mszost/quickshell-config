@@ -47,8 +47,7 @@ Scope {
       width: parent.width
       height: column.height + (root.padding * 2)
       radius: 10 
-      color: Colors.surfaceDim //Colors.alpha(Colors.background, 0.75)
-      // border.color: Colors.outlineVariant
+      color: Colors.surfaceDim
 
       focus: true 
       Keys.onEscapePressed: root.isVisible = false

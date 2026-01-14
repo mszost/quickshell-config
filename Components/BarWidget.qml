@@ -31,7 +31,7 @@ Item {
 
   // Colors and animations
   property color normalColor: Colors.foreground
-  property color hoverColor: Colors.alpha(Colors.foreground, 0.66)
+  property color hoverColor: Colors.mOnSurfaceVariant
   property color animatedColor: ma.containsMouse ? root.hoverColor : root.normalColor
 
   property int defaultDuration: 125
