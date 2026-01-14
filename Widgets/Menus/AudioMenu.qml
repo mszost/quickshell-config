@@ -45,7 +45,7 @@ Scope {
         WrapperMouseArea {
           id: muteButton
           hoverEnabled: true
-          onClicked: AudioService.isMuted = !AudioService.isMuted 
+          onClicked: AudioService.activeSink.audio.muted = !AudioService.activeSink.audio.muted
 
           Text {
             text: AudioService.symbol
@@ -196,7 +196,7 @@ Scope {
               property color textColor: {
                 if (parent.containsMouse) return Colors.secondary
                 if (modelData.id == AudioService.activeSinkId) return Colors.foreground
-                else return Colors.alpha(Colors.foreground,0.5)
+                else return Colors.mOnSurfaceVariant
               }
               Behavior on textColor { ColorAnimation { duration: 100; easing.type: Easing.InOutQuad } }
 

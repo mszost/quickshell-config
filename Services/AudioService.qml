@@ -34,13 +34,13 @@ Singleton {
   //   return deviceList
   // }
 
-  readonly property PwNode activeSink: Pipewire.defaultAudioSink
+  property PwNode activeSink: Pipewire.preferredDefaultAudioSink
   readonly property string activeSinkId: Pipewire.defaultAudioSink?.id ?? ''
 
   readonly property PwNode activeSource: Pipewire.defaultAudioSource
   readonly property string activeSourceId: Pipewire.defaultAudioSource?.id ?? ''
 
-  property bool isMuted: Pipewire.defaultAudioSink?.muted ?? false
+  property bool isMuted: Pipewire.defaultAudioSink?.audio.muted ?? false
  
   property real volume: Pipewire.defaultAudioSink?.audio?.volume ?? 0
   readonly property int volumeAsInt: Math.round(volume * 100)
