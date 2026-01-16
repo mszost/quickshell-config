@@ -90,7 +90,7 @@ Scope {
           
           // Sliding in/out animation
           y: panel.dockIsVisible ? (parent.height - height - offset) : parent.height
-          Behavior on y { NumberAnimation { duration: 350; easing.type: Easing.OutBack } }
+          Behavior on y { NumberAnimation { duration: 300; easing.type: Easing.OutBack } }
 
           // Leaving the bounds of bgRect dismisses the dock
           HoverHandler { id: exitArea; margin: buffer } 
@@ -111,7 +111,10 @@ Scope {
                 Layout.preferredHeight: 55
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-                onClicked: DesktopEntries.byId(modelData).execute() // TODO: additional animation on click 
+                onClicked: { 
+                  clickAnimation.restart()
+                  DesktopEntries.byId(modelData).execute()
+                }
 
                 Image {
                   id: appIcon
@@ -121,8 +124,18 @@ Scope {
                   sourceSize.width: 128
                   mipmap: true
                   scale: iconArea.containsMouse ? 1.15 : 1.0
-                  Behavior on scale { NumberAnimation { duration: 100 } }  
                   visible: true
+                 
+                  Behavior on scale { NumberAnimation { 
+                    duration: 100
+                  }} 
+
+                  SequentialAnimation on scale {
+                    id: clickAnimation
+                    running: false
+                    NumberAnimation { to: 1.0; duration: 100 }
+                    NumberAnimation { to: 1.15; duration: 100 }
+                  }
                 }
 
                 // MultiEffect {  // drop shadow effect for each icon
