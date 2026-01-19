@@ -12,20 +12,12 @@ Singleton {
     precision: SystemClock.Seconds
   }
 
-  readonly property string second: { 
-    Qt.formatDateTime(clock.date, 's')
-  }
-
-  readonly property string minute: {
-    Qt.formatDateTime(clock.date, 'm')
-  }
-
   readonly property string hour: {
     Qt.formatDateTime(clock.date, 'h')
   }
 
   readonly property string datetime: {
-    Qt.formatDateTime(clock.date, 'ddd,  MMM. d   •   h:mm AP')
+    Qt.formatDateTime(clock.date, 'h:mm AP    •   ddd,  MMM. d')
   }
 
   readonly property string date: {
@@ -34,6 +26,10 @@ Singleton {
 
   readonly property string time: {
     Qt.formatDateTime(clock.date, 'h:mm:ss')
+  }
+
+  function format(fmtString) {
+    return Qt.formatDateTime(clock.date, fmtString)
   }
 }
 
