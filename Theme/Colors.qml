@@ -10,7 +10,7 @@ QtObject {
   }
 
   // property list<string> availableThemes: _palettes.keys
-  property string activeTheme: 'nord'
+  property string activeTheme: 'gruvbox-material'
 
   readonly property var _palettes: ({
     'matugen': {
@@ -151,57 +151,58 @@ QtObject {
       blue: "#7DAEA3",
       purple: "#D699B6",
 
-      background: '#32302f',
-      foreground: '#d4be98',
+      background: '#282828',
+      foreground: '#ddc7a1',
       outline: '#a89984',
-      outlineVariant: '#7c6f64',
+      outlineVariant: '#504945',
       shadow: '#000000',
       scrim: '#252423',
 
       primary: '#a9b665',
-    //   mOnPrimary: 
-    //   primaryContainer: 
-    //   mOnPrimaryContainer: 
+      // primary: '#89b482',
+      mOnPrimary: '#414900',
+      primaryContainer: '#32361a',
+      mOnPrimaryContainer: '#6E7257',
     //   inversePrimary: 
     //   primaryFixed: 
     //   primaryFixedDim: 
     //   mOnPrimaryFixed: 
     //   mOnPrimaryFixedVariant: 
 
-      secondary: '#D8A657'
-    //   mOnSecondary: 
-    //   secondaryContainer: 
-    //   mOnSecondaryContainer: 
+      secondary: '#D8A657',
+      mOnSecondary: '#623C00',
+      secondaryContainer: '#473c29',
+      mOnSecondaryContainer: '#827865',
     //   secondaryFixed: 
     //   secondaryFixedDim: 
     //   mOnSecondaryFixed: 
     //   mOnSecondaryFixedVariant: 
 
-    //   tertiary: 
-    //   mOnTertiary: 
-    //   tertiaryContainer: 
-    //   mOnTertiaryContainer: 
+      tertiary: '#7daea3',
+      mOnTertiary: '#1E463F',
+      tertiaryContainer: '#0d3138',
+      mOnTertiaryContainer: '#506E75',
     //   tertiaryFixed: 
     //   tertiaryFixedDim: 
     //   mOnTertiaryFixed: 
     //   mOnTertiaryFixedVariant: 
 
-    //   error: 
-    //   mOnError: 
-    //   errorContainer: 
-    //   mOnErrorContainer: 
+      error: '#ea6962',
+      mOnError:  '#6E0008',
+      errorContainer: '#3c1f1e',
+      mOnErrorContainer: '#7B5D5B', 
 
-    //   surface: 
-    //   mOnSurface: 
-    //   surfaceDim: 
-    //   surfaceBright: 
+      surface: '#282828',
+      mOnSurface: '#d4be98',
+      surfaceDim: '#141617',
+      surfaceBright: '#3c3836',
     //   surfaceContainerLowest: 
     //   surfaceContainerLow: 
     //   surfaceContainer: 
     //   surfaceContainerHigh: 
     //   surfaceContainerHighest: 
     //   surfaceVariant: 
-    //   mOnSurfaceVariant: 
+      mOnSurfaceVariant: '#928374'
     //   inverseSurface: 
     //   inverseOnSurface: 
     },
@@ -306,10 +307,10 @@ QtObject {
   // readonly property color mOnTertiaryFixed: _palettes[activeTheme].mOnTertiaryFixed
   // readonly property color mOnTertiaryFixedVariant: _palettes[activeTheme].mOnTertiaryFixedVariant
   //
-  // readonly property color error: _palettes[activeTheme].error
-  // readonly property color mOnError: _palettes[activeTheme].mOnError
-  // readonly property color errorContainer: _palettes[activeTheme].errorContainer
-  // readonly property color mOnErrorContainer: _palettes[activeTheme].mOnErrorContainer
+  readonly property color error: _palettes[activeTheme].error
+  readonly property color mOnError: _palettes[activeTheme].mOnError
+  readonly property color errorContainer: _palettes[activeTheme].errorContainer
+  readonly property color mOnErrorContainer: _palettes[activeTheme].mOnErrorContainer
   //
   // readonly property color surface: _palettes[activeTheme].surface
   // readonly property color mOnSurface: _palettes[activeTheme].mOn_surface
