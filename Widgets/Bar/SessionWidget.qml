@@ -8,7 +8,8 @@ BarWidget {
   iconFamily: Fonts.lucide.family
   iconSize: Fonts.lucide.pixelSize
   iconWeight: Fonts.lucide.weight
-  hoverColor: Colors.red 
+  normalColor: Colors.red
+  hoverColor: Colors.mOnErrorContainer
 
   // Menu {
   //   id: menu

@@ -4,7 +4,7 @@ import qs.Services
 
 BarWidget {
   id: root
-  text: NetworkService.networkName
+  // text: NetworkService.networkName
   icon: NetworkService.symbol
 }
 

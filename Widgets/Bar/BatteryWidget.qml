@@ -9,13 +9,13 @@ BarWidget {
   text: BatteryService.isAvailable ? BatteryService.percentage + '%' : ''
   icon: BatteryService.symbol
   iconSize: 20
-  animationSpeed: BatteryService.isCritical ? 300 : defaultDuration 
+  animDuration: BatteryService.isCritical ? 300 : 100
 
   animatedColor: {
-      if (!BatteryService.isAvailable) return Colors.red
-      if (BatteryService.isCharging)   return '#4eed8e'
-      if (BatteryService.isCritical)   return blinker.state ? Colors.red : Colors.alpha(Colors.red, 0.35)
-      return mouseArea.containsMouse ? hoverColor : normalColor
+    if (!BatteryService.isAvailable) return Colors.red
+    if (BatteryService.isCharging)   return '#4eed8e'
+    if (BatteryService.isCritical)   return blinker.state ? Colors.red : Colors.alpha(Colors.red, 0.35)
+    return mouseArea.containsMouse ? hoverColor : normalColor
   }
 
   Timer {

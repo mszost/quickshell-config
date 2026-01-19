@@ -31,16 +31,15 @@ Item {
 
   // Colors and animations
   property color normalColor: Colors.foreground
-  property color hoverColor: Colors.mOnSurfaceVariant
+  property color hoverColor: Colors.primary //Colors.mOnSurfaceVariant
   property color animatedColor: ma.containsMouse ? root.hoverColor : root.normalColor
 
-  property int defaultDuration: 125
-  property alias animationSpeed: anim.duration
+  property alias animDuration: anim.duration
   
   Behavior on animatedColor {
     ColorAnimation {
       id: anim
-      duration: defaultDuration
+      duration: 100
       easing.type: Easing.InOutQuad
     }
   }
