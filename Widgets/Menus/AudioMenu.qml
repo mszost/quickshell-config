@@ -134,7 +134,7 @@ Scope {
             width: 50
             horizontalAlignment: Text.AlignHCenter
             text: `${AudioService.volumeAsInt}%`
-            font: Fonts.monospace
+            font: Fonts.jetbrains
             color: Colors.foreground
           }
         }

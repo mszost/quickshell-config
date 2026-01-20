@@ -31,7 +31,7 @@ Scope {
 
         RowLayout {
           anchors { fill: parent; leftMargin: 16; rightMargin: 16 }
-          spacing: 8
+          spacing: 9
 
           WorkspacesWidget {}
           UpdatesWidget {}
