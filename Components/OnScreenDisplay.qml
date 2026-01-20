@@ -41,7 +41,7 @@ Scope {
 
     PanelWindow {
       anchors.top: true
-      margins.top: screen.height / 20 
+      margins.top: 20 
       exclusiveZone: 0
       mask: Region {}  // An empty click mask prevents the window from blocking mouse events
 
@@ -56,7 +56,7 @@ Scope {
 
       Rectangle {
         id: bgRect
-        implicitWidth: parent.width -2
+        implicitWidth: parent.width -2  // padding for scale animation
         implicitHeight: parent.height -2
         radius: height
         color: Colors.alpha(Colors.background, 0.75)
