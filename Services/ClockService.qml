@@ -16,6 +16,10 @@ Singleton {
     Qt.formatDateTime(clock.date, 'h')
   }
 
+  readonly property string minute: {
+    Qt.formatDateTime(clock.date, 'm')
+  }
+
   readonly property string datetime: {
     Qt.formatDateTime(clock.date, 'h:mm AP  •  ddd, MMM. d')
   }

@@ -1,5 +1,4 @@
 // Watches for available system updates.
-// Runs an automatic check every hour.
 
 pragma Singleton
 
@@ -14,10 +13,10 @@ Scope {
   property int numUpdates: 0
   readonly property bool shouldShowWidget: numUpdates > 10
 
-  // Using an event handler on the hour instead of a Timer,
-  // since this is such a large time scale
-  property string currentHour: ClockService.hour
-  onCurrentHourChanged: runCheck()
+  // Using an event handler on the time instead of a Timer, 
+  // probably less resource intense. Checks for updates every 10 minutes.
+  property string currentMinute: ClockService.minute
+  onCurrentMinuteChanged: if (currentMinute % 10 == 0) runCheck()
 
   Process {
     id: checkUpdatesProcess
