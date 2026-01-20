@@ -29,7 +29,7 @@ QtObject {
   // readonly property font interTight: Qt.font({ family: _interTightLoader.name, pixelSize: 12, weight: 700 })
 
   readonly property font jetbrains: Qt.font({ family: _jetbrainsLoader.name, pixelSize: 13, weight: 700 }) 
-  readonly property font ibmPlex:   Qt.font({ family: _ibmPlexLoader.name,   pixelSize: 14, weight: 500 })
+  readonly property font ibmPlex:   Qt.font({ family: _ibmPlexLoader.name,   pixelSize: 13, weight: 500 })
   readonly property font rubik:     Qt.font({  family: _rubikLoader.name,    pixelSize: 12, weight: 600 })
   readonly property font lucide:    Qt.font({ family: _lucideLoader.name,    pixelSize: 14, weight: 700 })
   readonly property font tabler:    Qt.font({ family: _tablerLoader.name,    pixelSize: 18, weight: 600 })
@@ -41,9 +41,12 @@ QtObject {
   readonly property font barIcon: tabler
   readonly property font barLabel: ibmPlex
 
+  readonly property font osdLabel: Qt.font({ family: _ibmPlexLoader.name, pixelSize: 15, weight: 500 }) 
+  readonly property font osdIcon: Qt.font({ family: _tablerLoader.name, pixelSize: 24, weight: 600})
+
   readonly property font menuHeading:     Qt.font({ family: _rubikLoader.name,   pixelSize: 18, weight: 600 })
   readonly property font menuHeadingIcon: Qt.font({ family: _tablerLoader.name,  pixelSize: 22, weight: 600 })
   readonly property font menuSubheading:  Qt.font({ family: _ibmPlexLoader.name, pixelSize: 14, weight: 500 })  
-  readonly property font menuBody:        Qt.font({ family: _ibmPlexLoader.name, pixelSize: 13, weight: 500 }) 
+  readonly property font menuBody: ibmPlex 
 }
 
