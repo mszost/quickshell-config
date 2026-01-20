@@ -6,6 +6,7 @@ import Quickshell.Widgets
 import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
 
+import qs
 import qs.Theme
 import qs.Services
 import qs.Components
@@ -15,10 +16,12 @@ Scope {
   id: root
   
   required property var boundItem
-  property alias isVisible: menu.isVisible
 
   readonly property int blockRadius: 8
   readonly property int padding: 12
+
+  property alias isVisible: menu.isVisible
+  onIsVisibleChanged: GlobalStates.audioMenuOpen = isVisible
 
   ContextMenu {
     id: menu
