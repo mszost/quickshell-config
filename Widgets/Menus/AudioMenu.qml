@@ -175,12 +175,6 @@ Scope {
           color: Colors.primary
         }
 
-        Rectangle {  // spacer item
-          height: 5
-          width: parent.width
-          color: 'transparent'
-        }
-
         Repeater {
           model: AudioService.availableSinks
 
