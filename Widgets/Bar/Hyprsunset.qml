@@ -6,7 +6,6 @@ import qs.Theme
 BarWidget { 
   id: root
   icon: filterState ? '\ufda4' : '\ueb30'
-  iconSize: 17
   onClicked: filterState = toggleFilter()
 
   property bool filterState: false
