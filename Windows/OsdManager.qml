@@ -8,6 +8,7 @@ Scope {
   id: root
 
   OnScreenDisplay {
+    label: 'Volume'
     level: AudioService.volume
     icon: AudioService.symbol
     shouldShowOsd: !GlobalStates.audioMenuOpen

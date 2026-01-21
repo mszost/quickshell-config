@@ -20,6 +20,7 @@ Scope {
   
   required property real level
   required property string icon
+  required property string label
   property bool isVisible: false
   property bool shouldShowOsd: true
 
@@ -40,13 +41,13 @@ Scope {
     model: Quickshell.screens
 
     PanelWindow {
-      anchors.top: true
-      margins.top: 20 
+      anchors.bottom: true
+      margins.bottom: screen.height/6 
       exclusiveZone: 0
       mask: Region {}  // An empty click mask prevents the window from blocking mouse events
 
-      implicitWidth: 200
-      implicitHeight: 60
+      implicitWidth: 180
+      implicitHeight: 50
       color: 'transparent'
 
       screen: modelData
@@ -79,15 +80,15 @@ Scope {
 
           Column {
             Layout.fillWidth: true
-            spacing: 6
+            spacing: 4
             Layout.bottomMargin: 6
 
             RowLayout {
               width: parent.width
               Text {
                 Layout.alignment: Qt.AlignLeft
-                Layout.leftMargin: root.padding/2
-                text: 'Volume'
+                // Layout.leftMargin: root.padding
+                text: root.label
                 font: Fonts.osdLabel
                 color: Colors.foreground
               }
