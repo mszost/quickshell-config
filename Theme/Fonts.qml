@@ -41,7 +41,7 @@ QtObject {
   readonly property font barIcon: tabler
   readonly property font barLabel: ibmPlex
 
-  readonly property font osdLabel: Qt.font({ family: _ibmPlexLoader.name, pixelSize: 15, weight: 500 }) 
+  readonly property font osdLabel: ibmPlex 
   readonly property font osdIcon: Qt.font({ family: _tablerLoader.name, pixelSize: 24, weight: 600})
 
   readonly property font menuHeading:     Qt.font({ family: _rubikLoader.name,   pixelSize: 18, weight: 600 })
