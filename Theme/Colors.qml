@@ -1,6 +1,7 @@
 pragma Singleton
 
 import QtQuick
+import qs
 
 QtObject {
   id: root
@@ -10,7 +11,7 @@ QtObject {
   }
 
   // property list<string> availableThemes: _palettes.keys
-  property string activeTheme: 'gruvbox-material'
+  property string activeTheme: Config.theme
 
   readonly property var _palettes: ({
     'matugen': {
