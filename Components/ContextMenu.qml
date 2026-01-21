@@ -3,23 +3,29 @@
 // See Widgets/Menus/
 
 import QtQuick
+
 import Quickshell
 import Quickshell.Hyprland
+
+import qs
 import qs.Theme
 
 
 Scope {
   id: root
-  required property var boundItem  // the widget that this menu should appear under
   default property alias menuContent: column.data  // provided by files implementing this component
+  required property var boundItem  // the widget that this menu should appear under
 
   property int padding: 10
   property int yOffset: 25
   property int width: 350
-  property int radius: 8
+  property int radius: 10
 
   property bool isVisible: false
   onIsVisibleChanged: focusGrab.active = isVisible
+
+  readonly property real bgAlpha: Config.menuAlpha ?? Config.alpha ?? 1.0
+
 
   PopupWindow {
     id: popup
@@ -47,7 +53,7 @@ Scope {
       width: parent.width
       height: column.height + (root.padding * 2)
       radius: 10 
-      color: Colors.surfaceDim
+      color: Colors.alpha(Colors.surfaceDim, root.bgAlpha)
 
       focus: true 
       Keys.onEscapePressed: root.isVisible = false

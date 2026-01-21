@@ -10,6 +10,7 @@ import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
 import Quickshell.Widgets
 
+import qs
 import qs.Theme
 import qs.Components
 import qs.Services
@@ -25,6 +26,7 @@ Scope {
   property bool shouldShowOsd: true
 
   readonly property int padding: 12
+  readonly property real bgAlpha: Config.osdAlpha ?? Config.alpha ?? 1.0
 
   onLevelChanged: {
     root.isVisible = root.shouldShowOsd
@@ -60,7 +62,7 @@ Scope {
         implicitWidth: parent.width -2  // padding for scale animation
         implicitHeight: parent.height -2
         radius: height
-        color: Colors.alpha(Colors.background, 0.75)
+        color: Colors.alpha(Colors.background, bgAlpha)
 
         // pop in/out animation
         scale: root.isVisible ? 1 : 0

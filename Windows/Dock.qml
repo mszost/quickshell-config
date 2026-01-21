@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Widgets
 import Quickshell.Hyprland
 
+import qs
 import qs.Theme
 import qs.Services
 
@@ -14,19 +15,10 @@ Scope {
   id: root
   readonly property int offset: 6   // height offset from the bottom edge of the screen
   readonly property int buffer: 16  // used as padding for popup and bgRect
-  readonly property list<string> dockMonitors: ['eDP-2', 'DP-10', 'HDMI-1']  // list of displays that the dock should appear on
+  readonly property list<string> dockMonitors: Config.dockMonitors 
+  readonly property list<string> dockApps: Config.dockApps
 
-  readonly property list<string> dockApps: [ // names of .desktop files
-     'kitty',
-     'org.gnome.Nautilus',
-     'firefox',
-     'vivaldi-stable',
-     'obsidian',
-     'code-oss',
-     'vesktop',
-     'steam',
-     'org.keepassxc.KeePassXC',
-  ]
+  readonly property real bgAlpha: Config.dockAlpha ?? Config.alpha ?? 1.0
 
   Variants {
     model: Quickshell.screens
@@ -80,8 +72,8 @@ Scope {
           height: 72
           width: content.width + buffer*2
           radius: height * 0.3
-          color: Colors.alpha(Colors.background, 0.5)
-          border.color: Colors.alpha(Colors.outlineVariant, 0.5)
+          color: Colors.alpha(Colors.background, bgAlpha)
+          border.color: Colors.alpha(Colors.outlineVariant, bgAlpha)
           border.width: 1
           antialiasing: true
           

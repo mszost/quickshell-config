@@ -23,6 +23,8 @@ Scope {
   property alias isVisible: menu.isVisible
   onIsVisibleChanged: GlobalStates.audioMenuOpen = isVisible
 
+  property real bgAlpha: Config.menuAlpha ?? Config.alpha ?? 1.0
+
   ContextMenu {
     id: menu
     boundItem: root.boundItem
@@ -32,7 +34,7 @@ Scope {
       width: parent.width
       height: titleRow.height * 2
       radius: root.blockRadius
-      color: Colors.alpha(Colors.background, 0.75)
+      color: Colors.alpha(Colors.background, bgAlpha)
 
 
       RowLayout {
@@ -93,7 +95,7 @@ Scope {
       width: parent.width
       height: sinkSliderCol.height + (root.padding * 2.25)
       radius: root.blockRadius
-      color:  Colors.alpha(Colors.background, 0.75) 
+      color:  Colors.alpha(Colors.background, bgAlpha) 
 
       Column { 
         id: sinkSliderCol
@@ -160,7 +162,7 @@ Scope {
       width: parent.width
       height: sinkListCol.height + (root.padding * 2.25)
       radius: root.blockRadius
-      color: Colors.alpha(Colors.background, 0.75)
+      color: Colors.alpha(Colors.background, bgAlpha)
 
       Column {
         id: sinkListCol

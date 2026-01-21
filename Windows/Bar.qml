@@ -2,12 +2,14 @@ import Quickshell
 import QtQuick
 import QtQuick.Layouts
 
-import qs.Widgets.Bar
+import qs
 import qs.Theme
+import qs.Widgets.Bar
 
 
 Scope {
   id: root
+  readonly property real bgAlpha: Config.barAlpha ?? Config.alpha ?? 1.0
 
   Variants {
     model: Quickshell.screens
@@ -17,7 +19,7 @@ Scope {
       anchors { top: true; left: true; right: true }
       implicitHeight: 36
       color: 'transparent' 
-      visible: ['eDP-2', 'DP-10', 'HDMI-1'].includes(modelData.name)
+      visible: Config.barMonitors.includes(modelData.name)
       
       screen: modelData
       property var modelData
@@ -26,7 +28,7 @@ Scope {
         id: bgRect
         anchors { fill: parent; topMargin: 3; leftMargin: 10; rightMargin: 10 }
         radius: 10
-        color: Colors.alpha(Colors.background, 0.75)  
+        color: Colors.alpha(Colors.background, bgAlpha)  
         antialiasing: true
 
         RowLayout {
