@@ -115,7 +115,7 @@ Scope {
           }
           Text {
             anchors.baseline: sinkSliderLabel.baseline
-            text: `(${AudioService.activeSink?.description})`
+            text: `(${AudioService.activeSink?.description ?? ''})`
             font: Fonts.menuBody
             color: Colors.foreground
           }
