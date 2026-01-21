@@ -29,7 +29,7 @@ BarWidget {
     if (wheelEvent.angleDelta.y < 0) AudioService.setVolume(AudioService.volume - step)
   }
 
-  mouseArea.onClicked: menu.isVisible = !menu.isVisible
+  mouseArea.onClicked: menu.isVisible = true
 
   AudioMenu {
     id: menu
