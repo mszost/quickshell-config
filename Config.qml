@@ -30,6 +30,9 @@ Singleton {
 
   // Dock background opacity 
   property real dockAlpha: 0.5
+  // Height offset from the bottom edge of the screen
+  // (setting this above ~10px can cause issues with the mouse detection)
+  property int dockOffset: 6
   // Monitors that the dock should appear on
   readonly property list<string> dockMonitors: ['eDP-2', 'DP-10', 'HDMI-1']
   // Applications to show on the dock (uses names of .desktop files from ~/.local/share/applications/)

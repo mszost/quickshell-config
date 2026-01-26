@@ -13,10 +13,8 @@ import qs.Services
 
 Scope {
   id: root
-  readonly property int offset: 6   // height offset from the bottom edge of the screen
-  readonly property int buffer: 16  // used as padding for popup and bgRect
-  readonly property list<string> dockMonitors: Config.dockMonitors 
-  readonly property list<string> dockApps: Config.dockApps
+  readonly property int offset: Config.dockOffset
+  readonly property int buffer: 14  // used as padding for popup and bgRect
 
   readonly property real bgAlpha: Config.dockAlpha ?? Config.alpha ?? 1.0
 
@@ -36,7 +34,7 @@ Scope {
       
       // All of the properties below must be chidren of panel so that their states are stored separately for each screen
       property bool dockIsVisible: { 
-        if (!dockMonitors.includes(modelData.name)) return false
+        if (!Config.dockMonitors.includes(modelData.name)) return false
         if (!isFocused) return false
         if (!isOccupied) return true
         return isHovered
@@ -93,7 +91,7 @@ Scope {
             spacing: 8
             
             Repeater {
-              model: root.dockApps
+              model: Config.dockApps
                              
               WrapperMouseArea {
                 id: iconArea
