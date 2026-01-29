@@ -35,7 +35,7 @@ Scope {
 
   Timer {
     id: hideTimer
-    interval: 1000
+    interval: 1500
     onTriggered: root.isVisible = false
   }
 
@@ -66,7 +66,7 @@ Scope {
 
         // pop in/out animation
         scale: root.isVisible ? 1 : 0
-        Behavior on scale { NumberAnimation { duration: 100; easing.type: Easing.InOutBack } }
+        Behavior on scale { NumberAnimation { duration: 100; easing.type: Easing.InOutExpo } }
 
         RowLayout {
           anchors { fill: parent; leftMargin: root.padding; rightMargin: root.padding }
