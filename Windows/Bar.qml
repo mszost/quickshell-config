@@ -50,7 +50,7 @@ Scope {
           from: 'occupied'
           to: '*'
           SequentialAnimation {
-            PauseAnimation { duration: 200 }
+            PauseAnimation { duration: 300 }
             PropertyAction { properties: 'root', 'root', 'bgRadius' }
           }
         }
@@ -64,7 +64,7 @@ Scope {
         Behavior on radius { NumberAnimation { duration: 1000; easing.type: Easing.OutCirc } }
         Behavior on anchors.topMargin { NumberAnimation { duration: 300; easing.type: Easing.OutBack } }
         Behavior on anchors.leftMargin { NumberAnimation { duration: 300; easing.type: Easing.InOutQuad } }
-        Behavior on anchors.rightMargin { NumberAnimation { duration: 300; easing.type: Easing.InOutQuad} }
+        Behavior on anchors.rightMargin { NumberAnimation { duration: 500; easing.type: Easing.InOutQuad} }
 
 
         RowLayout {
@@ -76,7 +76,8 @@ Scope {
 
           Item { Layout.fillWidth: true } // Spacer 
           
-          Hyprsunset { Layout.alignment: Qt.AlignRight }
+          // SysTrayWidget{ Layout.alignment: Qt.AlignRight }
+          BacklightWidget { Layout.alignment: Qt.AlignRight }
           NetworkWidget { Layout.alignment: Qt.AlignRight }
           AudioWidget { Layout.alignment: Qt.AlignRight }
           BatteryWidget { Layout.alignment: Qt.AlignRight }
