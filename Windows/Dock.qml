@@ -13,7 +13,7 @@ import qs.Services
 
 Scope {
   id: root
-  readonly property int offset: Config.dockOffset
+  readonly property int padY: Config.dockVerticalOffset
   readonly property int buffer: 14  // used as padding for popup and bgRect
 
   readonly property real bgAlpha: Config.dockAlpha ?? Config.alpha ?? 1.0
@@ -31,7 +31,7 @@ Scope {
       
       screen: modelData
       required property var modelData
-      
+
       // All of the properties below must be chidren of panel so that their states are stored separately for each screen
       property bool dockIsVisible: { 
         if (!Config.dockMonitors.includes(modelData.name)) return false
@@ -40,9 +40,9 @@ Scope {
         return isHovered
       }
       
-      property bool isFocused: Hyprland.focusedMonitor?.name == modelData.name
-      property bool isOccupied: HyprlandService.isWorkspaceOccupied(Hyprland.focusedWorkspace?.id)
-      property bool isHovered: enterArea.hovered || exitArea.hovered
+      readonly property bool isFocused: Hyprland.focusedMonitor?.name == modelData.name
+      readonly property bool isOccupied: HyprService.isWsTiled(HyprService.getWsForScreen(modelData))
+      readonly property bool isHovered: enterArea.hovered || exitArea.hovered
 
       // Hovering near the bottom edge of the screen triggers the dock to open
       HoverHandler { id: enterArea } 
@@ -60,18 +60,18 @@ Scope {
         // popup is slightly larger than the visible bgRect in order 
         // to avoid clipping the animation and exitArea
         implicitWidth: bgRect.width + buffer 
-        implicitHeight: bgRect.height + offset + buffer 
+        implicitHeight: bgRect.height + padY + buffer 
         visible: bgRect.y < height 
         color: 'transparent'
 
         Rectangle {
           id: bgRect
           anchors.horizontalCenter: parent.horizontalCenter
-          height: 72
+          height: 73
           width: content.width + buffer*2
-          radius: height * 0.3
+          radius: height * 0.275
           color: Colors.alpha(Colors.background, bgAlpha)
-          border.color: Colors.alpha(Colors.outlineVariant, bgAlpha)
+          border.color: Colors.alpha(Colors.outlineVariant, 0.5)
           border.width: 1
           antialiasing: true
           
@@ -79,8 +79,8 @@ Scope {
           // the below expression for `y` can likely be simplified.
           
           // Sliding in/out animation
-          y: panel.dockIsVisible ? (parent.height - height - offset) : parent.height
-          Behavior on y { NumberAnimation { duration: 300; easing.type: Easing.OutBack } }
+          y: panel.dockIsVisible ? (parent.height - height - padY) : parent.height
+          Behavior on y { NumberAnimation { duration: 330; easing.type: Easing.OutBack } }
 
           // Leaving the bounds of bgRect dismisses the dock
           HoverHandler { id: exitArea; margin: buffer } 
@@ -97,7 +97,7 @@ Scope {
                 id: iconArea
                 child: appIcon
                 resizeChild: false
-                Layout.preferredWidth: 55  // actual rendered pixel size, downscaled from appIcon.sourceSize
+                Layout.preferredWidth: 55  // Actual displayed resolution, downscaled from appIcon.sourceSize 
                 Layout.preferredHeight: 55
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
@@ -109,34 +109,26 @@ Scope {
                 Image {
                   id: appIcon
                   anchors.fill: parent
-                  // Wait for the full application list to load to prevent a race condition
+                  // Wait for the full application list to load (prevents a race condition)
                   source: (DesktopEntries.applications.values, DesktopEntries.byId(modelData)?.icon ?? '') 
-                  sourceSize.width: 128
+                  sourceSize.width: 128  // Render resolution
                   mipmap: true
                   scale: iconArea.containsMouse ? 1.15 : 1.0
                   visible: true
-                 
+
+                  // Hover animation 
                   Behavior on scale { NumberAnimation { 
                     duration: 100
                   }} 
 
+                  // Click animation
                   SequentialAnimation on scale {
                     id: clickAnimation
                     running: false
-                    NumberAnimation { to: 1.0; duration: 100 }
-                    NumberAnimation { to: 1.15; duration: 100 }
+                    NumberAnimation { to: 0.90; duration: 75 }
+                    NumberAnimation { to: 1.15; duration: 75 }
                   }
                 }
-
-                // MultiEffect {  // drop shadow effect for each icon
-                //   anchors.fill: parent
-                //   source: appIcon
-                //   shadowEnabled: true
-                //   shadowBlur: 0
-                //   shadowColor: "black"
-                //   shadowVerticalOffset: 5
-                //   shadowHorizontalOffset: 5
-                // }
               }
             }
           }

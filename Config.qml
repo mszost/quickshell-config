@@ -9,36 +9,55 @@ Singleton {
   // ░█░█░█▀▀░█░█░█▀▀░█▀▄░█▀█░█░░
   // ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀
  
-  // See Theme/Colors.qml for available color palettes
-  readonly property string theme: 'nord'
+  // See ./Theme/Colors.qml for available color palettes
+  property string theme: 'gruvbox-material'
+  
+  // Global enable/disable sound effects
+  property bool muteSounds: false
+  
   // Global background opacity (range 0.0 - 1.0)
   // Item-specific values (barAlpha, dockAlpha, etc.) will fall back to this if they are unset
   readonly property real alpha: 1.0
-  // Global enable/disable sound effects
-  readonly property bool muteSounds: false
+
 
 
   // ░█▀▄░█▀█░█▀▄
   // ░█▀▄░█▀█░█▀▄
   // ░▀▀░░▀░▀░▀░▀
 
-  // Bar background opacity
-  property real barAlpha: 0.5
+  readonly property real barAlpha: 0.5  // TODO... this only applies when the bar is floating.
+  
   // Monitors that the bar should appear on
   readonly property list<string> barMonitors: ['eDP-2', 'DP-10', 'HDMI-1']
+  
+  // If enabled the bar will switch between 'floating' and 'solid'
+  // states depending on the presence of windows in the workspace
+  readonly property bool barDynamic: true 
+  
+  // Whether to show labels for bar widgets. Options: 'show', 'hide', or 'dynamic'
+  // Can also be set individually for each widget in ./Widgets/Bar/<widget>
+  readonly property string barLabelStyle: 'dynamic'
+  
+  // Spacing from the edges of the screen (only applies to floating state)
+  property int barVerticalOffset: 6
+  property int barHorizontalOffset: 18
+  property int barCornerRadius: 10
+
 
 
   // ░█▀▄░█▀█░█▀▀░█░█
   // ░█░█░█░█░█░░░█▀▄
   // ░▀▀░░▀▀▀░▀▀▀░▀░▀
 
-  // Dock background opacity 
-  property real dockAlpha: 0.5
-  // Height offset from the bottom edge of the screen (setting this above ~10px can cause issues)
-  property int dockOffset: 60
+  readonly property real dockAlpha: 0.25
+
   // Monitors that the dock should appear on
   readonly property list<string> dockMonitors: ['eDP-2', 'DP-10', 'HDMI-1']
-  // Applications to show on the dock (uses names of .desktop files from ~/.local/share/applications/)
+
+  // Spacing from bottom edge of the screen (values > 10px can cause issues)
+  readonly property int dockVerticalOffset: 6
+  
+  // Applications to show on the dock (uses names of .desktop files in ~/.local/share/applications/)
   readonly property list<string> dockApps: [
     'kitty',
     'org.kde.dolphin',
@@ -46,26 +65,33 @@ Singleton {
     'vivaldi-stable',
     'obsidian',
     'code-oss',
+    'spotify-launcher',
     'vesktop',
     'steam',
     'org.keepassxc.KeePassXC',
   ]
 
 
+
   // ░█▄█░█▀▀░█▀█░█░█░█▀▀
   // ░█░█░█▀▀░█░█░█░█░▀▀█
   // ░▀░▀░▀▀▀░▀░▀░▀▀▀░▀▀▀
 
-  // Menu background opacity
-  property real menuAlpha: 0.75
+  property real menuRowAlpha: 0.66
+  property real menuContainerAlpha: 0.25
+
+  // Tabler icon unicode strings for devices in the audio menu
+  property var menuAudioIcons: {
+    'device.description': '\u0000'
+  }
+
 
 
   // ░█▀█░█▀▀░█▀▄
   // ░█░█░▀▀█░█░█
   // ░▀▀▀░▀▀▀░▀▀░
 
-  // OSD background opacity
-  property real osdAlpha: 0.75
+  property real osdAlpha: 0.25
   // Use alternative style for OSDs, inspired by https://github.com/end-4/dots-hyprland
   // property bool osdAltStyle: true
 }
