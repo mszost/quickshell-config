@@ -50,7 +50,7 @@ Scope {
           from: 'occupied'
           to: '*'
           SequentialAnimation {
-            PauseAnimation { duration: 375 }
+            PauseAnimation { duration: 200 }
             PropertyAction { properties: 'root', 'root', 'bgRadius' }
           }
         }
@@ -60,11 +60,12 @@ Scope {
         property int padX: Config.barHorizontalOffset
         property int padY: Config.barVerticalOffset
 
-        Behavior on bgAlpha { NumberAnimation { duration: 600; easing.type: Easing.OutQuad } }
-        Behavior on radius { NumberAnimation { duration: 400; easing.type: Easing.OutCirc } }
-        Behavior on anchors.topMargin { NumberAnimation { duration: 350; easing.type: Easing.OutQuad } }
-        Behavior on anchors.leftMargin { NumberAnimation { duration: 350; easing.type: Easing.OutQuad } }
-        Behavior on anchors.rightMargin { NumberAnimation { duration: 350; easing.type: Easing.OutQuad } }
+        Behavior on bgAlpha { NumberAnimation { duration: 500; easing.type: Easing.OutQuad } }
+        Behavior on radius { NumberAnimation { duration: 1000; easing.type: Easing.OutCirc } }
+        Behavior on anchors.topMargin { NumberAnimation { duration: 300; easing.type: Easing.OutBack } }
+        Behavior on anchors.leftMargin { NumberAnimation { duration: 300; easing.type: Easing.InOutQuad } }
+        Behavior on anchors.rightMargin { NumberAnimation { duration: 300; easing.type: Easing.InOutQuad} }
+
 
         RowLayout {
           anchors { fill: parent; leftMargin: 16; rightMargin: 16 }

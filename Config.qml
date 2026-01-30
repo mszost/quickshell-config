@@ -39,8 +39,8 @@ Singleton {
   readonly property string barLabelStyle: 'dynamic'
   
   // Spacing from the edges of the screen (only applies to floating state)
-  property int barVerticalOffset: 6
-  property int barHorizontalOffset: 18
+  property int barVerticalOffset: 7
+  property int barHorizontalOffset: 16
   property int barCornerRadius: 10
 
 
