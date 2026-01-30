@@ -41,15 +41,14 @@ Singleton {
     return workspace?.toplevels.values.some(w => w.lastIpcObject.floating === false) ?? null
   }
 
-  // Refreshes Quickshell when a window's floating/tiled state is changed,
-  // because lastIpcObject does not update on it's own. This is required for
-  // workspaceHasTiledWindows() to work properly. 
+  // Refreshes Quickshell when Hyprland fires an IPC event that suggests a potential change 
+  // of the workspace's tiling/floating state. Because lastIpcObject does not update independently.
+  // This is required for workspaceHasTiledWindows() to work properly. 
   Connections {
     target: Hyprland
 
     function onRawEvent(event, data) {
-      // 'movewindow' fires when a window moves to a new workspace (which may change the window's tiled status)
-      if (event.name  === 'changefloatingmode' || event.name  === 'movewindow') {
+      if (['changefloatingmode', 'movewindow', 'openwindow'].includes(event.name)) {
         Hyprland.refreshToplevels() 
       }
     }
