@@ -22,7 +22,6 @@ Singleton {
   }
 
   function isWsOccupied(wsId: int): bool {
-    wsId -= 1
     const windowsOnThisWorkspace = Hyprland.workspaces.values[wsId]?.toplevels.values ?? []
     return windowsOnThisWorkspace.length > 0 
   }  
@@ -38,7 +37,6 @@ Singleton {
 
   // True if the workspace has a tiled window present on it
   function isWsTiled(wsId: int): bool {
-    wsId -= 1
     const workspace = Hyprland.workspaces.values[wsId]
     return workspace?.toplevels.values.some(w => w.lastIpcObject.floating === false) ?? null
   }
