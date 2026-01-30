@@ -5,7 +5,6 @@ import Quickshell
 import Quickshell.Hyprland
 
 import qs
-import qs.Utils
 import qs.Theme
 import qs.Services
 import qs.Widgets.Bar
