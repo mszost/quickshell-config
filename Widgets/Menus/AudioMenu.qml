@@ -23,7 +23,7 @@ Scope {
   property alias isVisible: menu.isVisible
   onIsVisibleChanged: GlobalStates.audioMenuOpen = isVisible
 
-  property real bgAlpha: Config.menuAlpha ?? Config.alpha ?? 1.0
+  property real bgAlpha: Config.menuRowAlpha ?? Config.alpha ?? 1.0
 
   ContextMenu {
     id: menu

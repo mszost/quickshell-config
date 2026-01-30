@@ -24,7 +24,7 @@ Scope {
   property bool isVisible: false
   onIsVisibleChanged: focusGrab.active = isVisible
 
-  readonly property real bgAlpha: Config.menuAlpha ?? Config.alpha ?? 1.0
+  readonly property real bgAlpha: Config.menuContainerAlpha ?? Config.alpha ?? 1.0
 
 
   PopupWindow {
