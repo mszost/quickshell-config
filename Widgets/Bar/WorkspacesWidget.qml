@@ -34,15 +34,15 @@ Item {
         Rectangle { 
           id: wsIcon
           height: 13
-          width: HyprlandService.isWorkspaceFocused(index+1) ? height*2 : height
+          width: HyprService.isWsFocused(index+1) ? height*2 : height
           radius: width/2
           border.width: 1
           border.color: Colors.alpha(Colors.surfaceDim, 0.1)
           antialiasing: true
         
           color: {
-            if (HyprlandService.isWorkspaceFocused(index+1)) return Colors.primary  
-            if (HyprlandService.isWorkspaceOccupied(index+1)) return Colors.secondary
+            if (HyprService.isWsFocused(index+1)) return Colors.primary  
+            if (HyprService.isWsOccupied(index+1)) return Colors.secondary
             else return Colors.surfaceDim
           }
 
