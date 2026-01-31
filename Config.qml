@@ -1,6 +1,9 @@
 pragma Singleton
 
+import QtQuick
 import Quickshell
+
+import qs.Theme
 
 Singleton {
   id: root
@@ -25,8 +28,11 @@ Singleton {
   // ░█▀▄░█▀█░█▀▄
   // ░▀▀░░▀░▀░▀░▀
 
-  readonly property real barAlpha: 0.5  // TODO... this only applies when the bar is floating.
-  
+  readonly property real barAlpha: 0.75
+  readonly property real barAlphaFloating: 0.25
+  readonly property color barColorBg: Colors.background
+  readonly property int barHeight: 35
+
   // Monitors that the bar should appear on
   readonly property list<string> barMonitors: ['eDP-2', 'DP-10', 'HDMI-1']
   
@@ -36,7 +42,7 @@ Singleton {
   
   // Whether to show labels for bar widgets. Options: 'show', 'hide', or 'dynamic'
   // Can also be set individually for each widget in ./Widgets/Bar/<widget>
-  readonly property string barLabelStyle: 'dynamic'
+  // readonly property string barLabelStyle: 'dynamic'
   
   // Spacing from the edges of the screen (only applies to floating state)
   property int barVerticalOffset: 7
