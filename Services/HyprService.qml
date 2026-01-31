@@ -9,10 +9,38 @@ Singleton {
   id: root
 
   readonly property string focusedWindowTitle: Hyprland.activeToplevel?.title ?? ''
-  // readonly property bool focusedWorkspaceOccupied: isWorkspaceOccupied(Hyprland.focusedWorkspace?.id ?? -1)
+
+  // Provides fast lookup for workspace-related functions. 
+  // Building this is expensive, but it is reevaluated far less
+  // frequently than function calls are made, so it's worth it.
+  readonly property var _wsCache: {
+    const occupied = new Set()
+    const tiled = new Set()
+    for (const ws of Hyprland.workspaces.values) {
+      if (ws.toplevels.values.length > 0) {
+        occupied.add(ws.id)
+        if (ws.toplevels.values.some(w => w.lastIpcObject.floating === false)) {
+          tiled.add(ws.id)
+        }
+      }
+    }
+    return { occupied, tiled }
+  }
+
+  function isWsOccupied(wsId: int): bool {
+    return _wsCache.occupied.has(wsId)
+  } 
+
+  function isWsTiled(wsId: int): bool {
+    return _wsCache.tiled.has(wsId)
+  }
   
-  // Accpets an instance of Quickshell.ShellScreen or an integer corresponding to the monitor ID in Hyprland
-  function getWsForScreen(screen) {
+  function isWsFocused(wsId: int): bool {
+    return wsId === Hyprland.focusedWorkspace?.id ?? false
+  }
+  
+  // Accpets an instance of Quickshell.ShellScreen or an integer corresponding to an index in the Hyprland monitors list.
+  function getWsForScreen(screen): bool {
     if (typeof screen === 'object') {
       return Hyprland.monitorFor(screen).activeWorkspace?.id ?? null
     } 
@@ -21,29 +49,16 @@ Singleton {
     }
   }
 
-  function isWsOccupied(wsId: int): bool {
-    const windowsOnThisWorkspace = Hyprland.workspaces.values[wsId]?.toplevels.values ?? []
-    return windowsOnThisWorkspace.length > 0 
-  }  
-
-  function isWsFocused(wsId: int): bool {
-    return wsId === Hyprland.focusedWorkspace?.id ?? false
-  }
-
-
-  function isScreenOccupied(screen) {
+  function isScreenOccupied(screen): bool {
     return isWsOccupied(getWsForScreen(screen))
   }
 
-  // True if the workspace has a tiled window present on it
-  function isWsTiled(wsId: int): bool {
-    const workspace = Hyprland.workspaces.values[wsId]
-    return workspace?.toplevels.values.some(w => w.lastIpcObject.floating === false) ?? null
-  }
+  // function isScreenFocused(screen) {
+  // }
 
-  // Refreshes Quickshell when Hyprland fires an IPC event that suggests a potential change 
-  // of the workspace's tiling/floating state. Because lastIpcObject does not update independently.
-  // This is required for workspaceHasTiledWindows() to work properly. 
+  // Refreshes Quickshell's window tracking when Hyprland fires an IPC event that suggests 
+  // a potential change of the tiled/floating state of a workspace. Because lastIpcObject 
+  // does not update independently, this is required for isWsTiled() to work properly. 
   Connections {
     target: Hyprland
 
