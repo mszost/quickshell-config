@@ -81,7 +81,7 @@ Scope {
           }
 
           Text { 
-            text: '\uea03'//'\ueb55'
+            text: Icons.tabler['adjustments']
             color: mixerButton.containsMouse? Colors.secondary : Colors.foreground
             font: Fonts.menuHeadingIcon
             Behavior on color { ColorAnimation { duration: 100; easing.type: Easing.OutQuad } } 
@@ -201,7 +201,10 @@ Scope {
 
               Text {
                 anchors.verticalCenter: parent.verticalCenter
-                text: AudioService.getSinkSymbol(modelData.description)
+                text: {
+                  Config.menuAudioDeviceSymbols[modelData.description] 
+                  || Config.menuAudioDeviceSymbols['_fallback']
+                }
                 font: Fonts.tabler
                 color: parent.textColor
               }

@@ -7,9 +7,11 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 
+import qs.Theme
+
 Scope {
   id: root
-  property string symbol: '\uea71'
+  property string symbol: Icons.tabler['cloud-download']
   property int numUpdates: 0
   readonly property bool shouldShowWidget: numUpdates > 10
 

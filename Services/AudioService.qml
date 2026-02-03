@@ -4,16 +4,18 @@ import QtQuick
 import Quickshell
 import Quickshell.Services.Pipewire
 
+import qs.Theme
+
 
 Singleton {
   id: root
 
   readonly property string symbol: {
-    if (AudioService.isMuted) return '\uF1C3'
-    if (AudioService.volumeAsInt > 50) return '\ueb51'
-    if (AudioService.volumeAsInt > 20) return '\ueb4f'
-    if (AudioService.volumeAsInt > 0) return String.fromCodePoint(0x1019d)
-    else return '\ueb50'
+    if (AudioService.isMuted) return Icons.tabler['volume-mute']
+    if (AudioService.volumeAsInt > 50) return Icons.tabler['volume-high']
+    if (AudioService.volumeAsInt > 20) return Icons.tabler['volume-mid']
+    if (AudioService.volumeAsInt > 0) return Icons.tabler['volume-low']
+    return Icons.tabler['volume-zero']
   }
 
   readonly property list<PwNode> availableSinks: {
@@ -55,17 +57,6 @@ Singleton {
 
   function setPreferredSink(node) {
     Pipewire.preferredDefaultAudioSink = node
-  }
-
-  function getSinkSymbol(description) {
-    switch (description) {
-      case 'Laptop Speakers': return '\ueb64'
-      case 'Aux': return '\uea8b'
-      case 'QC45': return '\ueabd'
-      case 'Buds':
-      case 'Buds2': return '\uf5a9'
-      default: return '\ueb51'
-    }
   }
 }
 

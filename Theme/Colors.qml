@@ -268,7 +268,7 @@ QtObject {
 
 
   readonly property color _debug: '#ff00ff'
-  readonly property color debug: Colors.alpha(_debug, 0.66)
+  readonly property color debug: Colors.alpha(_debug, 0.25)
   readonly property color red: _palettes[activeTheme].red
   // readonly property color red: _palettes[activeTheme].red
   // readonly property color orange: _palettes[activeTheme].orange

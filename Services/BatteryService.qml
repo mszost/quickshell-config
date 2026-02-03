@@ -4,12 +4,14 @@ import QtQuick
 import Quickshell
 import Quickshell.Services.UPower
 
+import qs.Theme
+
 
 Singleton {
   id: root
 
   readonly property UPowerDevice device: UPower.displayDevice
-  readonly property int state: device.state //UPowerDeviceState.toString(device.state)
+  readonly property int state: device.state
   readonly property bool isAvailable: (device !== null)
   readonly property bool isCharging: isAvailable && (device.state === 1)
   readonly property bool isCritical: isAvailable && !isCharging && percentage <= 10
@@ -17,21 +19,22 @@ Singleton {
   
   readonly property int percentage: isAvailable ? Math.floor(device.percentage * 100) : 0
 
-  readonly property string symbol: {
-    if (!isAvailable) return '\uED1C'
-    if (isCharging)   return '\uEA33'
-    if (isCritical)   return '\uFF1D'
-    if (isPlugged)    return '\uEF3B'
-    
-    if (percentage >= 75) return '\uEA32'
-    if (percentage >= 60) return '\uEA31'
-    if (percentage >= 35) return '\uEA30'
-    if (percentage >= 20) return '\uEA2F'
-    return '\uEA34'
+ //  readonly property int timeRemaining: {
+ //   device.state === device.Discharging ? device.timeToEmpty : device.timeToFull
+ // }
+
+ readonly property string symbol: {
+   if (!isAvailable)     return Icons.tabler['battery-off']
+   if (isCharging)       return Icons.tabler['battery-charging']
+   if (isPlugged)        return Icons.tabler['battery-charging-2']
+   if (isCritical)       return Icons.tabler['battery-exclamation']
+   if (percentage >= 85) return Icons.tabler['battery-4']
+   if (percentage >= 70) return Icons.tabler['battery-3']
+   if (percentage >= 50) return Icons.tabler['battery-2']
+   if (percentage >= 30) return Icons.tabler['battery-1']
+   if (percentage >= 20) return Icons.tabler['battery']
+   if (percentage >= 15) return Icons.tabler['battery-critical']
+   return Icons.tabler['alert-triangle']
   }
-  
-  //readonly property int timeRemaining: {
-  //  device.state === UPowerDeviceState.Discharging ? device.timeToEmpty : device.timeToFull
-  //}
 }
 

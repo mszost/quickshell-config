@@ -12,10 +12,10 @@ Singleton {
   // ░█░█░█▀▀░█░█░█▀▀░█▀▄░█▀█░█░░
   // ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀
  
-  // See ./Theme/Colors.qml for available color palettes
+  // See Theme/Colors.qml for available color palettes
   property string theme: 'gruvbox-material'
   
-  // Global enable/disable sound effects
+  // Enable or disable sound effects
   property bool muteSounds: false
   
   // Global background opacity (range 0.0 - 1.0)
@@ -28,17 +28,18 @@ Singleton {
   // ░█▀▄░█▀█░█▀▄
   // ░▀▀░░▀░▀░▀░▀
 
-  readonly property real barAlpha: 0.75
-  readonly property real barAlphaFloating: 0.25
+  readonly property real barAlpha: 1.0
+  readonly property real barAlphaFloating: 0.5
   readonly property color barColorBg: Colors.background
   readonly property int barHeight: 35
 
   // Monitors that the bar should appear on
   readonly property list<string> barMonitors: ['eDP-2', 'DP-10', 'HDMI-1']
-  
+
   // If enabled the bar will switch between 'floating' and 'solid'
-  // states depending on the presence of windows in the workspace
-  readonly property bool barDynamic: true 
+  // states depending on the presence of windows in the workspace.
+  // Otherwise, the default state is 'solid'
+  readonly property bool barDynamic: false 
   
   // Whether to show labels for bar widgets. Options: 'show', 'hide', or 'dynamic'
   // Can also be set individually for each widget in ./Widgets/Bar/<widget>
@@ -74,6 +75,7 @@ Singleton {
     'spotify-launcher',
     'vesktop',
     'steam',
+    'vintage-story',
     'org.keepassxc.KeePassXC',
   ]
 
@@ -86,9 +88,16 @@ Singleton {
   property real menuRowAlpha: 0.66
   property real menuContainerAlpha: 0.25
 
-  // Tabler icon unicode strings for devices in the audio menu
-  property var menuAudioIcons: {
-    'device.description': '\u0000'
+  // Tabler icons for devices listed in AudioMenu
+  // In the format of {<device.description>: <unicode string>}
+  property var menuAudioDeviceSymbols: {
+    'Laptop Speakers': Icons.tabler['laptop'],
+    'QC45': Icons.tabler['headphones'],
+    'Aux': Icons.tabler['device-speaker'],
+    'Buds': Icons.tabler['device-airpods'],
+    'Buds 2': Icons.tabler['device-airpods'],
+    'USB Audio Headphones': Icons.tabler['usb'],
+    '_fallback': Icons.tabler['volume'] // used if the device's mapping is not set above
   }
 
 

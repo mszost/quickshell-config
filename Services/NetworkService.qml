@@ -5,6 +5,8 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 
+import qs.Theme
+
 // Heavily based on https://github.com/end-4/dots-hyprland/
 
 Singleton {
@@ -19,18 +21,18 @@ Singleton {
   property int networkStrength
 
   property string symbol: {
-    if (ethernet) return '\ueb9d'
+    if (ethernet) return Icons.tabler['sitemap']
     if (wifiEnabled) {
-      if (networkStrength > 0) return '\ueb52' // wifi
-      if (networkStrength > 0) return '\ueba5' // wifi-2
-      if (networkStrength > 0) return '\ueba4' // wifi-1
-      if (networkStrength > 0) return '\ueba3' // wifi-0
-      return '\uf9e6' // world-question  // this is user-disconnected state
+    if (networkStrength > 75) return Icons.tabler['wifi']
+    if (networkStrength > 50) return Icons.tabler['wifi-2']
+    if (networkStrength > 25) return Icons.tabler['wifi-1']
+    if (networkStrength > 0)  return Icons.tabler['wifi-0']
+    return Icons.tabler['world-question']
     } 
-    if (wifiStatus === 'connecting') return '\ueb18' // router
-    if (wifiStatus === 'disconnected') return '\uf9eb' // world-x
-    if (wifiStatus === 'disabled') return '\uecfa' // wifi-off
-    return '\uea06' // alert-triangle
+    if (wifiStatus === 'connecting') return Icons.tabler['router']
+    if (wifiStatus === 'disconnected') return Icons.tabler['world-x']
+    if (wifiStatus === 'disabled') return Icons.tabler['wifi-off']
+    return Icons.tabler['alert-triangle']
   }
 
   // re-run all checks on a 30-second interval

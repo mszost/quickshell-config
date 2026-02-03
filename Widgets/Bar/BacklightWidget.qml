@@ -5,7 +5,7 @@ import qs.Theme
 
 BarWidget { 
   id: root
-  icon: filterState ? '\ufda4' : '\ueb30'
+  icon: filterState ? Icons.tabler['temperature-sun'] : Icons.tabler['sun']
   onClicked: filterState = toggleFilter()
 
   property bool filterState: false
