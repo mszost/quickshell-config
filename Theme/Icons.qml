@@ -23,7 +23,7 @@ Singleton {
     'battery-3': '\uEA31',
     'battery-4': '\uEA32',
     'battery-off': '\uED1C',
-    'battery-charging': '\uEA34',
+    'battery-charging': '\uEA33',
     'battery-charging-2': '\uEF3B',
     'battery-exclamation': '\uFF1D',
     'battery-spark': '\uFFBD',
