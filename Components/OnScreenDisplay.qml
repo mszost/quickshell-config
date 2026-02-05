@@ -66,7 +66,7 @@ Scope {
 
         // pop in/out animation
         scale: root.isVisible ? 1 : 0
-        Behavior on scale { NumberAnimation { duration: 100; easing.type: Easing.InOutExpo } }
+        Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.InOutExpo } }
 
         RowLayout {
           anchors { fill: parent; leftMargin: root.padding; rightMargin: root.padding }

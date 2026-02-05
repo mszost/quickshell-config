@@ -62,8 +62,8 @@ Scope {
       y: root.isVisible ? 0 : (-1 * height)
       Behavior on y { 
         NumberAnimation { 
-          duration: 300
-          easing.type: Easing.OutExpo
+          duration: 200
+          easing.type: Easing.InOutCirc
           onRunningChanged: {
             if (!running && !root.isVisible) {
               popup.animatingOut = false
