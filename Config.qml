@@ -3,7 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 
-import qs.Theme
+import qs.style
 
 Singleton {
   id: root
@@ -12,11 +12,13 @@ Singleton {
   // ░█░█░█▀▀░█░█░█▀▀░█▀▄░█▀█░█░░
   // ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀
  
-  // See Theme/Colors.qml for available color palettes
-  property string theme: 'gruvbox-material'
+  // See ./Theme/Colors.qml for available color palettes
+  property string theme: 'nord'
   
   // Enable or disable sound effects
-  property bool muteSounds: false
+  // If you don't want sounds at all, removing the `SoundEffects {}` initialization
+  // in ./shell.qml will prevent loading the object entirely, thus saving some memory
+  property bool muteSounds: true
   
   // Global background opacity (range 0.0 - 1.0)
   // Item-specific values (barAlpha, dockAlpha, etc.) will fall back to this if they are unset
@@ -28,7 +30,7 @@ Singleton {
   // ░█▀▄░█▀█░█▀▄
   // ░▀▀░░▀░▀░▀░▀
 
-  readonly property real barAlpha: 1.0
+  readonly property real barAlpha: 0.70
   readonly property real barAlphaFloating: 0.5
   readonly property color barColorBg: Colors.background
   readonly property int barHeight: 35
@@ -39,7 +41,7 @@ Singleton {
   // If enabled the bar will switch between 'floating' and 'solid'
   // states depending on the presence of windows in the workspace.
   // Otherwise, the default state is 'solid'
-  readonly property bool barDynamic: false 
+  readonly property bool barDynamic: false
   
   // Whether to show labels for bar widgets. Options: 'show', 'hide', or 'dynamic'
   // Can also be set individually for each widget in ./Widgets/Bar/<widget>
@@ -57,6 +59,7 @@ Singleton {
   // ░▀▀░░▀▀▀░▀▀▀░▀░▀
 
   readonly property real dockAlpha: 0.25
+  readonly property real dockAlphaOutline: 0.5
 
   // Monitors that the dock should appear on
   readonly property list<string> dockMonitors: ['eDP-2', 'DP-10', 'HDMI-1']
@@ -64,7 +67,8 @@ Singleton {
   // Spacing from bottom edge of the screen (values > 10px can cause issues)
   readonly property int dockVerticalOffset: 6
   
-  // Applications to show on the dock (uses names of .desktop files in ~/.local/share/applications/)
+  // Applications to show on the dock 
+  // Uses names of .desktop files from ~/.local/share/applications/
   readonly property list<string> dockApps: [
     'kitty',
     'org.kde.dolphin',
@@ -85,10 +89,10 @@ Singleton {
   // ░█░█░█▀▀░█░█░█░█░▀▀█
   // ░▀░▀░▀▀▀░▀░▀░▀▀▀░▀▀▀
 
-  property real menuRowAlpha: 0.66
-  property real menuContainerAlpha: 0.25
+  property real menuRowAlpha: 0.5
+  property real menuContainerAlpha: 0.75
 
-  // Tabler icons for devices listed in AudioMenu
+  // Tabler icons for devices listed in ./Widgets/Menus/AudioMenu.qml
   // In the format of {<device.description>: <unicode string>}
   property var menuAudioDeviceSymbols: {
     'Laptop Speakers': Icons.tabler['laptop'],
@@ -97,7 +101,7 @@ Singleton {
     'Buds': Icons.tabler['device-airpods'],
     'Buds 2': Icons.tabler['device-airpods'],
     'USB Audio Headphones': Icons.tabler['usb'],
-    '_fallback': Icons.tabler['volume'] // used if the device's mapping is not set above
+    '_fallback': Icons.tabler['volume'] // used if the device has no mapping set above
   }
 
 

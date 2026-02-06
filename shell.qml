@@ -1,14 +1,14 @@
 import QtQuick
 
 import Quickshell
-import qs.Windows
-import qs.Theme
+import qs.views
+import qs.style
 
 
 Scope {
   Bar {}
   Dock {}
   OsdManager {}
-  SoundEffects {}
+  // SoundEffects {}
 }
 

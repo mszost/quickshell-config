@@ -3,6 +3,6 @@ pragma Singleton
 import Quickshell
 
 Singleton {
-  property bool audioMenuOpen: false
+  property bool menuAudioIsOpen: false
 }
 
