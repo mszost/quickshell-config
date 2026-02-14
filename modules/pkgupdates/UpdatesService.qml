@@ -1,18 +1,15 @@
-// Watches for available system updates.
-
 pragma Singleton
 
 import QtQuick
-
 import Quickshell
 import Quickshell.Io
-
 import qs.style
-
+import qs.modules.time
 
 Scope {
   id: root
   property string symbol: Icons.tabler['cloud-download']
+  
   property int numUpdates: 0
   readonly property bool shouldShowWidget: numUpdates > 10
 

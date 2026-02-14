@@ -1,21 +1,18 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
-
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Hyprland
-
 import qs
 import qs.style
+import qs.components.dock
 import qs.modules.hyprland
-
 
 Scope {
   id: root
   readonly property int padY: Config.dockVerticalOffset
-  readonly property int buffer: 14  // used as padding for popup and bgRect
-
+  readonly property int buffer: 12  // used as padding for popup and bgRect
   readonly property real bgAlpha: Config.dockAlpha ?? Config.alpha ?? 1.0
 
   Variants {
@@ -25,7 +22,7 @@ Scope {
       id: panel
       anchors.bottom: true
       implicitHeight: 0
-      implicitWidth: bgRect.width 
+      implicitWidth: 500//bgRect.width 
       color: 'transparent'
       exclusiveZone: 0
       
@@ -70,7 +67,7 @@ Scope {
           height: 73
           width: content.width + buffer*2
           radius: height * 0.275
-          color: Colors.alpha(Colors.background, bgAlpha)
+          color: Colors.alpha(Config.dockColorBg, bgAlpha)
           border.color: Colors.alpha(Colors.outlineVariant, 0.5)
           border.width: 1
           antialiasing: true
@@ -80,7 +77,7 @@ Scope {
           
           // Sliding in/out animation
           y: panel.dockIsVisible ? (parent.height - height - padY) : parent.height
-          Behavior on y { NumberAnimation { duration: 330; easing.type: Easing.OutBack } }
+          Behavior on y { NumberAnimation { duration: 250; easing.type: Easing.InOutCirc } }
 
           // Leaving the bounds of bgRect dismisses the dock
           HoverHandler { id: exitArea; margin: buffer } 
@@ -118,15 +115,17 @@ Scope {
 
                   // Hover animation 
                   Behavior on scale { NumberAnimation { 
-                    duration: 100
+                    duration: 300
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.5
                   }} 
 
                   // Click animation
                   SequentialAnimation on scale {
                     id: clickAnimation
                     running: false
-                    NumberAnimation { to: 0.90; duration: 75 }
-                    NumberAnimation { to: 1.15; duration: 75 }
+                    NumberAnimation { to: 0.90; duration: 90 }
+                    NumberAnimation { to: 1.10; duration: 90 }
                   }
                 }
               }

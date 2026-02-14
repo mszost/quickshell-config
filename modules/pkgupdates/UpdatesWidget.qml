@@ -1,11 +1,8 @@
 // Simple widget for system update reminders.
-// See Services/UpdatesService.qml
 
 import Quickshell.Hyprland
-
 import qs.style
 import qs.components.bar
-
 
 BarWidget { 
   id: root

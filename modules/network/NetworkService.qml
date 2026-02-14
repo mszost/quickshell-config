@@ -1,14 +1,11 @@
 pragma Singleton
 
 import QtQuick
-
 import Quickshell
 import Quickshell.Io
-
 import qs.style
 
 // Heavily based on https://github.com/end-4/dots-hyprland/
-
 Singleton {
   id: root
 

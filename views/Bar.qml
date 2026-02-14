@@ -1,19 +1,19 @@
 import QtQuick
 import QtQuick.Layouts
-
+import QtQuick.Effects
+import Qt5Compat.GraphicalEffects
 import Quickshell
-
 import qs
 import qs.style
 import qs.modules.audio
 import qs.modules.battery
+import qs.modules.backlight
 import qs.modules.hyprland
 import qs.modules.network
 import qs.modules.pkgupdates
 import qs.modules.session
 import qs.modules.time
 import qs.modules.tray
-
 
 Scope {
   id: root
@@ -24,7 +24,7 @@ Scope {
     PanelWindow {
       id: panel
       anchors { top: true; left: true; right: true }
-      implicitHeight: Config.barHeight 
+      implicitHeight: Config.barHeight + bgRect.padY 
       color: 'transparent' 
       visible: Config.barMonitors.includes(modelData.name)
 
@@ -34,14 +34,40 @@ Scope {
         !Config.barDynamic || HyprService.isWsTiled(HyprService.getWsForScreen(modelData))
       }
 
-      Behavior on height { NumberAnimation { duration: 350; easing.type: Easing.InOutCirc }}
+      Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.InOutCirc }}
+
+      RectangularShadow {
+        id: shadow
+        anchors.fill: bgRect
+        offset.x: -5
+        offset.y: -5
+        radius: bgRect.radius
+        blur: 8
+        spread: 2
+        color: Colors.shadow
+
+        // Enable layering to apply the mask
+        layer.enabled: true
+        // Expand the source rect to include the blur/spread (adjust values as needed)
+        layer.sourceRect: Qt.rect(-blur, -blur, width + blur * 2, height + blur * 2)
+        
+        layer.effect: OpacityMask {
+          invert: true // Keeps the OUTSIDE of the mask
+          maskSource: Rectangle {
+            width: shadow.width
+            height: shadow.height
+            radius: shadow.radius
+            visible: false // The mask itself should not be drawn
+          }
+        }
+      }
 
       Rectangle {  
         id: bgRect
         anchors { fill: parent; topMargin: padY; leftMargin: padX; rightMargin: padX }
         radius: bgRadius
-        color: Colors.alpha(Config.barColorBg, bgAlpha) 
         antialiasing: true
+        color: Colors.alpha(Config.barColorBg, bgAlpha)
 
         // State handler: on change to panel.shouldTile, sleep before updaing dimensions
         states: State {
@@ -61,18 +87,30 @@ Scope {
           }
         }
 
+      // RectangularShadow {
+      //   width: bgRect.width
+      //   height: bgRect.height
+      //   radius: bgRect.radius
+      //   z: -1
+      //   offset.x: -5
+      //   offset.y: -5
+      //   blur: 5
+      //   spread: 1
+      //   color: Colors.shadow //Qt.darker(bgRect.color, 1.6)
+      // }
+
         property real bgAlpha: panel.shouldTile ? Config.barAlpha : Config.barAlphaFloating ?? Config.alpha ?? 1.0
         property int bgRadius: Config.barCornerRadius
         property int padX: Config.barHorizontalOffset
         property int padY: Config.barVerticalOffset
 
         // looks glitchy because the height is being updated before the padding.
-        Behavior on height { NumberAnimation { duration: 350; easing.type: Easing.InOutCirc }}
+        Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.InOutCirc }}
         Behavior on bgAlpha { NumberAnimation { duration: 300; easing.type: Easing.OutQuad }}
-        Behavior on radius { NumberAnimation { duration: 700; easing.type: Easing.OutQuad }}
-        Behavior on anchors.topMargin { NumberAnimation { duration: 350; easing.type: Easing.InOutCirc }}
-        Behavior on anchors.leftMargin { NumberAnimation { duration: 500; easing.type: Easing.InOutCubic }}
-        Behavior on anchors.rightMargin { NumberAnimation { duration: 500; easing.type: Easing.InOutCubic }}
+        Behavior on radius { NumberAnimation { duration: 600; easing.type: Easing.OutQuad }}
+        Behavior on anchors.topMargin { NumberAnimation { duration: 300; easing.type: Easing.InOutCirc }}
+        Behavior on anchors.leftMargin { NumberAnimation { duration: 300; easing.type: Easing.InOutCubic }}
+        Behavior on anchors.rightMargin { NumberAnimation { duration: 300; easing.type: Easing.InOutCubic }}
 
 
         RowLayout {
@@ -108,8 +146,8 @@ Scope {
               spacing: 9
               readonly property var position: 'right'
 
-              SysTrayWidget {} 
-              BlueLightFilterWidget {}
+              SysTrayWidget {}
+              BacklightWidget {}
               NetworkWidget {}
               AudioWidget {}
               BatteryWidget {}

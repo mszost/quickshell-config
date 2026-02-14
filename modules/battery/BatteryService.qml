@@ -3,9 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Services.UPower
-
 import qs.style
-
 
 Singleton {
   id: root
@@ -32,9 +30,9 @@ Singleton {
    if (percentage >= 60) return Icons.tabler['battery-3']
    if (percentage >= 40) return Icons.tabler['battery-2']
    if (percentage >= 30) return Icons.tabler['battery-1']
-   if (percentage >= 20) return Icons.tabler['battery']
-   if (percentage >= 15) return Icons.tabler['battery-critical']
-   return Icons.tabler['alert-triangle']
+   if (percentage >= 15) return Icons.tabler['battery']
+   return Icons.tabler['battery-exclamation']
+   // return Icons.tabler['alert-triangle']
   }
 }
 

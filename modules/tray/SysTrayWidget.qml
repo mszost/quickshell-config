@@ -1,14 +1,12 @@
 import QtQuick
 import QtQuick.Layouts
-
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
-
 import qs.style
 
 Item {
-  id:root
+  id: root
   implicitWidth: content.implicitWidth 
   implicitHeight: content.implicitHeight
 

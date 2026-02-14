@@ -1,7 +1,6 @@
 import qs.style
 import qs.components.bar
 
-
 BarWidget {
   id: root
   // text: NetworkService.networkName

@@ -12,10 +12,55 @@ pragma Singleton
 import Quickshell
 
 Singleton {
-  property var tabler: {
-    'alert-triangle': '\uEA06',
-    'adjustments': '\uEA03',
+  // readonly property string alertTriangle: '\uea06' 
+  // readonly property string adjustments: '\uea03'
+  //
+  // readonly property string power: '\ueb0d'
+  // readonly property string logout: '\ueba8'
+  // readonly property string reload: '\uf3ae'
+  // readonly property string zzz: '\uf228'
+  //
+  // readonly property string batteryZero
+  // readonly property string batteryLow
+  // readonly property string batteryMid
+  // readonly property string batteryHigh
+  // readonly property string batteryCritical
+  // readonly property string batteryOff
+  // readonly property string batteryCharging
+  // readonly property string batteryCharging2
+  // readonly property string batterySpark
+  //
+  // readonly property string wifiZero: '\uEBA3'
+  // readonly property string wifiLow: '\u'
+  // readonly property string wifiMid
+  // readonly property string wifiHigh
+  // readonly property string wifiOff
+  // readonly property string router
+  // readonly property string sitemap
+  // readonly property string worldX
+  // readonly property string worldQuestion
+  //
+  // readonly property string volumeZero
+  // readonly property string volumeLow
+  // readonly property string volumeMid
+  // readonly property string volumeHigh
+  // readonly property string volumeMute
+  //
+  // readonly property string usb
+  // readonly property string laptop
+  // readonly property string headphones
+  // readonly property string airpods
+  // readonly property string headphones
+  // readonly property string speaker
+  //
+  // readonly property string cloudDownload
+  // readonly property string sun
+  // readonly property string sunTemperature
 
+
+  property var tabler: {
+    'power': '\ueb0d',
+    'adjustments': '\uea03',
 
     'battery-3': '\uEA34',
     'battery-1': '\uEA2F',
@@ -51,6 +96,7 @@ Singleton {
     'device-speaker': '\uEA8B',
 
     'cloud-download': '\uEA71',
+
 
     'sun': '\uEB30',
     'temperature-sun': '\uFDA4',

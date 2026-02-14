@@ -1,8 +1,6 @@
 import QtQuick
 import QtMultimedia
-
 import Quickshell
-
 import qs
 import qs.modules.audio
 

@@ -1,14 +1,11 @@
 import QtQuick
 import QtQuick.Layouts
-
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
-
 import qs
 import qs.style
 import qs.components.bar
-
 
 BarWidget {
   id: root
@@ -20,7 +17,6 @@ BarWidget {
     if (menu.isVisible) return hoverColor
     return Colors.foreground
   }
-
   
   // Scroll event handler
   mouseArea.onWheel: (wheelEvent) => {
@@ -31,7 +27,7 @@ BarWidget {
 
   mouseArea.onClicked: menu.isVisible = true
 
-  AudioMenu {
+  AudioPanel {
     id: menu
     boundItem: root
     widgetContainerPos: root.widgetContainerPos

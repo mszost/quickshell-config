@@ -4,11 +4,8 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 
-
 Singleton {
   id: root
-
-  readonly property string focusedWindowTitle: Hyprland.activeToplevel?.title ?? ''
 
   // Provides fast lookup for workspace-related functions. 
   // Building this is expensive, but it is reevaluated far less
@@ -53,8 +50,7 @@ Singleton {
     return isWsOccupied(getWsForScreen(screen))
   }
 
-  // function isScreenFocused(screen) {
-  // }
+  readonly property string focusedWindowTitle: Hyprland.activeToplevel?.title ?? ''
 
   // Refreshes Quickshell's window tracking when Hyprland fires an IPC event that suggests 
   // a potential change of the tiled/floating state of a workspace. Because lastIpcObject 

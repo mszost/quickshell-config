@@ -2,7 +2,6 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
-
 import qs.style
 
 Singleton {
@@ -26,14 +25,21 @@ Singleton {
 
 
 
+  // ░█░█░▀█▀░█▀▄░█▀▀░█▀▀░▀█▀░█▀▀
+  // ░█▄█░░█░░█░█░█░█░█▀▀░░█░░▀▀█
+  // ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
+
+  // readonly property bool 
+
+
   // ░█▀▄░█▀█░█▀▄
   // ░█▀▄░█▀█░█▀▄
   // ░▀▀░░▀░▀░▀░▀
 
-  readonly property real barAlpha: 0.70
-  readonly property real barAlphaFloating: 0.5
-  readonly property color barColorBg: Colors.background
-  readonly property int barHeight: 35
+  readonly property real barAlpha: 1.0
+  readonly property real barAlphaFloating: 0.75
+  readonly property color barColorBg: Colors.surfaceDim
+  readonly property int barHeight: 36
 
   // Monitors that the bar should appear on
   readonly property list<string> barMonitors: ['eDP-2', 'DP-10', 'HDMI-1']
@@ -41,14 +47,14 @@ Singleton {
   // If enabled the bar will switch between 'floating' and 'solid'
   // states depending on the presence of windows in the workspace.
   // Otherwise, the default state is 'solid'
-  readonly property bool barDynamic: false
+  readonly property bool barDynamic: true
   
   // Whether to show labels for bar widgets. Options: 'show', 'hide', or 'dynamic'
   // Can also be set individually for each widget in ./Widgets/Bar/<widget>
   // readonly property string barLabelStyle: 'dynamic'
   
   // Spacing from the edges of the screen (only applies to floating state)
-  property int barVerticalOffset: 7
+  property int barVerticalOffset: 5
   property int barHorizontalOffset: 16
   property int barCornerRadius: 10
 
@@ -58,8 +64,9 @@ Singleton {
   // ░█░█░█░█░█░░░█▀▄
   // ░▀▀░░▀▀▀░▀▀▀░▀░▀
 
-  readonly property real dockAlpha: 0.25
-  readonly property real dockAlphaOutline: 0.5
+  readonly property real dockAlpha: 0.66
+  readonly property real dockAlphaOutline: 0.80
+  readonly property color dockColorBg: Colors.surfaceDim
 
   // Monitors that the dock should appear on
   readonly property list<string> dockMonitors: ['eDP-2', 'DP-10', 'HDMI-1']
@@ -89,8 +96,8 @@ Singleton {
   // ░█░█░█▀▀░█░█░█░█░▀▀█
   // ░▀░▀░▀▀▀░▀░▀░▀▀▀░▀▀▀
 
-  property real menuRowAlpha: 0.5
-  property real menuContainerAlpha: 0.75
+  property real menuRowAlpha: 1.0
+  property real menuContainerAlpha: 0.80
 
   // Tabler icons for devices listed in ./Widgets/Menus/AudioMenu.qml
   // In the format of {<device.description>: <unicode string>}
@@ -110,7 +117,7 @@ Singleton {
   // ░█░█░▀▀█░█░█
   // ░▀▀▀░▀▀▀░▀▀░
 
-  property real osdAlpha: 0.25
+  property real osdAlpha: 0.80
   // Use alternative style for OSDs, inspired by https://github.com/end-4/dots-hyprland
   // property bool osdAltStyle: true
 }

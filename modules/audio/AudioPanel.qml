@@ -1,17 +1,14 @@
 import QtQuick
 import QtQuick.Layouts
-
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
-
 import qs
 import qs.style
 import qs.templates
 import qs.components.bar
 import qs.components.common
-
 
 Scope {
   id: root
@@ -27,7 +24,7 @@ Scope {
 
   property real bgAlpha: Config.menuRowAlpha ?? Config.alpha ?? 1.0
 
-  ContextMenu {
+  Panel {
     id: menu
     boundItem: root.boundItem
     widgetContainerPos: root.widgetContainerPos

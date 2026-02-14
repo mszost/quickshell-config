@@ -1,5 +1,4 @@
 import QtQuick
-
 import qs.style
 import qs.components.bar
 

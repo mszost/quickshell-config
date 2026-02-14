@@ -1,7 +1,5 @@
-// Template for a Widget in the bar containing two Text items side-by-side (an icon and a label)
-// See Widgets/Bar/
-
 import QtQuick
+import qs
 import qs.style
 
 Item {
@@ -15,6 +13,9 @@ Item {
   // RowLayout
   property alias spacing: content.spacing
   property alias layoutDirection: content.layoutDirection
+
+  // Pill 
+  property alias pillMargins: bgRect.anchors.margins
 
   // Text items (label and icon)
   property alias text: label.text
@@ -46,13 +47,18 @@ Item {
     }
   }
 
-  // Rectangle {
-  //   id: bgRect
-  //   anchors.fill: parent
-  //   anchors.margins: -2
-  //   color: Colors.alpha(Colors.debug, 0.33)
-  //   radius: height/4
-  // }
+  Rectangle {
+    id: bgRect
+    anchors {
+      fill: parent
+      margins: -5
+      // leftMargin: -6; rightMargin: -6
+      // topMargin: -6; bottomMargin: -6
+    }
+    radius: height
+    color: 'transparent'//Config.barColorBg
+    // border.color: Colors.debug
+  }
 
   Row {
     id: content
@@ -71,8 +77,6 @@ Item {
           
     Text {
       id: icon
-      anchors.verticalCenter: parent.verticalCenter
-      anchors.verticalCenterOffset: -1
       font.family: Fonts.barIcon.family
       font.pixelSize: Fonts.barIcon.pixelSize
       font.weight: Fonts.barIcon.weight 

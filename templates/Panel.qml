@@ -1,15 +1,12 @@
 // Template for a drop-down context menu.
 // Intended to be attached to an instance of BarWidget.
-// See Widgets/Menus/
+// See modules/audio/AudioMenu.qml
 
 import QtQuick
-
 import Quickshell
 import Quickshell.Hyprland
-
 import qs
 import qs.style
-
 
 Scope {
   id: root
@@ -21,9 +18,10 @@ Scope {
   readonly property int radius: 16
   readonly property int padding: 12
   readonly property int yOffset: 26
+  // Sets a minimum distance from the sides of the screen
   readonly property int xOffset: switch (widgetContainerPos) {
-    case ('right'): return -40
-    case ('left'): return 40
+    case ('right'): return -45
+    case ('left'): return 45
     default: return 20
   } 
 
@@ -59,7 +57,9 @@ Scope {
       id: bgRect
       width: parent.width
       height: column.height + (root.padding * 2)
-      radius: root.radius
+      // radius: root.radius /
+      bottomLeftRadius: root.radius
+      bottomRightRadius: root.radius
       color: Colors.alpha(Colors.surfaceDim, root.bgAlpha)
 
       focus: true 
@@ -69,7 +69,7 @@ Scope {
       y: root.isVisible ? 0 : (-1 * height)
       Behavior on y { 
         NumberAnimation { 
-          duration: 200
+          duration: 250
           easing.type: Easing.InOutCirc
           onRunningChanged: {
             if (!running && !root.isVisible) {
