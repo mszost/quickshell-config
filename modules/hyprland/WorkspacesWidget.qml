@@ -1,10 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
-
 import Quickshell
 import Quickshell.Hyprland
 import qs.style
-
 
 Rectangle {
   id: bgRect
@@ -17,11 +15,10 @@ Rectangle {
 
   Row { 
     id: wsRow
-    // anchors.verticalCenter: parent.verticalCenter
     spacing: 5
 
     Repeater {
-      model: [1,2,3,4,5,6,7]//Hyprland.workspaces.values
+      model: [1,2,3,4,5,6,7]
 
       Rectangle { 
         id: wsIcon
@@ -37,24 +34,11 @@ Rectangle {
           else return Colors.surfaceDim
         }
 
-        Behavior on color { ColorAnimation { 
-          duration: 75
-          easing.type: Easing.OutInQuad 
-        }}
         Behavior on width { NumberAnimation { 
           duration: 375
           easing.type: Easing.OutBack 
           easing.overshoot: 2.5
         }}
-
-        // Text {
-        //   anchors.centerIn:parent
-        //   color: Colors.surfaceDim
-        //   font.family: Fonts.jetbrains.family
-        //   font.pixelSize: 8
-        //   font.weight: 1000
-        //   text: modelData.id
-        // }
       }
     }
   }
