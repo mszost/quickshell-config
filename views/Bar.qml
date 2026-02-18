@@ -36,32 +36,6 @@ Scope {
 
       Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.InOutCirc }}
 
-      // RectangularShadow {
-      //   id: shadow
-      //   anchors.fill: bgRect
-      //   offset.x: -5
-      //   offset.y: -5
-      //   radius: bgRect.radius
-      //   blur: 8
-      //   spread: 2
-      //   color: Colors.shadow
-      //
-      //   // Enable layering to apply the mask
-      //   layer.enabled: true
-      //   // Expand the source rect to include the blur/spread (adjust values as needed)
-      //   layer.sourceRect: Qt.rect(-blur, -blur, width + blur * 2, height + blur * 2)
-      //
-      //   layer.effect: OpacityMask {
-      //     invert: true // Keeps the OUTSIDE of the mask
-      //     maskSource: Rectangle {
-      //       width: shadow.width
-      //       height: shadow.height
-      //       radius: shadow.radius
-      //       visible: false // The mask itself should not be drawn
-      //     }
-      //   }
-      // }
-
       Rectangle {  
         id: bgRect
         anchors { fill: parent; topMargin: padY; leftMargin: padX; rightMargin: padX }
@@ -86,18 +60,6 @@ Scope {
             PropertyAction { properties: 'padX', 'padY', 'bgRadius', 'height' }
           }
         }
-
-      // RectangularShadow {
-      //   width: bgRect.width
-      //   height: bgRect.height
-      //   radius: bgRect.radius
-      //   z: -1
-      //   offset.x: -5
-      //   offset.y: -5
-      //   blur: 5
-      //   spread: 1
-      //   color: Colors.shadow //Qt.darker(bgRect.color, 1.6)
-      // }
 
         property real bgAlpha: panel.shouldTile ? Config.barAlpha : Config.barAlphaFloating ?? Config.alpha ?? 1.0
         property int bgRadius: Config.barCornerRadius
