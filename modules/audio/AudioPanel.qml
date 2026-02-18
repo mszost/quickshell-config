@@ -4,7 +4,6 @@ import Quickshell.Widgets
 import Quickshell.Hyprland
 import qs
 import qs.style
-import qs.templates
 import qs.components.panel
 
 Scope {

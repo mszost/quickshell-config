@@ -3,7 +3,7 @@ import Quickshell
 
 import qs
 import qs.modules.audio
-import qs.templates
+import qs.components.common
 
 Scope {
   id: root

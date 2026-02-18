@@ -15,11 +15,11 @@ BarWidget {
     if (wheelEvent.angleDelta.y < 0) BacklightService.setBrightness(BacklightService.percentage - step)
   }
 
-  mouseArea.onClicked: menu.isVisible = true
+  // mouseArea.onClicked: menu.isVisible = true
 
-  BacklightPanel {
-    id: menu
-    boundItem: root
-    widgetContainerPos: root.widgetContainerPos
-  }
+  // BacklightPanel {
+  //   id: menu
+  //   boundItem: root
+  //   widgetContainerPos: root.widgetContainerPos
+  // }
 }
