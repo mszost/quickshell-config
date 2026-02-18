@@ -37,7 +37,7 @@ Singleton {
   // ░▀▀░░▀░▀░▀░▀
 
   readonly property real barAlpha: 1.0
-  readonly property real barAlphaFloating: 0.75
+  readonly property real barAlphaFloating: 0.85
   readonly property color barColorBg: Colors.surfaceDim
   readonly property int barHeight: 36
 
@@ -56,7 +56,7 @@ Singleton {
   // Spacing from the edges of the screen (only applies to floating state)
   property int barVerticalOffset: 5
   property int barHorizontalOffset: 16
-  property int barCornerRadius: 10
+  property int barCornerRadius: 11
 
 
 
@@ -64,8 +64,8 @@ Singleton {
   // ░█░█░█░█░█░░░█▀▄
   // ░▀▀░░▀▀▀░▀▀▀░▀░▀
 
-  readonly property real dockAlpha: 0.66
-  readonly property real dockAlphaOutline: 0.80
+  readonly property real dockAlpha: 0.80
+  readonly property real dockAlphaOutline: 0.85
   readonly property color dockColorBg: Colors.surfaceDim
 
   // Monitors that the dock should appear on
@@ -92,16 +92,18 @@ Singleton {
 
 
 
-  // ░█▄█░█▀▀░█▀█░█░█░█▀▀
-  // ░█░█░█▀▀░█░█░█░█░▀▀█
-  // ░▀░▀░▀▀▀░▀░▀░▀▀▀░▀▀▀
+  // ░█▀█░█▀█░█▀█░█▀▀░█░░░█▀▀
+  // ░█▀▀░█▀█░█░█░█▀▀░█░░░▀▀█
+  // ░▀░░░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀
 
-  property real menuRowAlpha: 1.0
-  property real menuContainerAlpha: 0.80
+  readonly property real panelContainerAlpha: 0.85
+  readonly property real panelBlockAlpha: 1.0
+
+  readonly property int panelRadius: 12
 
   // Tabler icons for devices listed in ./Widgets/Menus/AudioMenu.qml
   // In the format of {<device.description>: <unicode string>}
-  property var menuAudioDeviceSymbols: {
+  readonly property var panelAudioDeviceSymbols: {
     'Laptop Speakers': Icons.tabler['laptop'],
     'QC45': Icons.tabler['headphones'],
     'Aux': Icons.tabler['device-speaker'],

@@ -48,7 +48,7 @@ QtObject {
 
   readonly property font menuHeading:     Qt.font({ family: _rubikLoader.name,   pixelSize: 17, weight: 600 })
   readonly property font menuHeadingIcon: Qt.font({ family: _tablerLoader.name,  pixelSize: 22, weight: 600 })
-  readonly property font menuSubheading:  Qt.font({ family: _ibmPlexLoader.name, pixelSize: 15, weight: 500 })  
+  readonly property font menuSubheading:  Qt.font({ family: _ibmPlexLoader.name, pixelSize: 14, weight: 500 })  
   readonly property font menuBody: ibmPlex 
 }
 
