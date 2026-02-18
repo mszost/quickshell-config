@@ -36,31 +36,31 @@ Scope {
 
       Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.InOutCirc }}
 
-      RectangularShadow {
-        id: shadow
-        anchors.fill: bgRect
-        offset.x: -5
-        offset.y: -5
-        radius: bgRect.radius
-        blur: 8
-        spread: 2
-        color: Colors.shadow
-
-        // Enable layering to apply the mask
-        layer.enabled: true
-        // Expand the source rect to include the blur/spread (adjust values as needed)
-        layer.sourceRect: Qt.rect(-blur, -blur, width + blur * 2, height + blur * 2)
-        
-        layer.effect: OpacityMask {
-          invert: true // Keeps the OUTSIDE of the mask
-          maskSource: Rectangle {
-            width: shadow.width
-            height: shadow.height
-            radius: shadow.radius
-            visible: false // The mask itself should not be drawn
-          }
-        }
-      }
+      // RectangularShadow {
+      //   id: shadow
+      //   anchors.fill: bgRect
+      //   offset.x: -5
+      //   offset.y: -5
+      //   radius: bgRect.radius
+      //   blur: 8
+      //   spread: 2
+      //   color: Colors.shadow
+      //
+      //   // Enable layering to apply the mask
+      //   layer.enabled: true
+      //   // Expand the source rect to include the blur/spread (adjust values as needed)
+      //   layer.sourceRect: Qt.rect(-blur, -blur, width + blur * 2, height + blur * 2)
+      //
+      //   layer.effect: OpacityMask {
+      //     invert: true // Keeps the OUTSIDE of the mask
+      //     maskSource: Rectangle {
+      //       width: shadow.width
+      //       height: shadow.height
+      //       radius: shadow.radius
+      //       visible: false // The mask itself should not be drawn
+      //     }
+      //   }
+      // }
 
       Rectangle {  
         id: bgRect

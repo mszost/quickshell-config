@@ -64,9 +64,9 @@ Scope {
         Rectangle {
           id: bgRect
           anchors.horizontalCenter: parent.horizontalCenter
-          height: 73
-          width: content.width + buffer*2
-          radius: height * 0.275
+          height: 74
+          width: content.width + buffer*2.5
+          radius: height * 0.3
           color: Colors.alpha(Config.dockColorBg, bgAlpha)
           border.color: Colors.alpha(Colors.outlineVariant, 0.5)
           border.width: 1
@@ -85,7 +85,7 @@ Scope {
           RowLayout {
             id: content
             anchors.centerIn: parent
-            spacing: 8
+            spacing: 7
             
             Repeater {
               model: Config.dockApps
