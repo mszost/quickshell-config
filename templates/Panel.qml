@@ -1,6 +1,5 @@
-// Template for a drop-down context menu.
 // Intended to be attached to an instance of BarWidget.
-// See modules/audio/AudioMenu.qml
+// See modules/audio/AudioPanel.qml
 
 import QtQuick
 import Quickshell
@@ -10,11 +9,11 @@ import qs.style
 
 Scope {
   id: root
-  default property alias menuContent: column.data  // provided by files implementing this component
-  required property var boundItem  // the widget that this menu should appear under
+  default property alias menuContent: column.data
+  required property var boundItem  // the widget that this panel should appear under
   required property var widgetContainerPos
 
-  readonly property int width: 350
+  property int width: 375
   readonly property int radius: 16
   readonly property int padding: 12
   readonly property int yOffset: 26
@@ -25,7 +24,7 @@ Scope {
     default: return 20
   } 
 
-  readonly property real bgAlpha: Config.menuContainerAlpha ?? Config.alpha ?? 1.0
+  readonly property real bgAlpha: Config.panelContainerAlpha ?? Config.alpha ?? 1.0
   
   property bool isVisible: false
   onIsVisibleChanged: focusGrab.active = isVisible
@@ -57,7 +56,6 @@ Scope {
       id: bgRect
       width: parent.width
       height: column.height + (root.padding * 2)
-      // radius: root.radius /
       bottomLeftRadius: root.radius
       bottomRightRadius: root.radius
       color: Colors.alpha(Colors.surfaceDim, root.bgAlpha)
@@ -71,7 +69,8 @@ Scope {
         NumberAnimation { 
           duration: 250
           easing.type: Easing.InOutCirc
-          onRunningChanged: {
+          // Wait for animation to finish before toggling visibility
+          onRunningChanged: {  
             if (!running && !root.isVisible) {
               popup.animatingOut = false
             } else if (running && !root.isVisible) {
@@ -89,7 +88,7 @@ Scope {
           right: parent.right
           margins: root.padding
         }
-        spacing: 11
+        spacing: 10
       }
     }
   }
