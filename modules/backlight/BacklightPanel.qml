@@ -35,8 +35,8 @@ Scope {
       value: BacklightService.percentage / 100
       onMoved: (sliderValue) => BacklightService.setBrightness(sliderValue * 100)
       onWheel: (wheel) => {
-        if (event.angleDelta.y > 0) BacklightService.setBrightness(BacklightService.percentage + 2)
-        if (event.angleDelta.y < 0) BacklightService.setBrightness(BacklightService.percentage - 2)
+        if (wheel.angleDelta.y > 0) BacklightService.setBrightness(BacklightService.percentage + 5)
+        if (wheel.angleDelta.y < 0) BacklightService.setBrightness(BacklightService.percentage - 5)
       }
     }
   }
