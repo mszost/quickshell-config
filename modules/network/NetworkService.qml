@@ -11,25 +11,24 @@ Singleton {
 
   property bool ethernet: false
   property bool wifi: true
-  // property bool vpn: false
   property bool wifiEnabled: false
   property string networkName
   property string wifiStatus
   property int networkStrength
 
   property string symbol: {
-    if (ethernet) return Icons.tabler['sitemap']
+    if (ethernet) return Icons.ethernet
     if (wifiEnabled) {
-    if (networkStrength > 75) return Icons.tabler['wifi']
-    if (networkStrength > 50) return Icons.tabler['wifi-2']
-    if (networkStrength > 25) return Icons.tabler['wifi-1']
-    if (networkStrength > 0)  return Icons.tabler['wifi-0']
-    return Icons.tabler['world-question']
-    } 
-    if (wifiStatus === 'connecting') return Icons.tabler['router']
-    if (wifiStatus === 'disconnected') return Icons.tabler['world-x']
-    if (wifiStatus === 'disabled') return Icons.tabler['wifi-off']
-    return Icons.tabler['alert-triangle']
+      if (networkStrength > 75) return Icons.wifi4
+      if (networkStrength > 50) return Icons.wifi3
+      if (networkStrength > 25) return Icons.wifi2
+      if (networkStrength > 0)  return Icons.wifi1
+      return Icons.wifi0
+    }
+    if (wifiStatus === 'connecting') return Icons.router
+    if (wifiStatus === 'disconnected') return Icons.worldX
+    if (wifiStatus === 'disabled') return Icons.wifiOff
+    return Icons.alertTriangle
   }
 
   // re-run all checks on a 30-second interval

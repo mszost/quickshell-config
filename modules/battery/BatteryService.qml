@@ -22,17 +22,16 @@ Singleton {
  // }
 
  readonly property string symbol: {
-   if (!isAvailable)     return Icons.tabler['battery-off']
-   if (isCharging)       return Icons.tabler['battery-charging']
-   if (isPlugged)        return Icons.tabler['battery-charging-2']
-   if (isCritical)       return Icons.tabler['battery-exclamation']
-   if (percentage >= 80) return Icons.tabler['battery-4']
-   if (percentage >= 60) return Icons.tabler['battery-3']
-   if (percentage >= 40) return Icons.tabler['battery-2']
-   if (percentage >= 30) return Icons.tabler['battery-1']
-   if (percentage >= 15) return Icons.tabler['battery']
-   return Icons.tabler['battery-exclamation']
-   // return Icons.tabler['alert-triangle']
+   if (!isAvailable)     return Icons.batteryOff
+   if (isCharging)       return Icons.batteryCharging
+   if (isPlugged)        return Icons.batteryPlugged
+   if (isCritical)       return Icons.batteryCritical
+   if (percentage >= 80) return Icons.battery4
+   if (percentage >= 60) return Icons.battery3
+   if (percentage >= 40) return Icons.battery2
+   if (percentage >= 30) return Icons.battery1
+   if (percentage >= 15) return Icons.battery0
+   return Icons.batteryCritical
   }
 }
 

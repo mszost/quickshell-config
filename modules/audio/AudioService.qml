@@ -9,11 +9,11 @@ Singleton {
   id: root
 
   readonly property string symbol: {
-    if (AudioService.isMuted) return Icons.tabler['volume-mute']
-    if (AudioService.volumeAsInt > 50) return Icons.tabler['volume-high']
-    if (AudioService.volumeAsInt > 20) return Icons.tabler['volume-mid']
-    if (AudioService.volumeAsInt > 0) return Icons.tabler['volume-low']
-    return Icons.tabler['volume-zero']
+    if (AudioService.isMuted) return Icons.volumeMute
+    if (AudioService.volumeAsInt > 50) return Icons.volume3
+    if (AudioService.volumeAsInt > 25) return Icons.volume2
+    if (AudioService.volumeAsInt > 0) return Icons.volume1
+    return Icons.volume0
   }
 
   readonly property list<PwNode> availableSinks: {

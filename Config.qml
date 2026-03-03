@@ -12,7 +12,7 @@ Singleton {
   // ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀
  
   // See ./Theme/Colors.qml for available color palettes
-  property string theme: 'nord'
+  property string theme: 'gruvbox-material'
   
   // Enable or disable sound effects
   // If you don't want sounds at all, removing the `SoundEffects {}` initialization
@@ -37,7 +37,7 @@ Singleton {
   // ░▀▀░░▀░▀░▀░▀
 
   readonly property real barAlpha: 1.0
-  readonly property real barAlphaFloating: 0.85
+  readonly property real barAlphaFloating: 0.8
   readonly property color barColorBg: Colors.surfaceDim
   readonly property int barHeight: 36
 
@@ -64,8 +64,8 @@ Singleton {
   // ░█░█░█░█░█░░░█▀▄
   // ░▀▀░░▀▀▀░▀▀▀░▀░▀
 
-  readonly property real dockAlpha: 0.80
-  readonly property real dockAlphaOutline: 0.85
+  readonly property real dockAlpha: 0.65
+  readonly property real dockAlphaOutline: 0.80
   readonly property color dockColorBg: Colors.surfaceDim
 
   // Monitors that the dock should appear on
@@ -79,7 +79,7 @@ Singleton {
   readonly property list<string> dockApps: [
     'kitty',
     'org.kde.dolphin',
-    'firefox',
+    'zen',
     'vivaldi-stable',
     'obsidian',
     'code-oss',
@@ -96,7 +96,7 @@ Singleton {
   // ░█▀▀░█▀█░█░█░█▀▀░█░░░▀▀█
   // ░▀░░░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀
 
-  readonly property real panelContainerAlpha: 0.85
+  readonly property real panelContainerAlpha: 0.8
   readonly property real panelBlockAlpha: 1.0
 
   readonly property int panelRadius: 12
@@ -104,13 +104,13 @@ Singleton {
   // Tabler icons for devices listed in ./Widgets/Menus/AudioMenu.qml
   // In the format of {<device.description>: <unicode string>}
   readonly property var panelAudioDeviceSymbols: {
-    'Laptop Speakers': Icons.tabler['laptop'],
-    'QC45': Icons.tabler['headphones'],
-    'Aux': Icons.tabler['device-speaker'],
-    'Buds': Icons.tabler['device-airpods'],
-    'Buds 2': Icons.tabler['device-airpods'],
-    'USB Audio Headphones': Icons.tabler['usb'],
-    '_fallback': Icons.tabler['volume'] // used if the device has no mapping set above
+    'Laptop Speakers': Icons.laptop,
+    'QC45': Icons.headphones,
+    'Aux': Icons.speaker,
+    'Buds': Icons.airpods,
+    'Buds 2': Icons.airpods,
+    'USB Audio Headphones': Icons.usb,
+    '_fallback': Icons.volume3 // used if the device has no mapping set above
   }
 
 

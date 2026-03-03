@@ -8,7 +8,7 @@ import qs.modules.time
 
 Scope {
   id: root
-  property string symbol: Icons.tabler['cloud-download']
+  property string symbol: Icons.cloudDownload
   
   property int numUpdates: 0
   readonly property bool shouldShowWidget: numUpdates > 10

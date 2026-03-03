@@ -10,7 +10,7 @@ import qs.style
 
 Singleton {
   id: root
-  readonly property string symbol: filterActive ? Icons.tabler['temperature-sun'] : Icons.tabler['sun']
+  readonly property string symbol: filterActive ? Icons.sunTemperature : Icons.sun
   readonly property int percentage: (brightness / _maxBrightness) * 100
   property int brightness: 0
   property int _maxBrightness: 0
