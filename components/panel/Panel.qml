@@ -19,8 +19,8 @@ Scope {
   readonly property int yOffset: 26
   // Sets a minimum distance from the sides of the screen
   readonly property int xOffset: switch (widgetContainerPos) {
-    case ('right'): return -45
-    case ('left'): return 45
+    case ('right'): return -50
+    case ('left'): return 50
     default: return 20
   } 
 

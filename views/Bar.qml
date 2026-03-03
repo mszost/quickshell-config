@@ -87,7 +87,7 @@ Scope {
             Row {
               id: rowLeft
               anchors.verticalCenter: parent.verticalCenter
-              spacing: 9
+              spacing: 10
               readonly property var position: 'left'
               
               WorkspacesWidget {}
@@ -105,7 +105,7 @@ Scope {
             Row {
               id: rowRight
               anchors.verticalCenter: parent.verticalCenter
-              spacing: 9
+              spacing: 10
               readonly property var position: 'right'
 
               SysTrayWidget {}

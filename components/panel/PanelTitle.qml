@@ -47,7 +47,7 @@ PanelRow {
       cursorShape: Qt.PointingHandCursor
       
       Text {
-        text: Icons.tabler['adjustments']
+        text: Icons.adjustments
         font: Fonts.menuHeadingIcon
         color: parent.containsMouse ? Colors.secondary : Colors.foreground
         Behavior on color { ColorAnimation { duration: 100; easing.type: Easing.InOutQuad } } 
