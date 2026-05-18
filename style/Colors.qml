@@ -79,6 +79,25 @@ QtObject {
       inverseOnSurface: Matugen.inverseOnSurface
     },
 
+    'rumda': {
+      background: '#5F4A42',
+      foreground: '#FCD7BA',
+      outline: '#E9CEBE',
+      outlineVariant: '#512324',
+      shadow: '#512324',
+      scrim: '#512324',
+
+      primary: '#809FBF',
+
+      secondary: '#899797',
+      
+      surface: '',
+      surfaceDim: '#482C28',
+      surfaceBright: '',
+
+
+    },
+
     'nord': {
       red: '#bf616a',
       orange: '##d08770',
@@ -129,7 +148,7 @@ QtObject {
     //   mOnErrorContainer: 
 
       surface: '#2e3440',
-      mOn_surface: '#d8dee9', 
+      mOnSurface: '#d8dee9', 
       surfaceDim: '#1f242e',
       surfaceBright: '#4c566a', // nord3
     //   surfaceContainerLowest: 
@@ -159,8 +178,9 @@ QtObject {
       shadow: '#000000',
       scrim: '#252423',
 
-      primary: '#a9b665',
+      // primary: '#a9b665',
       // primary: '#89b482',
+      primary: "#D8A657",
       mOnPrimary: '#414900',
       primaryContainer: '#32361a',
       mOnPrimaryContainer: '#6E7257',
@@ -170,7 +190,7 @@ QtObject {
     //   mOnPrimaryFixed: 
     //   mOnPrimaryFixedVariant: 
 
-      secondary: '#D8A657',
+      secondary: '#E78A4E',
       mOnSecondary: '#623C00',
       secondaryContainer: '#473c29',
       mOnSecondaryContainer: '#827865',
@@ -268,7 +288,7 @@ QtObject {
 
 
   readonly property color _debug: '#ff00ff'
-  readonly property color debug: Colors.alpha(_debug, 0.25)
+  readonly property color debug: Colors.alpha(_debug, 0.0)
   readonly property color red: _palettes[activeTheme].red
   // readonly property color red: _palettes[activeTheme].red
   // readonly property color orange: _palettes[activeTheme].orange

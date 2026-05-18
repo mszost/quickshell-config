@@ -21,6 +21,7 @@ Pane {
 
   contentItem: Column {
     id: column
+    width: root.availableWidth
     spacing: 4
   }
 }

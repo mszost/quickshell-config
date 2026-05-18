@@ -17,7 +17,7 @@ PanelRow {
 
   RowLayout {
     id: content
-    implicitWidth: parent.width
+    width: parent.width
     spacing: 8
 
     WrapperMouseArea {

@@ -16,22 +16,24 @@ Singleton {
   property string wifiStatus
   property int networkStrength
 
-  property string symbol: {
+  // TODO: fix race condition without resorting to recursion
+  property string symbol: getSymbol()
+
+  function getSymbol() {
     if (ethernet) return Icons.ethernet
     if (wifiEnabled) {
-      if (networkStrength > 75) return Icons.wifi4
-      if (networkStrength > 50) return Icons.wifi3
-      if (networkStrength > 25) return Icons.wifi2
-      if (networkStrength > 0)  return Icons.wifi1
-      return Icons.wifi0
+      if (networkStrength > 50) return Icons.wifi4
+      if (networkStrength > 25) return Icons.wifi3
+      if (networkStrength > 0) return Icons.wifi2
     }
     if (wifiStatus === 'connecting') return Icons.router
     if (wifiStatus === 'disconnected') return Icons.worldX
     if (wifiStatus === 'disabled') return Icons.wifiOff
-    return Icons.alertTriangle
+
+    return getSymbol()
   }
 
-  // re-run all checks on a 30-second interval
+  // Re-run all checks on a 30 second interval
   Timer {
     interval: 30000
     running: true

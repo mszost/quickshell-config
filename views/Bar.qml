@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
-import Qt5Compat.GraphicalEffects
 import Quickshell
 import qs
 import qs.style
@@ -87,10 +86,10 @@ Scope {
             Row {
               id: rowLeft
               anchors.verticalCenter: parent.verticalCenter
-              spacing: 10
+              spacing: 13
               readonly property var position: 'left'
               
-              WorkspacesWidget {}
+              ClockWidget {}
               UpdatesWidget {}
             }
           }
@@ -105,14 +104,14 @@ Scope {
             Row {
               id: rowRight
               anchors.verticalCenter: parent.verticalCenter
-              spacing: 10
+              spacing: 13
               readonly property var position: 'right'
 
               SysTrayWidget {}
-              BacklightWidget {}
               NetworkWidget {}
-              AudioWidget {}
-              BatteryWidget {}
+              BacklightWidget {}
+              AudioWidget { layoutDirection: Qt.RightToLeft } 
+              BatteryWidget { layoutDirection: Qt.RightToLeft }
               SessionWidget {}
             }
           }
@@ -128,7 +127,7 @@ Scope {
           Row {
             id: rowCenter
             anchors.verticalCenter: parent.verticalCenter
-            ClockWidget {}
+            WorkspacesWidget {}
           }
         }
       }

@@ -1,8 +1,11 @@
 import qs.components.bar 
+import qs.style
 
 BarWidget {
   id: root
-  // pillMargins: -8
   text: ClockService.datetime 
+  layoutDirection: Qt.RightToLeft
+  spacing: 5
+  icon: Icons.clock
 }
 

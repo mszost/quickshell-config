@@ -13,6 +13,7 @@ id: root
     repeat: false
   }
 
+  // Play on volume change
   SoundEffect {
     source: '../assets/sounds/audio-volume-change.wav'
     muted: Config.muteSounds

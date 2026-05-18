@@ -29,7 +29,7 @@ Singleton {
   // Run once at shell startup
   Process {
     id: getMaxBrightness
-    running: true
+    running: false
     command: ['sh', '-c', 
     `
       BL_PATH="/sys/class/backlight/$(ls /sys/class/backlight/ | head -n 1)"
@@ -41,7 +41,7 @@ Singleton {
   // Run continuously, watching for changes
   Process {
     id: getCurrentBrightness
-    running: true
+    running: false
     command: ["sh", "-c", 
     `
       BL_PATH="/sys/class/backlight/$(ls /sys/class/backlight/ | head -n 1)"

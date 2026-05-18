@@ -12,7 +12,7 @@ import qs.modules.hyprland
 Scope {
   id: root
   readonly property int padY: Config.dockVerticalOffset
-  readonly property int buffer: 12  // used as padding for popup and bgRect
+  readonly property int buffer: 8  // used as padding for popup and bgRect
   readonly property real bgAlpha: Config.dockAlpha ?? Config.alpha ?? 1.0
 
   Variants {
@@ -64,8 +64,8 @@ Scope {
         Rectangle {
           id: bgRect
           anchors.horizontalCenter: parent.horizontalCenter
-          height: 74
-          width: content.width + buffer*2.5
+          height: 64
+          width: content.width + buffer*3.25
           radius: height * 0.3
           color: Colors.alpha(Config.dockColorBg, bgAlpha)
           border.color: Colors.alpha(Colors.outlineVariant, 0.5)
@@ -77,7 +77,7 @@ Scope {
           
           // Sliding in/out animation
           y: panel.dockIsVisible ? (parent.height - height - padY) : parent.height
-          Behavior on y { NumberAnimation { duration: 250; easing.type: Easing.InOutCirc } }
+          Behavior on y { NumberAnimation { duration: 220; easing.type: Easing.InOutCirc } }
 
           // Leaving the bounds of bgRect dismisses the dock
           HoverHandler { id: exitArea; margin: buffer } 
@@ -85,17 +85,18 @@ Scope {
           RowLayout {
             id: content
             anchors.centerIn: parent
-            spacing: 7
+            spacing: 6
             
             Repeater {
               model: Config.dockApps
                              
               WrapperMouseArea {
                 id: iconArea
+                anchors.margins: -6
                 child: appIcon
                 resizeChild: false
-                Layout.preferredWidth: 55  // Actual displayed resolution, downscaled from appIcon.sourceSize 
-                Layout.preferredHeight: 55
+                Layout.preferredWidth: 41  // Actual displayed resolution, downscaled from appIcon.sourceSize 
+                Layout.preferredHeight: 41
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
                 onClicked: { 
@@ -110,22 +111,22 @@ Scope {
                   source: (DesktopEntries.applications.values, DesktopEntries.byId(modelData)?.icon ?? '') 
                   sourceSize.width: 128  // Render resolution
                   mipmap: true
-                  scale: iconArea.containsMouse ? 1.15 : 1.0
+                  scale: iconArea.containsMouse ? 1.125 : 1.0
                   visible: true
 
                   // Hover animation 
                   Behavior on scale { NumberAnimation { 
-                    duration: 300
+                    duration: 240
                     easing.type: Easing.OutBack
-                    easing.overshoot: 1.5
+                    easing.overshoot: 1.3
                   }} 
 
                   // Click animation
                   SequentialAnimation on scale {
                     id: clickAnimation
                     running: false
-                    NumberAnimation { to: 0.90; duration: 90 }
-                    NumberAnimation { to: 1.10; duration: 90 }
+                    NumberAnimation { to: 0.90; duration: 70 }
+                    NumberAnimation { to: 1.10; duration: 70 }
                   }
                 }
               }

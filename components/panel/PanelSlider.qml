@@ -46,7 +46,7 @@ PanelRow {
       StyledSlider {
         id: slider
         anchors.verticalCenter: parent.verticalCenter
-        width: parent.width - valueLabel.width
+        width: parent.width - valueLabel.width - parent.spacing
         value: root.value
         onMoved: root.moved(value)
       }
