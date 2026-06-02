@@ -43,8 +43,7 @@ Scope {
     implicitHeight: bgRect.height 
     color: 'transparent'
 
-    visible: root.isVisible || animatingOut
-    property bool animatingOut: false
+    visible: root.isVisible || bgRect.y > -bgRect.height
 
     HyprlandFocusGrab {
       id: focusGrab
@@ -69,14 +68,6 @@ Scope {
         NumberAnimation { 
           duration: 250
           easing.type: Easing.InOutCirc
-          // Wait for animation to finish before toggling visibility
-          onRunningChanged: {  
-            if (!running && !root.isVisible) {
-              popup.animatingOut = false
-            } else if (running && !root.isVisible) {
-              popup.animatingOut = true
-            }
-          }
         } 
       }
 
