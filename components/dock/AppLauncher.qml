@@ -12,8 +12,12 @@ WrapperMouseArea {
   Layout.preferredHeight: 55
   hoverEnabled: true
   cursorShape: Qt.PointingHandCursor
+  onPressed: (mouse) => {
+    if (mouse.button === Qt.LeftButton) {
+      clickAnimation.restart()
+    }
+  }
   onClicked: { 
-    clickAnimation.restart()
     DesktopEntries.byId(appId).execute()
   }
 
@@ -31,7 +35,7 @@ WrapperMouseArea {
 
     // Hover animation 
     Behavior on scale { NumberAnimation { 
-      duration: 300
+      duration: 400
       easing.type: Easing.OutBack
     }} 
 
@@ -39,8 +43,8 @@ WrapperMouseArea {
     SequentialAnimation on scale {
       id: clickAnimation
       running: false
-      NumberAnimation { to: 0.90; duration: 90 }
-      NumberAnimation { to: 1.15; duration: 90 }
+      NumberAnimation { to: 0.90; duration: 120 }
+      NumberAnimation { to: 1.2; duration: 120 }
     }
   }
 }

@@ -27,30 +27,69 @@ Singleton {
     return deviceList
   }
 
+  readonly property list<PwNode> availableSources: {
+    let nodes = Pipewire.nodes.values
+    let deviceList = []
+    for (let i=0; i<nodes.length; i++) {
+      let node = nodes[i];
+      if (!node.isSink && node.description && node.audio) {
+        deviceList.push(node)
+      }
+    }
+    return deviceList
+  }
+
   property PwNode activeSink: Pipewire.preferredDefaultAudioSink
   readonly property string activeSinkId: Pipewire.defaultAudioSink?.id ?? ''
 
-  // readonly property PwNode activeSource: Pipewire.defaultAudioSource
-  // readonly property string activeSourceId: Pipewire.defaultAudioSource?.id ?? ''
+  property PwNode activeSource: Pipewire.preferredDefaultAudioSource
+  readonly property string activeSourceId: Pipewire.defaultAudioSource?.id ?? ''
 
-  property bool isMuted: Pipewire.defaultAudioSink.audio.muted
+  property bool isMuted: Pipewire.defaultAudioSink?.audio?.muted ?? false
   property real volume: Pipewire.defaultAudioSink?.audio?.volume ?? 0
   readonly property int volumeAsInt: Math.round(volume * 100)
 
+  property bool isSourceMuted: Pipewire.defaultAudioSource?.audio?.muted ?? false
+  property real sourceVolume: Pipewire.defaultAudioSource?.audio?.volume ?? 0
+  readonly property int sourceVolumeAsInt: Math.round(sourceVolume * 100)
+
   function setVolume(val) {
-    Pipewire.defaultAudioSink.audio.volume = Math.max(0, Math.min(1, val))
+    if (Pipewire.defaultAudioSink?.audio) {
+      Pipewire.defaultAudioSink.audio.volume = Math.max(0, Math.min(1, val))
+    }
   }
 
   function toggleMute() {
-    isMuted = !isMuted
+    if (Pipewire.defaultAudioSink?.audio) {
+      isMuted = !isMuted
+    }
   }
 
   function setPreferredSink(node) {
     Pipewire.preferredDefaultAudioSink = node
   }
 
+  function setSourceVolume(val) {
+    if (Pipewire.defaultAudioSource?.audio) {
+      Pipewire.defaultAudioSource.audio.volume = Math.max(0, Math.min(1, val))
+    }
+  }
+
+  function toggleSourceMute() {
+    if (Pipewire.defaultAudioSource?.audio) {
+      isSourceMuted = !isSourceMuted
+    }
+  }
+
+  function setPreferredSource(node) {
+    Pipewire.preferredDefaultAudioSource = node
+  }
+
   PwObjectTracker {
-		objects: [ Pipewire.defaultAudioSink ]
+		objects: [ 
+      Pipewire.defaultAudioSink,
+      Pipewire.defaultAudioSource
+    ]
   }
 }
 

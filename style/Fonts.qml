@@ -6,42 +6,24 @@ QtObject {
   id: root
 
   // loading local fonts
-  // readonly property FontLoader _geistLoader: FontLoader { source: "../assets/fonts/Geist-Variable.ttf" }  
-  // readonly property FontLoader _workSansLoader: FontLoader { source: "../assets/fonts/WorkSans-Variable.ttf" }  
-  // readonly property FontLoader _justSansLoader: FontLoader { source: "../assets/fonts/JUST Sans Regular.otf" }  
-  // readonly property FontLoader _givonicLoader: FontLoader { source: "../assets/fonts/Givonic-Regular.otf" }  
-
-  // readonly property FontLoader _vigaLoader: FontLoader { source: "../assets/fonts/Viga-Regular.ttf" }  
-  // readonly property FontLoader _interLoader: FontLoader { source: "../assets/fonts/Inter-Variable.ttf" }  
-  // readonly property FontLoader _interTightLoader: FontLoader { source: "../assets/fonts/InterTight-Variable.ttf" }  
   readonly property FontLoader _jetbrainsLoader:  FontLoader { source: '../assets/fonts/JetBrainsMono-variable.ttf' }  
-  readonly property FontLoader _ibmPlexLoader: FontLoader { source: '../assets/fonts/IBMPlexSans-Variable.ttf' }  
-  readonly property FontLoader _rubikLoader:   FontLoader { source: '../assets/fonts/Rubik-Variable.ttf' }  
-  readonly property FontLoader _lucideLoader:  FontLoader { source: '../assets/fonts/lucide.ttf' }  
-  readonly property FontLoader _tablerLoader:  FontLoader { source: '../assets/fonts/tabler-icons.ttf' }  
-
+  readonly property FontLoader _ibmPlexLoader:    FontLoader { source: '../assets/fonts/IBMPlexSans-Variable.ttf' }  
+  readonly property FontLoader _rubikLoader:      FontLoader { source: '../assets/fonts/Rubik-Variable.ttf' }  
+  readonly property FontLoader _lucideLoader:     FontLoader { source: '../assets/fonts/lucide.ttf' }  
+  readonly property FontLoader _tablerLoader:     FontLoader { source: '../assets/fonts/tabler-icons.ttf' } 
+  readonly property FontLoader _cartographLoader: FontLoader { source: '../assets/fonts/CartographCF-Regular.otf' }
 
   // properties named after fonts
-  // readonly property font geist:      Qt.font({ family: _geistLoader.name,      pixelSize: 12, weight: 700 })
-  // readonly property font workSans:   Qt.font({ family: _workSansLoader.name,   pixelSize: 14, weight: 600 })
-  // readonly property font givonic:    Qt.font({ family: _givonicLoader.name,    pixelSize: 13, weight: 700 })
-  // readonly property font inter:      Qt.font({ family: _interLoader.name,      pixelSize: 12, weight: 700 })
-  // readonly property font interTight: Qt.font({ family: _interTightLoader.name, pixelSize: 12, weight: 700 })
-
-  readonly property font jetbrains: Qt.font({ family: _jetbrainsLoader.name, pixelSize: 12, weight: 700 }) 
-  readonly property font ibmPlex:   Qt.font({ family: _ibmPlexLoader.name,   pixelSize: 12, weight: 500 })
-  readonly property font rubik:     Qt.font({  family: _rubikLoader.name,    pixelSize: 12, weight: 600 })
-  readonly property font lucide:    Qt.font({ family: _lucideLoader.name,    pixelSize: 14, weight: 700 })
-  readonly property font tabler:    Qt.font({ family: _tablerLoader.name,    pixelSize: 15, weight: 600 })
-
-
-  // requires AUR package `apple-fonts`
-  // readonly property font sfProRounded: Qt.font({ family: 'SF Compact Rounded',   pixelSize: 12, weight: 600 })
-
+  readonly property font jetbrains:  Qt.font({ family: _jetbrainsLoader.name,  pixelSize: 12, weight: 700 }) 
+  readonly property font cartograph: Qt.font({ family: _cartographLoader.name, pixelSize: 12, weight: 400 })
+  readonly property font ibmPlex:    Qt.font({ family: _ibmPlexLoader.name,    pixelSize: 12, weight: 500 })
+  readonly property font rubik:      Qt.font({ family: _rubikLoader.name,      pixelSize: 12, weight: 600 })
+  readonly property font lucide:     Qt.font({ family: _lucideLoader.name,     pixelSize: 14, weight: 700 })
+  readonly property font tabler:     Qt.font({ family: _tablerLoader.name,     pixelSize: 15, weight: 600 })
 
   // properties named after their semantic use
   readonly property font barIcon: tabler
-  readonly property font barLabel: ibmPlex
+  readonly property font barLabel: cartograph
 
   readonly property font osdLabel: ibmPlex 
   readonly property font osdIcon: Qt.font({ family: _tablerLoader.name, pixelSize: 24, weight: 600})

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
+import qs
 import qs.style
 
 Rectangle {
@@ -9,20 +10,19 @@ Rectangle {
   implicitWidth: wsRow.implicitWidth
   implicitHeight: wsRow.implicitHeight
   anchors.verticalCenter: parent.verticalCenter
-
   radius: 8
   color: 'transparent'
 
   Row { 
     id: wsRow
-    spacing: 5
+    spacing: 4
 
     Repeater {
-      model: [1,2,3,4,5,6]
+      model: [1,2,3,4,5,6] //Hyprland.workspaces
 
       Rectangle { 
         id: wsIcon
-        height: 12
+        height: 13
         width: HyprService.isWsFocused(modelData) ? height*2 : height
         radius: width/2
         border.color: Colors.alpha(Colors.shadow, 0.25)
@@ -43,6 +43,14 @@ Rectangle {
           easing.type: Easing.OutBack 
           easing.overshoot: 2.8
         }}
+
+        Text {
+          anchors.centerIn: parent
+          text: Config.workspacesShowId ? modelData : ''
+          font.family: Fonts.cartograph.family
+          font.weight: 600 
+          font.pixelSize: 7
+        }
       }
     }
   }

@@ -6,7 +6,6 @@ BarWidget {
   id: root
   text: BatteryService.isAvailable ? BatteryService.percentage + '%' : ''
   icon: BatteryService.symbol
-  // iconSize: 20
   animDuration: BatteryService.isCritical ? 300 : 100
 
   animatedColor: {

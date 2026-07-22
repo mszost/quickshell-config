@@ -23,6 +23,7 @@ Scope {
       anchors.bottom: true
       implicitHeight: 0
       implicitWidth: 500//bgRect.width 
+      // color: dockIsVisible ? 'transparent' : 'red'
       color: 'transparent'
       exclusiveZone: 0
       
@@ -99,8 +100,12 @@ Scope {
                 Layout.preferredHeight: 41
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
+                onPressed: (mouse) => {
+                  if (mouse.button === Qt.LeftButton) {
+                    clickAnimation.restart()
+                  }
+                }
                 onClicked: { 
-                  clickAnimation.restart()
                   DesktopEntries.byId(modelData).execute()
                 }
 
@@ -116,7 +121,7 @@ Scope {
 
                   // Hover animation 
                   Behavior on scale { NumberAnimation { 
-                    duration: 240
+                    duration: 200
                     easing.type: Easing.OutBack
                     easing.overshoot: 1.3
                   }} 

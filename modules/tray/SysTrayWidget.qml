@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
+import Quickshell.Services.StatusNotifier
 import qs.style
 
 Item {
@@ -23,24 +24,25 @@ Item {
     spacing: 10
 
     Repeater {
-      model: SystemTray.items.values
+      model: SystemTray.items
 
       Rectangle {
         id: itemRect
-        implicitHeight: 16
-        implicitWidth: 16
+        required property StatusNotifierItem modelData
+        // implicitHeight: 16
+        // implicitWidth: 16
         color: 'transparent'
         border.color: Colors.debug
 
-        MouseArea {
-          anchors.fill: parent
-          acceptedButtons: Qt.LeftButton | Qt.RightButton
-          cursorShape: Qt.PointingHandCursor
-          onClicked: {
-            if (mouse.button === Qt.RightButton) modelData.display(itemRect)
-            if (mouse.button === Qt.LeftButton) modelData.activate()
-          }
-        }
+        // MouseArea {
+        //   anchors.fill: parent
+        //   acceptedButtons: Qt.LeftButton | Qt.RightButton
+        //   cursorShape: Qt.PointingHandCursor
+        //   onClicked: {
+        //     if (mouse.button === Qt.RightButton) modelData.display(itemRect)
+        //     if (mouse.button === Qt.LeftButton) modelData.activate()
+        //   }
+        // }
 
         Image {
           id: iconImage

@@ -45,6 +45,17 @@ Scope {
       }
     }
 
+    PanelSlider {
+      text: 'Input Volume (In)'
+      valueText: `${AudioService.sourceVolumeAsInt}%`
+      value: AudioService.sourceVolume
+      onMoved: (sliderValue) => AudioService.setSourceVolume(sliderValue)
+      onWheel: (wheel) => {
+        if (wheel.angleDelta.y > 0) AudioService.setSourceVolume(AudioService.sourceVolume + 0.02)
+        if (wheel.angleDelta.y < 0) AudioService.setSourceVolume(AudioService.sourceVolume - 0.02)
+      }
+    }
+
     // Select from list of available sinks
     PanelRow {
       Text {
@@ -67,6 +78,53 @@ Scope {
             property color textColor: {
               if (parent.containsMouse) return Colors.secondary
               if (modelData.id == AudioService.activeSinkId) return Colors.foreground
+              else return Colors.mOnSurfaceVariant
+            }
+            Behavior on textColor { ColorAnimation { duration: 100; easing.type: Easing.InOutQuad } }
+
+            Text {
+              anchors.verticalCenter: parent.verticalCenter
+              text: {
+                Config.panelAudioDeviceSymbols[modelData.description] 
+                || Config.menuAudioDeviceSymbols['_fallback']
+              }
+              font: Fonts.tabler
+              color: parent.textColor
+            }
+
+            Text {
+              anchors.verticalCenter: parent.verticalCenter
+              text: modelData.description
+              font: Fonts.menuBody
+              color: parent.textColor
+            }
+          }
+        }
+      }
+    }
+
+    // Select from list of available sources
+    PanelRow {
+      Text {
+        text: 'Input Devices'
+        font: Fonts.menuSubheading
+        color: Colors.primary
+      }
+
+      Repeater {
+        model: AudioService.availableSources
+
+        WrapperMouseArea {
+          hoverEnabled: true
+          onClicked: AudioService.setPreferredSource(modelData)
+
+          Row {
+            id: sourceDeviceRow
+            spacing: 5
+           
+            property color textColor: {
+              if (parent.containsMouse) return Colors.secondary
+              if (modelData.id == AudioService.activeSourceId) return Colors.foreground
               else return Colors.mOnSurfaceVariant
             }
             Behavior on textColor { ColorAnimation { duration: 100; easing.type: Easing.InOutQuad } }

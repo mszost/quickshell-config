@@ -29,15 +29,15 @@ Singleton {
   // ░█▄█░░█░░█░█░█░█░█▀▀░░█░░▀▀█
   // ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
 
-  // readonly property bool 
+  readonly property bool workspacesShowId: false
 
 
   // ░█▀▄░█▀█░█▀▄
   // ░█▀▄░█▀█░█▀▄
   // ░▀▀░░▀░▀░▀░▀
 
-  readonly property real barAlpha: 0.85
-  readonly property real barAlphaFloating: 0.8
+  readonly property real barAlpha: 1
+  readonly property real barAlphaFloating: 0.9
   readonly property color barColorBg: Colors.surfaceDim
   readonly property int barHeight: 32
 

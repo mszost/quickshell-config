@@ -16,7 +16,7 @@ Scope {
   property int width: 375
   readonly property int radius: 16
   readonly property int padding: 12
-  readonly property int yOffset: 27
+  readonly property int yOffset: 20
   // Sets a minimum distance from the sides of the screen
   readonly property int xOffset: switch (widgetContainerPos) {
     case ('right'): return -50
