@@ -69,6 +69,7 @@ Item {
     Text {
       id: label
       anchors.verticalCenter: parent.verticalCenter
+      verticalAlignment: Text.AlignVCenter
       font.family: Fonts.barLabel.family
       font.pixelSize: Fonts.barLabel.pixelSize
       font.weight: Fonts.barLabel.weight
@@ -77,6 +78,8 @@ Item {
           
     Text {
       id: icon
+      anchors.verticalCenter: parent.verticalCenter
+      verticalAlignment: Text.AlignVCenter
       font.family: Fonts.barIcon.family
       font.pixelSize: Fonts.barIcon.pixelSize
       font.weight: Fonts.barIcon.weight 
