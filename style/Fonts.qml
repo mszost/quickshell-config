@@ -19,7 +19,7 @@ QtObject {
   readonly property font ibmPlex:    Qt.font({ family: _ibmPlexLoader.name,    pixelSize: 12, weight: 500 })
   readonly property font rubik:      Qt.font({ family: _rubikLoader.name,      pixelSize: 12, weight: 600 })
   readonly property font lucide:     Qt.font({ family: _lucideLoader.name,     pixelSize: 14, weight: 700 })
-  readonly property font tabler:     Qt.font({ family: _tablerLoader.name,     pixelSize: 15, weight: 600 })
+  readonly property font tabler:     Qt.font({ family: _tablerLoader.name,     pixelSize: 13, weight: 600 })
 
   // properties named after their semantic use
   readonly property font barIcon: tabler

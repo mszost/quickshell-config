@@ -39,8 +39,8 @@ Singleton {
   readonly property real barAlpha: 1
   readonly property real barAlphaFloating: 1
   readonly property color barColorBg: Colors.surfaceDim
-  readonly property int barHeight: 29
-  readonly property int barPillHeight: 23
+  readonly property int barHeight: 27
+  readonly property int barPillHeight: 21
   readonly property int barWidgetSpacing: 6
 
   // Monitors that the bar should appear on
