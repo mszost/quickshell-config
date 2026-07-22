@@ -16,7 +16,7 @@ Pane {
 
   background: Rectangle {
     radius: 12
-    color: Colors.alpha(Colors.background, Config.panelBlockAlpha)
+    color: Colors.alpha(Colors.surface, Config.panelBlockAlpha)
   }
 
   contentItem: Column {

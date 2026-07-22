@@ -298,7 +298,6 @@ QtObject {
   // readonly property color blue: _palettes[activeTheme].blue
   // readonly property color purple: _palettes[activeTheme].purple
   
-  readonly property color background: _palettes[activeTheme].background
   readonly property color foreground: _palettes[activeTheme].foreground
 
   readonly property color primary: _palettes[activeTheme].primary

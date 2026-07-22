@@ -56,7 +56,7 @@ Scope {
         implicitWidth: parent.width -2  // padding for scale animation
         implicitHeight: parent.height -2
         radius: height
-        color: Colors.alpha(Colors.background, bgAlpha)
+        color: Colors.alpha(Colors.surface, bgAlpha)
 
         // pop in/out animation
         scale: root.isVisible ? 1 : 0
