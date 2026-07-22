@@ -5,17 +5,22 @@ import qs.style
 Item {
   id: root
 
-  implicitWidth: content.implicitWidth 
-  implicitHeight: content.implicitHeight
-
   readonly property var widgetContainerPos: parent.position
- 
+
+  // Pill (bgRect)
+  property int pillHeight: Config.barPillHeight
+  property int pillPadding: 5
+  property alias pillMargins: bgRect.anchors.margins
+
+  readonly property bool hasLabel: label.text !== ""
+  readonly property bool hasIcon: icon.text !== ""
+
+  implicitWidth: hasLabel ? content.implicitWidth + (pillPadding * 2) : pillHeight
+  implicitHeight: pillHeight
+
   // RowLayout
   property alias spacing: content.spacing
   property alias layoutDirection: content.layoutDirection
-
-  // Pill 
-  property alias pillMargins: bgRect.anchors.margins
 
   // Text items (label and icon)
   property alias text: label.text
@@ -47,17 +52,12 @@ Item {
     }
   }
 
+  // Pill
   Rectangle {
     id: bgRect
-    anchors {
-      fill: parent
-      margins: -5
-      // leftMargin: -6; rightMargin: -6
-      // topMargin: -6; bottomMargin: -6
-    }
+    anchors.fill: parent
     radius: height
-    color: 'transparent'//Config.barColorBg
-    // border.color: Colors.debug
+    color: Colors.surface
   }
 
   Row {
@@ -68,7 +68,9 @@ Item {
 
     Text {
       id: label
+      visible: root.hasLabel
       anchors.verticalCenter: parent.verticalCenter
+      horizontalAlignment: Text.AlignHCenter
       verticalAlignment: Text.AlignVCenter
       font.family: Fonts.barLabel.family
       font.pixelSize: Fonts.barLabel.pixelSize
@@ -78,7 +80,9 @@ Item {
           
     Text {
       id: icon
+      visible: root.hasIcon
       anchors.verticalCenter: parent.verticalCenter
+      horizontalAlignment: Text.AlignHCenter
       verticalAlignment: Text.AlignVCenter
       font.family: Fonts.barIcon.family
       font.pixelSize: Fonts.barIcon.pixelSize

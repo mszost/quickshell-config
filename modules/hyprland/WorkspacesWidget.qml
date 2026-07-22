@@ -7,14 +7,15 @@ import qs.style
 
 Rectangle {
   id: bgRect
-  implicitWidth: wsRow.implicitWidth
-  implicitHeight: wsRow.implicitHeight
+  implicitWidth: wsRow.implicitWidth + 28
+  implicitHeight: Config.barPillHeight //wsRow.implicitHeight
   anchors.verticalCenter: parent.verticalCenter
-  radius: 8
+  radius: height
   color: 'transparent'
 
   Row { 
     id: wsRow
+    anchors.centerIn: parent
     spacing: 4
 
     Repeater {
@@ -45,7 +46,9 @@ Rectangle {
         }}
 
         Text {
-          anchors.centerIn: parent
+          anchors.fill: parent
+          horizontalAlignment: Text.AlignHCenter
+          verticalAlignment: Text.AlignVCenter
           text: Config.workspacesShowId ? modelData : ''
           font.family: Fonts.cartograph.family
           font.weight: 600 

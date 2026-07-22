@@ -334,7 +334,7 @@ QtObject {
   readonly property color errorContainer: _palettes[activeTheme].errorContainer
   readonly property color mOnErrorContainer: _palettes[activeTheme].mOnErrorContainer
   //
-  // readonly property color surface: _palettes[activeTheme].surface
+  readonly property color surface: _palettes[activeTheme].surface
   // readonly property color mOnSurface: _palettes[activeTheme].mOn_surface
   readonly property color surfaceDim: _palettes[activeTheme].surfaceDim
   readonly property color surfaceBright: _palettes[activeTheme].surfaceBright

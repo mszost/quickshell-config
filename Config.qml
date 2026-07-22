@@ -12,7 +12,7 @@ Singleton {
   // ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀
  
   // See ./Style/Colors.qml for available color palettes
-  property string theme: 'gruvbox-material'
+  property string theme: 'nord'
   
   // Enable or disable sound effects
   // If you don't want sounds at all, removing the `SoundEffects {}` initialization
@@ -29,7 +29,7 @@ Singleton {
   // ░█▄█░░█░░█░█░█░█░█▀▀░░█░░▀▀█
   // ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
 
-  readonly property bool workspacesShowId: false
+  readonly property bool workspacesShowId: true
 
 
   // ░█▀▄░█▀█░█▀▄
@@ -37,9 +37,11 @@ Singleton {
   // ░▀▀░░▀░▀░▀░▀
 
   readonly property real barAlpha: 1
-  readonly property real barAlphaFloating: 0.9
+  readonly property real barAlphaFloating: 1
   readonly property color barColorBg: Colors.surfaceDim
-  readonly property int barHeight: 32
+  readonly property int barHeight: 29
+  readonly property int barPillHeight: 23
+  readonly property int barWidgetSpacing: 6
 
   // Monitors that the bar should appear on
   readonly property list<string> barMonitors: ['eDP-2', 'DP-10', 'DP-1', 'HDMI-1']
@@ -94,7 +96,7 @@ Singleton {
   // ░█▀▀░█▀█░█░█░█▀▀░█░░░▀▀█
   // ░▀░░░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀
 
-  readonly property real panelContainerAlpha: 0.8
+  readonly property real panelContainerAlpha: 1.0
   readonly property real panelBlockAlpha: 1.0
 
   readonly property int panelRadius: 12

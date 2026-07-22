@@ -10,18 +10,23 @@ import qs.style
 Scope {
   id: root
   default property alias menuContent: column.data
-  required property var boundItem  // the widget that this panel should appear under
+  required property var boundItem  // the widget that this panel attaches to
   required property var widgetContainerPos
 
   property int width: 375
   readonly property int radius: 16
   readonly property int padding: 12
-  readonly property int yOffset: 20
-  // Sets a minimum distance from the sides of the screen
+  
+  readonly property int yOffset: {
+    let itemHeight = boundItem ? boundItem.implicitHeight : Config.barPillHeight
+    let barMarginToBottom = Math.floor((Config.barHeight - itemHeight) / 2) - 1
+    return itemHeight + barMarginToBottom
+  }
+
   readonly property int xOffset: switch (widgetContainerPos) {
-    case ('right'): return -50
-    case ('left'): return 50
-    default: return 20
+    case ('right'): return -Math.floor(width / 5)
+    case ('left'): return Math.floor(width / 5)
+    default: return 0
   } 
 
   readonly property real bgAlpha: Config.panelContainerAlpha ?? Config.alpha ?? 1.0

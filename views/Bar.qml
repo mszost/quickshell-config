@@ -86,7 +86,7 @@ Scope {
             Row {
               id: rowLeft
               anchors.verticalCenter: parent.verticalCenter
-              spacing: 13
+              spacing: Config.barWidgetSpacing
               readonly property var position: 'left'
               
               ClockWidget {}
@@ -104,7 +104,7 @@ Scope {
             Row {
               id: rowRight
               anchors.verticalCenter: parent.verticalCenter
-              spacing: 13
+              spacing: Config.barWidgetSpacing
               readonly property var position: 'right'
 
               SysTrayWidget {}
