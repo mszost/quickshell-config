@@ -8,28 +8,63 @@ import qs.modules.hyprland
 Item {
   id: root
   
-  implicitWidth: iconImage.width + Config.dock.iconSpacing
-  implicitHeight: iconSize + Config.dock.dotGap + Config.dock.dotSize
+  implicitWidth: iconSize + cfg.iconSpacing
+  implicitHeight: iconSize + cfg.dotGap + cfg.dotSize
+  transform: Translate { x: root.pushOffset }
+
+  readonly property QtObject cfg: Config.dock
   
-  // Supplied by the Repeater / Dock
-  required property string modelData // desktop file name, without extension
-  // required property int index
+  // Provided by the parent Repeater
+  required property string modelData  // DesktopEntry.id
+  required property int index
+  required property real mouseX 
+  required property real zoomStrength
   required property real iconSize
-  // required property int hoveredIndex // -1 when the dock isn't hovered
   
   readonly property var entry: DesktopEntries.applications.values.find(e => e.id === modelData) ?? null
   readonly property int windowCount: HyprService.windowCountForApp(entry)
+  
+  readonly property alias cellSize: root.implicitWidth
+  
+  property real baseOffset: 0 // base-layout x position of this icon's row
+
+  // Signed (+/-) distance from the pointer to this icon's layout center (positive = icon is right of the pointer)
+  readonly property real pointerOffset: (root.x + root.width / 2) - mouseX
+
+  property real zoom: {
+    const radius = cfg.growthRadius * cellSize
+    const distance = Math.abs(pointerOffset)
+    const falloff = distance >= radius ? 0 : 0.5 * (1 + Math.cos(Math.PI * distance / radius))
+    return 1 + (cfg.maxGrowth - 1) * falloff * zoomStrength    
+  }
+  Behavior on zoom { NumberAnimation { easing.type: Easing.OutExpo; duration: 660 } }
+
+  // Shoves icon away from the pointer. Zero directly under the pointer, peaks at half of pushRadius,
+  // and returns to zero at pushRadius, so only the nearest icons move and the rest of the row stays put.
+  property real pushOffset: {
+    const radius = cfg.pushRadius * cellSize
+    if (Math.abs(pointerOffset) >= radius) return 0
+    return cfg.pushDistance * Math.sin(Math.PI * pointerOffset / radius) * zoomStrength
+  }
+  Behavior on pushOffset { NumberAnimation {easing.type: Easing.OutExpo; duration: 1000} }
+
+  // Rectangle { 
+  //   id: _debugRect
+  //   anchors.fill: parent
+  //   color: 'transparent'
+  //   border.color: Qt.alpha('lime', 0.25)
+  // }
 
   Image {
     id: iconImage
     anchors {
       bottom: dots.top
-      bottomMargin: Config.dock.dotGap
+      bottomMargin: cfg.dotGap
       horizontalCenter: parent.horizontalCenter
     }
-    width: root.iconSize
+    width: root.iconSize * root.zoom
     height: width
-    source: Quickshell.iconPath(root.entry?.icon ?? '', Config.dock.fallbackIcon)
+    source: Quickshell.iconPath(root.entry?.icon ?? '', cfg.fallbackIcon)
     sourceSize: Qt.size(root.iconSize, root.iconSize)
     fillMode: Image.PreserveAspectFit
     asynchronous: true
@@ -43,17 +78,17 @@ Item {
       bottom: parent.bottom
       horizontalCenter: parent.horizontalCenter
     }
-    height: Config.dock.dotSize
-    spacing: Config.dock.dotSpacing
+    height: cfg.dotSize
+    spacing: cfg.dotSpacing
 
     Repeater {
-      model: Math.min(root.windowCount, Config.dock.maxDots)
+      model: Math.min(root.windowCount, cfg.maxDots)
       
       Rectangle {
-        width: Config.dock.dotSize
+        width: cfg.dotSize
         height: width
         radius: width
-        color: Config.dock.dotColor
+        color: cfg.dotColor
       }
     }
   }
@@ -65,7 +100,7 @@ Item {
       right: parent.right
       bottom: parent.bottom
     }
-    height: iconImage.height + Config.dock.dotGap + Config.dock.dotSize
+    height: iconImage.height + cfg.dotGap + cfg.dotSize
     acceptedButtons: Qt.LeftButton
     cursorShape: Qt.PointingHandCursor
     onClicked: {

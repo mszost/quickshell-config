@@ -14,9 +14,9 @@ Scope {
   readonly property QtObject cfg: Config.dock
   readonly property bool showSeparatorLine: root.unpinnedOpenApps.length > 0
   readonly property real iconSize: cfg.height - (2 * cfg.iconRowPadding) - cfg.dotGap - cfg.dotSize
-  readonly property real pinnedAppsWidth: cfg.pinnedApps.length * (iconSize + cfg.iconSpacing) + (2 * cfg.iconRowPadding)
-  readonly property real openedAppsWidth: unpinnedOpenApps.length * (iconSize + cfg.iconSpacing) + (2 * cfg.iconRowPadding)
-  readonly property real totalDockWidth: pinnedAppsWidth + openedAppsWidth + (showSeparatorLine ? cfg.separatorLineWidth : 0)
+  readonly property real pinnedAppsWidth: cfg.pinnedApps.length * (iconSize + cfg.iconSpacing) + 2 * cfg.iconRowPadding
+  readonly property real openedAppsWidth: unpinnedOpenApps.length * (iconSize + cfg.iconSpacing) + 2 * cfg.iconRowPadding
+  readonly property real totalDockWidth: pinnedAppsWidth + openedAppsWidth + (showSeparatorLine ? cfg.separatorLineWidth : 0) + 2 * cfg.hoverZoneMargin
   readonly property real displacement: cfg.height + cfg.bottomMargin
 
   readonly property list<string> unpinnedOpenApps: {
@@ -31,12 +31,6 @@ Scope {
     }
     return Array.from(seen)
   }
-
-  // function getFocusedIcon(mouseX: real): void {
-  //   console.log(mouseX)
-  // }
-  //
-
 
   Variants {
     model: Quickshell.screens
@@ -53,8 +47,6 @@ Scope {
       implicitWidth: cfg.triggerWidth
       color: 'transparent'
 
-      // property var _debug: {console.log(Hyprland?.activeTopLevel ?? 'null'); return null}
-
       property var modelData
       property bool hoverRevealed: false
 
@@ -62,10 +54,33 @@ Scope {
       readonly property bool workspaceIsBusy: HyprService.isWorkspaceTiled(workspaceId) || !HyprService.isWorkspaceFocused(workspaceId)
       readonly property bool hidden: cfg.dynamicHiding && (workspaceIsBusy && !hoverRevealed)
       readonly property bool hovered: dockMouse.containsMouse || triggerMouse.hovered
+
+      // Mouse x coordinate mapped to the left edge of the default-scaled icon row
+      property real contentRelativeMouseX: dockMouse.mouseX - shelf.x - iconRow.x
       
+      property real zoomStrength: dockMouse.containsMouse ? 1 : 0
+     
       property real revealProgress: hidden ? 0 : 1
-      Behavior on revealProgress { Anim { kind: Motion.Bounce; easing.overshoot: 0.7 } }
+      Behavior on revealProgress { Anim { kind: Motion.Bounce; easing.overshoot: 1 } }
       
+      // readonly property var _debug: {
+      //   indexAt(dockMouse.mouseX, pinnedAppsRepeater)
+      // }
+
+      // function _indexAt(mouseX, repeater): any {
+      //   const local = mouseX - shelf.x - iconRow.x
+      //   let hoveredIndex = 0
+      //
+      //   for (let i=0; i<repeater.count; ++i) {
+      //     const icon = repeater.itemAt(i)
+      //     if (icon && local >= icon.x) {
+      //       hoveredIndex = i
+      //     }
+      //   }
+      //   let id = repeater.itemAt(hoveredIndex).entry.id
+      //   console.log(`index: ${hoveredIndex}; id: ${id}`)
+      // } 
+
       onHoveredChanged: {
         if (!cfg.dynamicHiding) { return }  // Ignore the hover event if hiding is disabled
         if (hovered) {
@@ -114,23 +129,18 @@ Scope {
         // color: Qt.alpha('lime', 0.3) // for debugging
         color: 'transparent'
 
-        readonly property var debug: {
-          console.log(dockMouse.mouseX)
-          return ''
-        }
-
-        Rectangle {
-          id: debugRect
-          anchors {
-            verticalCenter: parent.verticalCenter
-            left: parent.left
-            leftMargin: dockMouse.mouseX
-          }
-          z: 2
-          height: cfg.height
-          width: 1
-          color: 'magenta'
-        }
+        // Rectangle {
+        //   id: _debugRectX
+        //   anchors {
+        //     verticalCenter: parent.verticalCenter
+        //     left: parent.left
+        //     leftMargin: dockMouse.mouseX
+        //   }
+        //   z: 2
+        //   height: popup.height
+        //   width: 1
+        //   color: 'magenta'
+        // }
 
         // Everything that visually moves lives in here; the PopupWindow itself is static
         Item {
@@ -143,9 +153,11 @@ Scope {
             anchors.fill: parent
             hoverEnabled: true
             acceptedButtons: Qt.NoButton
+            // onPositionChanged: (mouse) => panel.relativeMouseX = mouse.x
           }
 
           Rectangle {
+            id: shelf
             anchors {
               bottom: parent.bottom
               bottomMargin: cfg.bottomMargin
@@ -168,10 +180,13 @@ Scope {
               }
 
               Repeater {
+                id: pinnedAppsRepeater
                 model: cfg.pinnedApps
 
                 DockIcon {
                   iconSize: root.iconSize
+                  mouseX: panel.contentRelativeMouseX
+                  zoomStrength: panel.zoomStrength
                 }
               }
 
@@ -193,10 +208,14 @@ Scope {
               }
 
               Repeater {
+                id: openAppsRepeater
                 model: root.unpinnedOpenApps
 
                 DockIcon {
                   iconSize: root.iconSize
+                  mouseX: panel.contentRelativeMouseX
+                  zoomStrength: panel.zoomStrength
+                  baseOffset: cfg.pinnedApps.length * (root.iconSize + cfg.iconSpacing) + root.separatorWidth
                 }
               }
             }

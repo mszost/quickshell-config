@@ -7,9 +7,7 @@ import qs.style
 Singleton {
   id: root
 
-  // readonly property string theme: 'gruvbox-material'
-  readonly property string theme: 'jade'
-  // readonly property string theme: 'nord'
+  readonly property string theme: 'nord'
   readonly property bool playSoundEffects: true
   readonly property real globalUiScale: 1.0
   readonly property real globalAnimationSpeed: 1.0
@@ -40,7 +38,7 @@ Singleton {
 
     // Styling
     readonly property color color: Colors.surface
-    readonly property real alpha: 1.0
+    readonly property real alpha: 0.8
     readonly property real floatingAlpha: 0.8
 
     // Dimensions
@@ -64,53 +62,58 @@ Singleton {
   // ░▀▀░░▀▀▀░▀▀▀░▀░▀
 
   property QtObject dock: QtObject {
-    // Content
-    // Pulls from .desktop files in ~/.local/share/applications/ and /usr/share/applications
+    // Behavior
+    readonly property list<string> monitors: ['eDP-2', 'DP-10', 'HDMI-1']
+    readonly property bool dynamicHiding: true
+    readonly property int hideDelay: 150
+
+    // Content (pulls from .desktop files in ~/.local/share/applications/ and /usr/share/applications)
     readonly property list<string> pinnedApps: [
       'kitty', 'org.kde.dolphin', 'zen', 'vivaldi-stable', 'obsidian',
       'code-oss', 'org.darktable.darktable', 'spotify-launcher', 'vesktop',
       'steam', 'vintage-story', 'org.keepassxc.KeePassXC',
     ]
     readonly property list<string> blacklistedApps: ['xdg-desktop-portal-gtk']
-
-    // readonly property string fallbackIcon: 'zen'
+    readonly property string fallbackIcon: 'zen' //todo
 
     // Styling
     readonly property color bgColor: Colors.surface
     readonly property color borderColor: Colors.outline
-    readonly property real alpha: 0.85
+    readonly property real alpha: 0.75
 
-    // Dimensions
-    readonly property int height: globalUiScale * 64
-    readonly property int iconSpacing: height / 10          // Spacing between icons within their row
+    // Container dimensions
+    readonly property int height: globalUiScale * 65
+    readonly property int iconSpacing: height / 7          // Spacing between icons within their row
     readonly property int iconRowPadding: height * 0.15     // Padding around the entire icon row
     readonly property int bottomMargin: globalUiScale * 10  // Distance from the bottom edge of the screen
     readonly property int radius: height * 0.3
 
+    // Trigger dimensions
     readonly property bool showTrigger: true
     readonly property int triggerHeight: globalUiScale * 4
     readonly property int triggerWidth: globalUiScale * 300
     readonly property color triggerColor: Colors.mOnSurface
     readonly property real triggerAlpha: 0.5
 
-    // Dots for running instances of pinned applications
+    // Dots for running instances applications
     readonly property color dotColor: Colors.primary
     readonly property int dotSize: globalUiScale * 4
-    readonly property int dotSpacing: globalUiScale * 2  // Spacing between dots
-    readonly property int dotGap: globalUiScale * -2     // Spacing between rows of dots and their app icon
+    readonly property int dotSpacing: globalUiScale * 2  // Spacing between dots within their row
+    readonly property int dotGap: globalUiScale * -1     // Spacing between dot row and app icon
     readonly property int maxDots: 4
-
-    readonly property int separatorLineWidth: 1  // vertical line between the pinned and open-but-unpinned apps
+    
+    // Vertical line between the pinned and open-but-unpinned apps
+    readonly property int separatorLineWidth: 1  
 
     // Setting hoverZoneMargin <= easing.overshoot of the dock's slide 
     // animation will cause the dock to clip it's bounds
-    readonly property real hoverZoneMargin: globalUiScale * 15
-    
-    // Behavior
-    readonly property list<string> monitors: ['eDP-2', 'DP-10', 'HDMI-1']
-    readonly property bool dynamicHiding: false//true
-    readonly property int hideDelay: 150
+    readonly property real hoverZoneMargin: globalUiScale * 25
 
+    // Properties for the focused icon scaling animation
+    readonly property real maxGrowth: 1.4
+    readonly property real growthRadius: 1.25  // Columns away from the pointer that should be scaled.
+    readonly property real pushRadius: 2       // Columns from the pointer beyond which icons don't move.
+    readonly property real pushDistance: globalUiScale * 5  // peak sideways displacement (pixels)
   }
 
 
@@ -149,8 +152,8 @@ Singleton {
     property QtObject workspaces: QtObject {
       readonly property int iconHeight: globalUiScale * 10
       readonly property int iconWidth: iconHeight
-      readonly property int iconSpacing: globalUiScale * 5
-      readonly property real focusedIconScaleX: globalUiScale * 2.75
+      readonly property int iconSpacing: globalUiScale * 4
+      readonly property real focusedIconScaleX: 3.0
       readonly property bool showWorkspaceId: true
       readonly property bool showSpecialWorkspaces: false
     }
