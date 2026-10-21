@@ -1,18 +1,11 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Effects
 import Quickshell
 import qs
 import qs.style
-import qs.modules.audio
-import qs.modules.battery
-import qs.modules.backlight
+import qs.components.common
+import qs.components.bar
 import qs.modules.hyprland
-import qs.modules.network
-import qs.modules.pkgupdates
-import qs.modules.session
-import qs.modules.time
-import qs.modules.tray
 
 Scope {
   id: root
@@ -23,111 +16,57 @@ Scope {
     PanelWindow {
       id: panel
       anchors { top: true; left: true; right: true }
-      implicitHeight: Config.barHeight + bgRect.padY 
-      color: 'transparent' 
-      visible: Config.barMonitors.includes(modelData.name)
-
       screen: modelData
-      property var modelData
-      readonly property bool shouldTile: {
-        !Config.barDynamic || HyprService.isWsTiled(HyprService.getWsForScreen(modelData))
+      visible: Config.bar.monitors.includes('*') || Config.bar.monitors.includes(modelData.name) 
+      implicitHeight: Config.bar.height
+      color: 'transparent'
+
+      margins {
+        top: shouldFloat ? Config.bar.floatingMarginY : Config.bar.marginY
+        left: shouldFloat ? Config.bar.floatingMarginX : Config.bar.marginX
+        right: shouldFloat ? Config.bar.floatingMarginX : Config.bar.marginX
       }
+      
+      property var modelData
 
-      Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.InOutCirc }}
+      property bool shouldFloat: Config.bar.dynamicFloating && 
+        !HyprService.isWorkspaceTiled(HyprService.getWorkspaceForScreen(panel.screen))
 
-      Rectangle {  
+      Behavior on margins.top { Anim { duration: shouldFloat ? Motion.veryFast : Motion.fast } }
+      Behavior on margins.left { Anim { duration: shouldFloat ? Motion.fast : Motion.fast } }
+      Behavior on margins.right { Anim { duration: shouldFloat ? Motion.fast : Motion.fast } }
+
+      Rectangle {
         id: bgRect
-        anchors { fill: parent; topMargin: padY; leftMargin: padX; rightMargin: padX }
-        radius: bgRadius
+        anchors { fill: parent }
         antialiasing: true
-        color: Colors.alpha(Config.barColorBg, bgAlpha)
+        radius: panel.shouldFloat ? Config.bar.floatingRadius : Config.bar.radius
+        color: Qt.alpha(Config.bar.color, panel.shouldFloat ? Config.bar.floatingAlpha : Config.bar.alpha)
+        border.color: panel.shouldFloat ? Qt.alpha(Colors.outline, Config.bar.alpha) : 'transparent'
 
-        // State handler: on change to panel.shouldTile, sleep before updaing dimensions
-        states: State {
-          name: 'occupied'
-          when: panel.shouldTile
-          PropertyChanges { 
-            target: bgRect
-            padX: 0; padY: 0; bgRadius: 0; height: 0 
-          }
+        Behavior on radius { Anim { duration: shouldFloat ? Motion.verySlow : Motion.veryFast } }
+        Behavior on color { ColorAnim { duration: Motion.veryFast } }
+
+        WidgetContainer {
+          anchors.centerIn: parent  
+          widgets: Config.bar.widgetsCenter
         }
-        transitions: Transition {
-          from: 'occupied'
-          to: '*'
-          SequentialAnimation {
-            PauseAnimation { duration: 200 }
-            PropertyAction { properties: 'padX', 'padY', 'bgRadius', 'height' }
-          }
-        }
-
-        property real bgAlpha: panel.shouldTile ? Config.barAlpha : Config.barAlphaFloating ?? Config.alpha ?? 1.0
-        property int bgRadius: Config.barCornerRadius
-        property int padX: Config.barHorizontalOffset
-        property int padY: Config.barVerticalOffset
-
-        // looks glitchy because the height is being updated before the padding.
-        Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.InOutCirc }}
-        Behavior on bgAlpha { NumberAnimation { duration: 300; easing.type: Easing.OutQuad }}
-        Behavior on radius { NumberAnimation { duration: 600; easing.type: Easing.OutQuad }}
-        Behavior on anchors.topMargin { NumberAnimation { duration: 300; easing.type: Easing.InOutCirc }}
-        Behavior on anchors.leftMargin { NumberAnimation { duration: 300; easing.type: Easing.InOutCubic }}
-        Behavior on anchors.rightMargin { NumberAnimation { duration: 300; easing.type: Easing.InOutCubic }}
-
 
         RowLayout {
-          anchors { fill: parent; leftMargin: 16; rightMargin: 16 }
-          
-          Rectangle {
-            implicitHeight: Config.barHeight
-            implicitWidth: rowLeft.width
-            color: 'transparent'
-            // border.color: Colors.debug
-
-            Row {
-              id: rowLeft
-              anchors.verticalCenter: parent.verticalCenter
-              spacing: Config.barWidgetSpacing
-              readonly property var position: 'left'
-              
-              ClockWidget {}
-              UpdatesWidget {}
-            }
+          anchors { 
+            fill: parent;
+            leftMargin: Config.bar.widgetMarginsX;
+            rightMargin: Config.bar.widgetMarginsX 
           }
 
-          Rectangle {
-            Layout.alignment: Qt.AlignRight 
-            implicitHeight: Config.barHeight
-            implicitWidth: rowRight.width
-            color: 'transparent'
-            // border.color: Colors.debug
-
-            Row {
-              id: rowRight
-              anchors.verticalCenter: parent.verticalCenter
-              spacing: Config.barWidgetSpacing
-              readonly property var position: 'right'
-
-              SysTrayWidget {}
-              NetworkWidget {}
-              BacklightWidget {}
-              AudioWidget { layoutDirection: Qt.RightToLeft } 
-              BatteryWidget { layoutDirection: Qt.RightToLeft }
-              SessionWidget {}
-            }
+          WidgetContainer {
+            Layout.alignment: Qt.AlignLeft
+            widgets: Config.bar.widgetsLeft
           }
-        }
 
-        Rectangle {
-          anchors.centerIn: parent
-          implicitHeight: Config.barHeight
-          implicitWidth: rowCenter.width
-          color: 'transparent'
-          // border.color: Colors.debug
-          
-          Row {
-            id: rowCenter
-            anchors.verticalCenter: parent.verticalCenter
-            WorkspacesWidget {}
+          WidgetContainer {
+            Layout.alignment: Qt.AlignRight
+            widgets: Config.bar.widgetsRight 
           }
         }
       }

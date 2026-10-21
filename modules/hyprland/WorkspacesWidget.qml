@@ -4,55 +4,53 @@ import Quickshell
 import Quickshell.Hyprland
 import qs
 import qs.style
+import qs.components.common
 
 Rectangle {
-  id: bgRect
-  implicitWidth: wsRow.implicitWidth + 28
-  implicitHeight: Config.barPillHeight //wsRow.implicitHeight
-  anchors.verticalCenter: parent.verticalCenter
+  id: root
+  implicitHeight: Config.widget.pillHeight
+  implicitWidth: wsRow.width + Config.widget.pillPaddingX
   radius: height
-  color: 'transparent'
+  color: Config.widget.pillColor
+  
+  // Shorthand for this widget's config object, because it's long
+  readonly property QtObject cfg: Config.widget.workspaces 
 
-  Row { 
+  Row {
     id: wsRow
     anchors.centerIn: parent
-    spacing: 4
-
+    spacing: cfg.iconSpacing
+    
     Repeater {
-      model: [1,2,3,4,5,6] //Hyprland.workspaces
+      model: Hyprland.workspaces
 
-      Rectangle { 
+      Rectangle {
         id: wsIcon
-        height: 13
-        width: HyprService.isWsFocused(modelData) ? height*2 : height
-        radius: width/2
-        border.color: Colors.alpha(Colors.shadow, 0.25)
-        antialiasing: true
-      
+        visible: cfg.showSpecialWorkspaces || modelData.id > 0
+        implicitHeight: cfg.iconHeight
+        implicitWidth: HyprService.isWorkspaceFocused(modelData.id) ? cfg.iconWidth * cfg.focusedIconScaleX : cfg.iconWidth
+        radius: height
         color: {
-          if (HyprService.isWsFocused(modelData)) return Colors.primary  
-          if (HyprService.isWsOccupied(modelData)) return Colors.secondary
-          else return Colors.shadow
+          if (HyprService.isWorkspaceFocused(modelData.id)) return Colors.primary  
+          if (HyprService.isWorkspaceOccupied(modelData.id)) return Colors.secondary
+          else return Colors.surfaceDim
         }
+        antialiasing: true
 
-        Behavior on color { ColorAnimation { 
-          duration: 150; easing.type: Easing.InOutQuad 
-        }}
-
-        Behavior on width { NumberAnimation { 
-          duration: 290
-          easing.type: Easing.OutBack 
-          easing.overshoot: 2.8
-        }}
+        Behavior on color { ColorAnim {} }
+        Behavior on implicitWidth { Anim { kind: Motion.Bounce } }
 
         Text {
           anchors.fill: parent
+          visible: { cfg.showWorkspaceId 
+            && (HyprService.isWorkspaceOccupied(modelData.id)
+            || HyprService.isWorkspaceFocused(modelData.id))
+          }
           horizontalAlignment: Text.AlignHCenter
-          verticalAlignment: Text.AlignVCenter
-          text: Config.workspacesShowId ? modelData : ''
-          font.family: Fonts.cartograph.family
-          font.weight: 600 
-          font.pixelSize: 7
+          font.family: Config.fontMono.family
+          font.pixelSize: cfg.iconHeight * 0.7
+          font.weight: 700
+          text: modelData.id > 0 ? modelData.id : ''
         }
       }
     }

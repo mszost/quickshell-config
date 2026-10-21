@@ -12,7 +12,8 @@ Singleton {
   readonly property int state: device.state
   readonly property bool isAvailable: (device !== null)
   readonly property bool isCharging: isAvailable && (device.state === 1)
-  readonly property bool isCritical: isAvailable && !isCharging && percentage <= 10
+  readonly property bool isCritical: isAvailable && !isCharging && percentage <= 15
+  // readonly property bool isLow: isAvailable && !isCharging && percentage <= 20
   readonly property bool isPlugged: device.state === 4 || device.state === 5
   
   readonly property int percentage: isAvailable ? Math.floor(device.percentage * 100) : 0
@@ -34,4 +35,3 @@ Singleton {
    return Icons.batteryCritical
   }
 }
-

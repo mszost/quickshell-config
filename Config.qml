@@ -7,120 +7,153 @@ import qs.style
 Singleton {
   id: root
 
-  // ░█▀▀░█▀▀░█▀█░█▀▀░█▀▄░█▀█░█░░
-  // ░█░█░█▀▀░█░█░█▀▀░█▀▄░█▀█░█░░
-  // ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀
- 
-  // See ./Style/Colors.qml for available color palettes
-  property string theme: 'nord'
-  
-  // Enable or disable sound effects
-  // If you don't want sounds at all, removing the `SoundEffects {}` initialization
-  // in ./shell.qml will prevent loading the object entirely, thus saving some memory
-  property bool muteSounds: false
-  
-  // Global background opacity (range 0.0 - 1.0)
-  // Item-specific values (barAlpha, dockAlpha, etc.) will fall back to this if they are unset
-  readonly property real alpha: 1.0
+  // readonly property string theme: 'gruvbox-material'
+  readonly property string theme: 'jade'
+  // readonly property string theme: 'nord'
+  readonly property bool playSoundEffects: true
+  readonly property real globalUiScale: 1.0
+  readonly property real globalAnimationSpeed: 1.0
 
+  property font fontMono: Fonts.jetbrainsMono //Fonts.cartograph
+  property font fontSans: Fonts.ibmPlexSans
 
-
-  // ░█░█░▀█▀░█▀▄░█▀▀░█▀▀░▀█▀░█▀▀
-  // ░█▄█░░█░░█░█░█░█░█▀▀░░█░░▀▀█
-  // ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
-
-  readonly property bool workspacesShowId: true
+  // Uncomment to set custom accents (overrides theme colors).
+  // readonly property color accentColorPrimary: '#FFFFFF'
+  // readonly property color accentColorSecondary: '#FFFFFF'
 
 
   // ░█▀▄░█▀█░█▀▄
   // ░█▀▄░█▀█░█▀▄
   // ░▀▀░░▀░▀░▀░▀
 
-  readonly property real barAlpha: 1
-  readonly property real barAlphaFloating: 1
-  readonly property color barColorBg: Colors.surfaceDim
-  readonly property int barHeight: 27
-  readonly property int barPillHeight: 21
-  readonly property int barWidgetSpacing: 6
+  property QtObject bar: QtObject { 
+    // See `components/bar/WidgetRegistry.qml` for names of available widgets.
+    readonly property list<string> widgetsLeft: ['clock', '_debug']
+    readonly property list<string> widgetsCenter: ['workspaces']
+    readonly property list<string> widgetsRight: ['brightness', 'audio', 'battery', 'session']
 
-  // Monitors that the bar should appear on
-  readonly property list<string> barMonitors: ['eDP-2', 'DP-10', 'DP-1', 'HDMI-1']
+    // Behavior
+    readonly property list<string> monitors: ['eDP-2', 'DP-10', 'DP-1', 'HDMI-1']
+    // If enabled the bar will switch between floating and edge-attached
+    // states when there are tiled windows present on the workspace.
+    readonly property bool dynamicFloating: false
 
-  // If enabled the bar will switch between 'floating' and 'solid'
-  // states depending on the presence of windows in the workspace.
-  // Otherwise, the default state is 'solid'
-  readonly property bool barDynamic: false
-  
-  // Whether to show labels for bar widgets. Options: 'show', 'hide', or 'dynamic'
-  // readonly property string barLabelStyle: 'dynamic'
-  
-  // Spacing from the edges of the screen (only applies to floating state)
-  property int barVerticalOffset: 5
-  property int barHorizontalOffset: 16
-  property int barCornerRadius: 11
+    // Styling
+    readonly property color color: Colors.surface
+    readonly property real alpha: 1.0
+    readonly property real floatingAlpha: 0.8
 
+    // Dimensions
+    readonly property int height: globalUiScale * 31
+    readonly property int marginX: globalUiScale * 0
+    readonly property int marginY: globalUiScale * 0
+    readonly property int radius: globalUiScale * 0
+
+    readonly property int floatingMarginY: globalUiScale * 8
+    readonly property int floatingMarginX: globalUiScale * 20
+    readonly property int floatingRadius: globalUiScale * 8
+
+    readonly property int widgetSpacing: globalUiScale * 5
+    readonly property int widgetMarginsX: globalUiScale * 16
+
+  }
 
 
   // ░█▀▄░█▀█░█▀▀░█░█
   // ░█░█░█░█░█░░░█▀▄
   // ░▀▀░░▀▀▀░▀▀▀░▀░▀
 
-  readonly property real dockAlpha: 0.80
-  readonly property real dockAlphaOutline: 0.80
-  readonly property color dockColorBg: Colors.surfaceDim
+  property QtObject dock: QtObject {
+    // Content
+    // Pulls from .desktop files in ~/.local/share/applications/ and /usr/share/applications
+    readonly property list<string> pinnedApps: [
+      'kitty', 'org.kde.dolphin', 'zen', 'vivaldi-stable', 'obsidian',
+      'code-oss', 'org.darktable.darktable', 'spotify-launcher', 'vesktop',
+      'steam', 'vintage-story', 'org.keepassxc.KeePassXC',
+    ]
+    readonly property list<string> blacklistedApps: ['xdg-desktop-portal-gtk']
 
-  // Monitors that the dock should appear on
-  readonly property list<string> dockMonitors: ['eDP-2', 'DP-10', 'DP-1', 'HDMI-1']
+    // readonly property string fallbackIcon: 'zen'
 
-  // Spacing from bottom edge of the screen (values > 10px can cause issues)
-  readonly property int dockVerticalOffset: 6
-  
-  // Applications to show on the dock 
-  // Uses names of .desktop files from ~/.local/share/applications/
-  readonly property list<string> dockApps: [
-    'kitty',
-    'org.kde.dolphin',
-    'zen',
-    'vivaldi-stable',
-    'obsidian',
-    'code-oss',
-    'spotify-launcher',
-    'vesktop',
-    'steam',
-    'org.keepassxc.KeePassXC',
-  ]
+    // Styling
+    readonly property color bgColor: Colors.surface
+    readonly property color borderColor: Colors.outline
+    readonly property real alpha: 0.85
 
+    // Dimensions
+    readonly property int height: globalUiScale * 64
+    readonly property int iconSpacing: height / 10          // Spacing between icons within their row
+    readonly property int iconRowPadding: height * 0.15     // Padding around the entire icon row
+    readonly property int bottomMargin: globalUiScale * 10  // Distance from the bottom edge of the screen
+    readonly property int radius: height * 0.3
 
+    readonly property bool showTrigger: true
+    readonly property int triggerHeight: globalUiScale * 4
+    readonly property int triggerWidth: globalUiScale * 300
+    readonly property color triggerColor: Colors.mOnSurface
+    readonly property real triggerAlpha: 0.5
 
-  // ░█▀█░█▀█░█▀█░█▀▀░█░░░█▀▀
-  // ░█▀▀░█▀█░█░█░█▀▀░█░░░▀▀█
-  // ░▀░░░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀
+    // Dots for running instances of pinned applications
+    readonly property color dotColor: Colors.primary
+    readonly property int dotSize: globalUiScale * 4
+    readonly property int dotSpacing: globalUiScale * 2  // Spacing between dots
+    readonly property int dotGap: globalUiScale * -2     // Spacing between rows of dots and their app icon
+    readonly property int maxDots: 4
 
-  readonly property real panelContainerAlpha: 1.0
-  readonly property real panelBlockAlpha: 1.0
+    readonly property int separatorLineWidth: 1  // vertical line between the pinned and open-but-unpinned apps
 
-  readonly property int panelRadius: 12
+    // Setting hoverZoneMargin <= easing.overshoot of the dock's slide 
+    // animation will cause the dock to clip it's bounds
+    readonly property real hoverZoneMargin: globalUiScale * 15
+    
+    // Behavior
+    readonly property list<string> monitors: ['eDP-2', 'DP-10', 'HDMI-1']
+    readonly property bool dynamicHiding: false//true
+    readonly property int hideDelay: 150
 
-  // Tabler icons for devices which are listed by ./modules/audio/AudioPanel.qml
-  // Uses device.description for names
-  readonly property var panelAudioDeviceSymbols: {
-    'Laptop Speakers': Icons.laptop,
-    'QC45': Icons.headphones,
-    'Aux': Icons.speaker,
-    'Buds': Icons.airpods,
-    'Buds 2': Icons.airpods,
-    'USB Audio Headphones': Icons.usb,
-    '_fallback': Icons.volume3 // used if the device has no mapping set above
   }
 
 
+  // ░█░█░▀█▀░█▀▄░█▀▀░█▀▀░▀█▀░█▀▀
+  // ░█▄█░░█░░█░█░█░█░█▀▀░░█░░▀▀█
+  // ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
 
-  // ░█▀█░█▀▀░█▀▄
-  // ░█░█░▀▀█░█░█
-  // ░▀▀▀░▀▀▀░▀▀░
+  property QtObject widget: QtObject {
+    readonly property color textColor: Colors.mOnSurface
+    readonly property font textFont: Fonts.cartograph
+    readonly property color pillColor: Colors.surfaceBright
+    readonly property int pillHeight: globalUiScale * 21
+    readonly property int pillPaddingX: globalUiScale * 16
 
-  property real osdAlpha: 0.80
-  // Use alternative style for OSDs, inspired by https://github.com/end-4/dots-hyprland
-  // property bool osdAltStyle: true
+    property QtObject audio: QtObject {}
+
+    property QtObject battery: QtObject {
+      readonly property int criticalBlinkRate: globalAnimationSpeed * 300
+    }
+
+    property QtObject brightness: QtObject {}
+
+    property QtObject clock: QtObject {
+      readonly property string format: 'h:mm AP  •  ddd, MMM. d'
+      // All widgets that implement `Widget.qml` can be modified in this way.
+      readonly property font textFont: Fonts.ibmPlexSans  
+    }
+
+    property QtObject network: QtObject {}
+
+    property QtObject session: QtObject {}
+
+    property QtObject tray: QtObject {}
+
+    
+    property QtObject workspaces: QtObject {
+      readonly property int iconHeight: globalUiScale * 10
+      readonly property int iconWidth: iconHeight
+      readonly property int iconSpacing: globalUiScale * 5
+      readonly property real focusedIconScaleX: globalUiScale * 2.75
+      readonly property bool showWorkspaceId: true
+      readonly property bool showSpecialWorkspaces: false
+    }
+  }
 }
 

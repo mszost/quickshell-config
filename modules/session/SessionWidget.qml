@@ -1,11 +1,8 @@
 import qs.style
-import qs.components.bar 
+import qs.components.bar
 
-BarWidget {
+Widget {
   id: root
   icon: Icons.power
-  iconSize: 15
-  normalColor: Colors.red
-  // hoverColor: Colors.mOnErrorContainer
+  colorStd: Colors.red
 }
-

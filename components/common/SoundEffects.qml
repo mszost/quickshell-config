@@ -5,7 +5,7 @@ import qs
 import qs.modules.audio
 
 Item {
-id: root
+  id: root
 
   Timer {
     id: cooldown
@@ -15,10 +15,10 @@ id: root
 
   // Play on volume change
   SoundEffect {
-    source: '../assets/sounds/audio-volume-change.wav'
-    muted: Config.muteSounds
+    source: '../../assets/sounds/audio-volume-change.wav'
+    muted: !Config.playSoundEffects
 
-    property int volume: AudioService.volumeAsInt
+    property int volume: AudioService.volumeAsInt * 0.5
     onVolumeChanged: {
       if (!cooldown.running) { // force wait of 100ms between each play
         play()
@@ -27,4 +27,3 @@ id: root
     }
   }
 }
-

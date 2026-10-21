@@ -1,145 +1,209 @@
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Effects
 import Quickshell
-import Quickshell.Widgets
 import Quickshell.Hyprland
 import qs
 import qs.style
+import qs.components.common
 import qs.components.dock
+import qs.modules.core
 import qs.modules.hyprland
 
-Scope {
+Scope { 
   id: root
-  readonly property int padY: Config.dockVerticalOffset
-  readonly property int buffer: 8  // used as padding for popup and bgRect
-  readonly property real bgAlpha: Config.dockAlpha ?? Config.alpha ?? 1.0
+
+  readonly property QtObject cfg: Config.dock
+  readonly property bool showSeparatorLine: root.unpinnedOpenApps.length > 0
+  readonly property real iconSize: cfg.height - (2 * cfg.iconRowPadding) - cfg.dotGap - cfg.dotSize
+  readonly property real pinnedAppsWidth: cfg.pinnedApps.length * (iconSize + cfg.iconSpacing) + (2 * cfg.iconRowPadding)
+  readonly property real openedAppsWidth: unpinnedOpenApps.length * (iconSize + cfg.iconSpacing) + (2 * cfg.iconRowPadding)
+  readonly property real totalDockWidth: pinnedAppsWidth + openedAppsWidth + (showSeparatorLine ? cfg.separatorLineWidth : 0)
+  readonly property real displacement: cfg.height + cfg.bottomMargin
+
+  readonly property list<string> unpinnedOpenApps: {
+    const seen = new Set()
+    for (const toplevel of Hyprland.toplevels.values) {
+      const entry = HyprService.entryForClass(toplevel.lastIpcObject.class)
+      if (entry && !cfg.pinnedApps.includes(entry.id)) {
+        if (!cfg.blacklistedApps.includes(entry.id)) { 
+          seen.add(entry.id)
+        }
+      }
+    }
+    return Array.from(seen)
+  }
+
+  // function getFocusedIcon(mouseX: real): void {
+  //   console.log(mouseX)
+  // }
+  //
+
 
   Variants {
     model: Quickshell.screens
 
+    // Trigger window: a thin strip on the bottom edge of the screen. It stays mapped at all times
+    // so it can detect the pointer; the dock itself lives in a PopupWindow anchored to it.
     PanelWindow {
       id: panel
       anchors.bottom: true
-      implicitHeight: 0
-      implicitWidth: 500//bgRect.width 
-      // color: dockIsVisible ? 'transparent' : 'red'
-      color: 'transparent'
-      exclusiveZone: 0
-      
       screen: modelData
-      required property var modelData
+      visible: cfg.monitors.includes('*') || cfg.monitors.includes(modelData.name)
+      exclusiveZone: 0
+      implicitHeight: cfg.triggerHeight
+      implicitWidth: cfg.triggerWidth
+      color: 'transparent'
 
-      // All of the properties below must be chidren of panel so that their states are stored separately for each screen
-      property bool dockIsVisible: { 
-        if (!Config.dockMonitors.includes(modelData.name)) return false
-        if (!isFocused) return false
-        if (!isOccupied) return true
-        return isHovered
-      }
+      // property var _debug: {console.log(Hyprland?.activeTopLevel ?? 'null'); return null}
+
+      property var modelData
+      property bool hoverRevealed: false
+
+      readonly property int workspaceId: HyprService.getWorkspaceForScreen(panel.screen)
+      readonly property bool workspaceIsBusy: HyprService.isWorkspaceTiled(workspaceId) || !HyprService.isWorkspaceFocused(workspaceId)
+      readonly property bool hidden: cfg.dynamicHiding && (workspaceIsBusy && !hoverRevealed)
+      readonly property bool hovered: dockMouse.containsMouse || triggerMouse.hovered
       
-      readonly property bool isFocused: Hyprland.focusedMonitor?.name == modelData.name
-      readonly property bool isOccupied: HyprService.isWsTiled(HyprService.getWsForScreen(modelData))
-      readonly property bool isHovered: enterArea.hovered || exitArea.hovered
+      property real revealProgress: hidden ? 0 : 1
+      Behavior on revealProgress { Anim { kind: Motion.Bounce; easing.overshoot: 0.7 } }
+      
+      onHoveredChanged: {
+        if (!cfg.dynamicHiding) { return }  // Ignore the hover event if hiding is disabled
+        if (hovered) {
+          hoverRevealed = true
+          hideTimer.stop()
+        } else { 
+          hideTimer.restart()
+        }
+      }
 
-      // Hovering near the bottom edge of the screen triggers the dock to open
-      HoverHandler { id: enterArea } 
+      HoverHandler { id: triggerMouse }
+      
+      Timer {
+        id: hideTimer
+        interval: cfg.hideDelay
+        onTriggered: hoverRevealed = false
+      }    
+    
+      // Visual component of the trigger; only shown while the dock is hidden.
+      Rectangle {
+        id: triggerRect
+        anchors.fill: parent
+        visible: cfg.showTrigger && panel.revealProgress <= 0
+        radius: height
+        color: Qt.alpha(cfg.triggerColor, alpha)
+        
+        property real alpha: visible ? cfg.triggerAlpha : 0.0
+        Behavior on alpha { Anim { duration: Motion.fast } }
+      }
 
-      PopupWindow { 
+      PopupWindow {
         id: popup
         anchor {
-          window: panel
-          // center horizontally
-          rect.x: panel.width/2 - width/2  
+          window: panel 
+          edges: Edges.Bottom          
+          gravity: Edges.Top
           adjustment: PopupAdjustment.None
-          edges: Edges.Top | Edges.Center
-          gravity: Edges.Top | Edges.Right
+          rect.x: 0
+          rect.y: 0
+          rect.width: panel.width
+          rect.height: panel.height
         }
-        // popup is slightly larger than the visible bgRect in order 
-        // to avoid clipping the animation and exitArea
-        implicitWidth: bgRect.width + buffer 
-        implicitHeight: bgRect.height + padY + buffer 
-        visible: bgRect.y < height 
+        visible: panel.visible && panel.revealProgress > 0
+        implicitWidth: root.totalDockWidth 
+        implicitHeight: cfg.height + cfg.bottomMargin + cfg.hoverZoneMargin
+        // color: Qt.alpha('lime', 0.3) // for debugging
         color: 'transparent'
 
+        readonly property var debug: {
+          console.log(dockMouse.mouseX)
+          return ''
+        }
+
         Rectangle {
-          id: bgRect
-          anchors.horizontalCenter: parent.horizontalCenter
-          height: 64
-          width: content.width + buffer*3.25
-          radius: height * 0.3
-          color: Colors.alpha(Config.dockColorBg, bgAlpha)
-          border.color: Colors.alpha(Colors.outlineVariant, 0.5)
-          border.width: 1
-          antialiasing: true
-          
-          // TODO: with the new HoverHandler implementation (replacing MouseArea)
-          // the below expression for `y` can likely be simplified.
-          
-          // Sliding in/out animation
-          y: panel.dockIsVisible ? (parent.height - height - padY) : parent.height
-          Behavior on y { NumberAnimation { duration: 220; easing.type: Easing.InOutCirc } }
+          id: debugRect
+          anchors {
+            verticalCenter: parent.verticalCenter
+            left: parent.left
+            leftMargin: dockMouse.mouseX
+          }
+          z: 2
+          height: cfg.height
+          width: 1
+          color: 'magenta'
+        }
 
-          // Leaving the bounds of bgRect dismisses the dock
-          HoverHandler { id: exitArea; margin: buffer } 
-          
-          RowLayout {
-            id: content
-            anchors.centerIn: parent
-            spacing: 6
-            
-            Repeater {
-              model: Config.dockApps
-                             
-              WrapperMouseArea {
-                id: iconArea
-                anchors.margins: -6
-                child: appIcon
-                resizeChild: false
-                Layout.preferredWidth: 41  // Actual displayed resolution, downscaled from appIcon.sourceSize 
-                Layout.preferredHeight: 41
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                onPressed: (mouse) => {
-                  if (mouse.button === Qt.LeftButton) {
-                    clickAnimation.restart()
-                  }
+        // Everything that visually moves lives in here; the PopupWindow itself is static
+        Item {
+          width: parent.width
+          height: parent.height
+          y: (1 - panel.revealProgress) * root.displacement
+
+          MouseArea {
+            id: dockMouse
+            anchors.fill: parent
+            hoverEnabled: true
+            acceptedButtons: Qt.NoButton
+          }
+
+          Rectangle {
+            anchors {
+              bottom: parent.bottom
+              bottomMargin: cfg.bottomMargin
+              horizontalCenter: parent.horizontalCenter
+            }
+            implicitWidth: iconRow.width + (2 * cfg.iconRowPadding)
+            implicitHeight: cfg.height
+            radius: cfg.radius
+            color: Qt.alpha(cfg.bgColor, cfg.alpha)
+            border.color: Qt.alpha(cfg.borderColor, cfg.alpha)
+            antialiasing: true
+
+            Row {
+              id: iconRow
+              anchors {
+                left: parent.left
+                leftMargin: cfg.iconRowPadding
+                bottom: parent.bottom
+                bottomMargin: cfg.iconRowPadding
+              }
+
+              Repeater {
+                model: cfg.pinnedApps
+
+                DockIcon {
+                  iconSize: root.iconSize
                 }
-                onClicked: { 
-                  DesktopEntries.byId(modelData).execute()
+              }
+
+              Item {
+                id: separatorLineContainer
+                anchors.verticalCenter: parent.verticalCenter
+                visible: root.showSeparatorLine 
+                height: iconSize
+                width: line.width < 1 ? 0 : line.width + (cfg.iconSpacing * 2)
+
+                Rectangle {
+                  id: line
+                  anchors.centerIn: parent
+                  height: parent.height
+                  width: cfg.separatorLineWidth
+                  radius: width
+                  color: Colors.outline
                 }
+              }
 
-                Image {
-                  id: appIcon
-                  anchors.fill: parent
-                  // Wait for the full application list to load (prevents a race condition)
-                  source: (DesktopEntries.applications.values, DesktopEntries.byId(modelData)?.icon ?? '') 
-                  sourceSize.width: 128  // Render resolution
-                  mipmap: true
-                  scale: iconArea.containsMouse ? 1.125 : 1.0
-                  visible: true
+              Repeater {
+                model: root.unpinnedOpenApps
 
-                  // Hover animation 
-                  Behavior on scale { NumberAnimation { 
-                    duration: 200
-                    easing.type: Easing.OutBack
-                    easing.overshoot: 1.3
-                  }} 
-
-                  // Click animation
-                  SequentialAnimation on scale {
-                    id: clickAnimation
-                    running: false
-                    NumberAnimation { to: 0.90; duration: 70 }
-                    NumberAnimation { to: 1.10; duration: 70 }
-                  }
+                DockIcon {
+                  iconSize: root.iconSize
                 }
               }
             }
           }
         }
       }
-    }
+    } 
   }
 }
 

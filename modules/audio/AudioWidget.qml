@@ -7,15 +7,16 @@ import qs
 import qs.style
 import qs.components.bar
 
-BarWidget {
+Widget {
   id: root
+  spacing: 1
+  font: Config.widget.audio.textFont || Config.widget.textFont
   text: AudioService.isMuted ? 'Muted' : AudioService.volumeAsInt + '%'
   icon: AudioService.symbol
-  spacing: 1
-  normalColor: {
+  
+  colorStd: {
     if (AudioService.volumeAsInt > 100) return Colors.red
-    if (menu.isVisible) return hoverColor
-    return Colors.foreground
+    return Colors.mOnSurface
   }
   
   // Scroll event handler
@@ -24,13 +25,4 @@ BarWidget {
     if (wheelEvent.angleDelta.y > 0) AudioService.setVolume(AudioService.volume + step)
     if (wheelEvent.angleDelta.y < 0) AudioService.setVolume(AudioService.volume - step)
   }
-
-  mouseArea.onClicked: menu.isVisible = true
-
-  AudioPanel {
-    id: menu
-    boundItem: root
-    widgetContainerPos: root.widgetContainerPos
-  }
 }
-

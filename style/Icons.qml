@@ -4,7 +4,8 @@
  Very new icons might not be available yet - the font this project uses was compiled
  from release v3.36.1: https://github.com/tabler/tabler-icons/releases/tag/v3.36.1
  
- Note that the keys for some icons do not match if the original naming was weird
+ Note that the property names for some icons do not match tabler.
+ In these cases, tabler's given name is commented on the same line.
 */
 
 pragma Singleton
@@ -41,11 +42,11 @@ Singleton {
   readonly property string ethernet: '\uEB9D'  // sitemap 
   readonly property string worldX: '\uF9EB' 
   
-  readonly property string volume0: '\uEB50'                      // volume-3
+  readonly property string volume0: '\uEB50'                       // volume-3
   readonly property string volume1: String.fromCodePoint(0x1019d)  // volume-4
   readonly property string volume2: '\uEB4F'                       // volume-2
-  readonly property string volume3: '\uEB51'                      // volume
-  readonly property string volumeMute: '\uF1C3'                      // volume-off
+  readonly property string volume3: '\uEB51'                       // volume
+  readonly property string volumeMuted: '\uF1C3'                   // volume-off
   
   readonly property string usb: '\uF00C'
   readonly property string laptop: '\uEB64'

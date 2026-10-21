@@ -1,12 +1,10 @@
 import QtQuick
 import Quickshell
 import qs.views
-import qs.style
+import qs.components.common
 
-Scope {
+ShellRoot { 
   Bar {}
   Dock {}
-  OsdLayer {}
   SoundEffects {}
 }
-

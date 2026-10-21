@@ -1,13 +1,12 @@
-import qs.components.bar 
+import QtQuick
+import qs
+import qs.components.bar
 import qs.style
 
-BarWidget {
+Widget {
   id: root
-  text: ClockService.datetime 
-  textFamily: Fonts.ibmPlex.family
-  textWeight: Fonts.ibmPlex.weight
-  layoutDirection: Qt.RightToLeft
-  spacing: 5
-  icon: Icons.clock
-}
 
+  font: Config.widget.clock.textFont || Config.widget.textFont 
+  icon: Icons.clock
+  text: TimeService.format(Config.widget.clock.format)
+}

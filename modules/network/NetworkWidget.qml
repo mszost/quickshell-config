@@ -1,10 +1,10 @@
 import qs.style
 import qs.components.bar
 
-BarWidget {
+Widget {
   id: root
-  // text: NetworkService.networkName
+  font: Config.widget.network.textFont || Config.widget.textFont
+  // iconSize: 12
   icon: NetworkService.symbol
-  iconSize: 13
+  // text: NetworkService.networkName
 }
-

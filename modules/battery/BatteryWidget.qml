@@ -1,28 +1,32 @@
+
 import QtQuick
+import qs
 import qs.style
 import qs.components.bar
 
-BarWidget {
+Widget {
   id: root
+  font: Config.widget.battery.textFont || Config.widget.textFont
   text: BatteryService.isAvailable ? BatteryService.percentage + '%' : ''
   icon: BatteryService.symbol
-  animDuration: BatteryService.isCritical ? 300 : 100
+  animDuration: BatteryService.isCritical ? 200 : 100
 
-  animatedColor: {
+  colorAnimated: {
     if (!BatteryService.isAvailable) return Colors.red
-    if (BatteryService.isCharging)   return '#4eed8e'
-    if (BatteryService.isCritical)   return blinker.state ? Colors.red : Colors.alpha(Colors.red, 0.35)
-    return mouseArea.containsMouse ? hoverColor : normalColor
+    if (mouseArea.containsMouse)     return colorOnHover
+    if (BatteryService.isCharging)   return Colors.brightGreen
+    if (BatteryService.isCritical)   return blinker.state ? Colors.red : Qt.alpha(Colors.red, 0.35) // 'white'
+    return colorStd
   }
+
 
   Timer {
     id: blinker
     property bool state: false
     running: BatteryService.isCritical
     repeat: true
-    interval: 350
+    interval: Config.widget.battery.criticalBlinkRate
     onTriggered: state = !state
     onRunningChanged: if (!running) state = false
   }
 }
-
