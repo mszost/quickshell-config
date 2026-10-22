@@ -12,8 +12,8 @@ Singleton {
 
   property real scale: Config.globalAnimationSpeed
 
-  readonly property int veryFast: 60
-  readonly property int fast: 120 * scale
+  readonly property int veryFast: 50
+  readonly property int fast: 100 * scale
   readonly property int normal: 200 * scale
   readonly property int slow: 300 * scale
   readonly property int verySlow: 420 * scale

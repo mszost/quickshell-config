@@ -47,7 +47,7 @@ Scope {
       implicitWidth: cfg.triggerWidth
       color: 'transparent'
 
-      property var modelData
+     property var modelData
       property bool hoverRevealed: false
 
       readonly property int workspaceId: HyprService.getWorkspaceForScreen(panel.screen)
@@ -61,7 +61,7 @@ Scope {
       property real zoomStrength: dockMouse.containsMouse ? 1 : 0
      
       property real revealProgress: hidden ? 0 : 1
-      Behavior on revealProgress { Anim { kind: Motion.Bounce; easing.overshoot: 1 } }
+      Behavior on revealProgress { NumberAnimation { easing.type: Easing.InOutCirc } }
       
       // readonly property var _debug: {
       //   indexAt(dockMouse.mouseX, pinnedAppsRepeater)
@@ -103,12 +103,12 @@ Scope {
       Rectangle {
         id: triggerRect
         anchors.fill: parent
-        visible: cfg.showTrigger && panel.revealProgress <= 0
+        visible: cfg.showTrigger
         radius: height
         color: Qt.alpha(cfg.triggerColor, alpha)
         
-        property real alpha: visible ? cfg.triggerAlpha : 0.0
-        Behavior on alpha { Anim { duration: Motion.fast } }
+        property real alpha: panel.revealProgress <= 0 ? cfg.triggerAlpha : 0.0
+        Behavior on alpha { Anim { duration: Motion.slow } }
       }
 
       PopupWindow {
@@ -126,7 +126,6 @@ Scope {
         visible: panel.visible && panel.revealProgress > 0
         implicitWidth: root.totalDockWidth 
         implicitHeight: cfg.height + cfg.bottomMargin + cfg.hoverZoneMargin
-        // color: Qt.alpha('lime', 0.3) // for debugging
         color: 'transparent'
 
         // Rectangle {
@@ -153,7 +152,6 @@ Scope {
             anchors.fill: parent
             hoverEnabled: true
             acceptedButtons: Qt.NoButton
-            // onPositionChanged: (mouse) => panel.relativeMouseX = mouse.x
           }
 
           Rectangle {
@@ -200,7 +198,7 @@ Scope {
                 Rectangle {
                   id: line
                   anchors.centerIn: parent
-                  height: parent.height
+                  height: parent.height * 0.75
                   width: cfg.separatorLineWidth
                   radius: width
                   color: Colors.outline
@@ -215,7 +213,6 @@ Scope {
                   iconSize: root.iconSize
                   mouseX: panel.contentRelativeMouseX
                   zoomStrength: panel.zoomStrength
-                  baseOffset: cfg.pinnedApps.length * (root.iconSize + cfg.iconSpacing) + root.separatorWidth
                 }
               }
             }

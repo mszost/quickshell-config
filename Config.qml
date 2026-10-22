@@ -7,10 +7,10 @@ import qs.style
 Singleton {
   id: root
 
-  readonly property string theme: 'nord'
+  readonly property string theme: 'creamy-forest'
   readonly property bool playSoundEffects: true
   readonly property real globalUiScale: 1.0
-  readonly property real globalAnimationSpeed: 1.0
+  readonly property real globalAnimationSpeed: 0.8
 
   property font fontMono: Fonts.jetbrainsMono //Fonts.cartograph
   property font fontSans: Fonts.ibmPlexSans
@@ -34,12 +34,12 @@ Singleton {
     readonly property list<string> monitors: ['eDP-2', 'DP-10', 'DP-1', 'HDMI-1']
     // If enabled the bar will switch between floating and edge-attached
     // states when there are tiled windows present on the workspace.
-    readonly property bool dynamicFloating: false
+    readonly property bool dynamicFloating: true
 
     // Styling
     readonly property color color: Colors.surface
     readonly property real alpha: 0.8
-    readonly property real floatingAlpha: 0.8
+    readonly property real floatingAlpha: 0.4
 
     // Dimensions
     readonly property int height: globalUiScale * 31
@@ -49,10 +49,10 @@ Singleton {
 
     readonly property int floatingMarginY: globalUiScale * 8
     readonly property int floatingMarginX: globalUiScale * 20
-    readonly property int floatingRadius: globalUiScale * 8
+    readonly property int floatingRadius: globalUiScale * 10
 
     readonly property int widgetSpacing: globalUiScale * 5
-    readonly property int widgetMarginsX: globalUiScale * 16
+    readonly property int widgetMarginsX: globalUiScale * 10
 
   }
 
@@ -65,7 +65,7 @@ Singleton {
     // Behavior
     readonly property list<string> monitors: ['eDP-2', 'DP-10', 'HDMI-1']
     readonly property bool dynamicHiding: true
-    readonly property int hideDelay: 150
+    readonly property int hideDelay: 330
 
     // Content (pulls from .desktop files in ~/.local/share/applications/ and /usr/share/applications)
     readonly property list<string> pinnedApps: [
@@ -83,19 +83,19 @@ Singleton {
 
     // Container dimensions
     readonly property int height: globalUiScale * 65
-    readonly property int iconSpacing: height / 7          // Spacing between icons within their row
+    readonly property int iconSpacing: height / 6           // Spacing between icons within their row
     readonly property int iconRowPadding: height * 0.15     // Padding around the entire icon row
     readonly property int bottomMargin: globalUiScale * 10  // Distance from the bottom edge of the screen
     readonly property int radius: height * 0.3
 
     // Trigger dimensions
     readonly property bool showTrigger: true
-    readonly property int triggerHeight: globalUiScale * 4
+    readonly property int triggerHeight: globalUiScale * 6
     readonly property int triggerWidth: globalUiScale * 300
     readonly property color triggerColor: Colors.mOnSurface
-    readonly property real triggerAlpha: 0.5
+    readonly property real triggerAlpha: 0.33
 
-    // Dots for running instances applications
+    // Dots for running instances
     readonly property color dotColor: Colors.primary
     readonly property int dotSize: globalUiScale * 4
     readonly property int dotSpacing: globalUiScale * 2  // Spacing between dots within their row
@@ -103,7 +103,7 @@ Singleton {
     readonly property int maxDots: 4
     
     // Vertical line between the pinned and open-but-unpinned apps
-    readonly property int separatorLineWidth: 1  
+    readonly property int separatorLineWidth: 2  
 
     // Setting hoverZoneMargin <= easing.overshoot of the dock's slide 
     // animation will cause the dock to clip it's bounds
@@ -111,9 +111,9 @@ Singleton {
 
     // Properties for the focused icon scaling animation
     readonly property real maxGrowth: 1.4
-    readonly property real growthRadius: 1.25  // Columns away from the pointer that should be scaled.
-    readonly property real pushRadius: 2       // Columns from the pointer beyond which icons don't move.
-    readonly property real pushDistance: globalUiScale * 5  // peak sideways displacement (pixels)
+    readonly property real growthRadius: 1.10     // Columns away from the pointer that should be scaled.
+    readonly property real pushRadius: 2.15       // Columns from the pointer beyond which icons don't move.
+    readonly property real pushDistance: globalUiScale * 4  // peak sideways displacement (pixels)
   }
 
 

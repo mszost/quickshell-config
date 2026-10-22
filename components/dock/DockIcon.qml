@@ -26,8 +26,6 @@ Item {
   
   readonly property alias cellSize: root.implicitWidth
   
-  property real baseOffset: 0 // base-layout x position of this icon's row
-
   // Signed (+/-) distance from the pointer to this icon's layout center (positive = icon is right of the pointer)
   readonly property real pointerOffset: (root.x + root.width / 2) - mouseX
 
@@ -37,7 +35,7 @@ Item {
     const falloff = distance >= radius ? 0 : 0.5 * (1 + Math.cos(Math.PI * distance / radius))
     return 1 + (cfg.maxGrowth - 1) * falloff * zoomStrength    
   }
-  Behavior on zoom { NumberAnimation { easing.type: Easing.OutExpo; duration: 660 } }
+  Behavior on zoom { NumberAnimation { easing.type: Easing.OutExpo; duration: 500 } }
 
   // Shoves icon away from the pointer. Zero directly under the pointer, peaks at half of pushRadius,
   // and returns to zero at pushRadius, so only the nearest icons move and the rest of the row stays put.

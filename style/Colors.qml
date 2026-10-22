@@ -230,6 +230,79 @@ Singleton {
     primary: '#D33682',
     secondary: '#6C71C4',
   },
+
+  'alpenglow': { 
+    surfaceDim: '#EEE8D5',
+    mOnSurface: '#E8C87A', 
+    surface: '#1E1A24',
+    surfaceBright: '#3A3040',
+    mOnSurfaceVariant: '#7b8596',
+
+    red: '#DC322F',
+    orange: '#CB4B16',
+    yellow: '#B58900',
+    green: '#859900',
+    cyan: '#22D3EE',
+    blue: '#3584E4',
+    purple: '#B877DB',
+
+    outline: '#3A3040',
+    outlineVariant: '#4c566a',
+    shadow: '#000000',
+    scrim: '#2e3440',
+
+    primary: '#D96B6B',
+    secondary: '#E8A87C',
+  },
+
+  'cream': { 
+    surfaceDim: '#161311',
+    mOnSurface: '#A2B574', 
+    surface: '#161311',
+    surfaceBright: '#26211E',
+    mOnSurfaceVariant: '#7b8596',
+
+    red: '#E37874',
+    orange: '#CB4B16',
+    yellow: '#B58900',
+    green: '#859900',
+    cyan: '#22D3EE',
+    blue: '#3584E4',
+    purple: '#B877DB',
+
+    outline: '#26211E',
+    outlineVariant: '#4c566a',
+    shadow: '#000000',
+    scrim: '#2e3440',
+
+    primary: '#DFB26C',
+    secondary: '#E09260',
+  },
+
+  'creamy-forest': { 
+    surfaceDim: '#161311',
+    mOnSurface: '#A2B08D', 
+    surface: '#1C1E1A',
+    surfaceBright: '#252722',
+    mOnSurfaceVariant: '#7b8596',
+
+    red: '#E37874',
+    orange: '#CB4B16',
+    yellow: '#B58900',
+    green: '#859900',
+    cyan: '#22D3EE',
+    blue: '#3584E4',
+    purple: '#B877DB',
+
+    outline: '#252722',
+    outlineVariant: '#4c566a',
+    shadow: '#000000',
+    scrim: '#2e3440',
+
+    primary: '#948E74',
+    secondary: '#6E857B',
+  },
+
 })
 
   readonly property color brightGreen: '#4eed8e'

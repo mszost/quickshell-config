@@ -33,7 +33,7 @@ Rectangle {
         color: {
           if (HyprService.isWorkspaceFocused(modelData.id)) return Colors.primary  
           if (HyprService.isWorkspaceOccupied(modelData.id)) return Colors.secondary
-          else return Colors.surfaceDim
+          else return Colors.surface
         }
         antialiasing: true
 
