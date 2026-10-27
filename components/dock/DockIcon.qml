@@ -35,7 +35,7 @@ Item {
     const falloff = distance >= radius ? 0 : 0.5 * (1 + Math.cos(Math.PI * distance / radius))
     return 1 + (cfg.maxGrowth - 1) * falloff * zoomStrength    
   }
-  Behavior on zoom { NumberAnimation { easing.type: Easing.OutExpo; duration: 500 } }
+  Behavior on zoom { NumberAnimation { easing.type: Easing.OutExpo; duration: cfg.growthAnimDuration } }
 
   // Shoves icon away from the pointer. Zero directly under the pointer, peaks at half of pushRadius,
   // and returns to zero at pushRadius, so only the nearest icons move and the rest of the row stays put.
@@ -44,7 +44,7 @@ Item {
     if (Math.abs(pointerOffset) >= radius) return 0
     return cfg.pushDistance * Math.sin(Math.PI * pointerOffset / radius) * zoomStrength
   }
-  Behavior on pushOffset { NumberAnimation {easing.type: Easing.OutExpo; duration: 1000} }
+  Behavior on pushOffset { NumberAnimation { easing.type: Easing.OutExpo; duration: cfg.pushAnimDuration } }
 
   // Rectangle { 
   //   id: _debugRect

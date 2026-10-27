@@ -10,7 +10,7 @@ Singleton {
   readonly property string theme: 'creamy-forest'
   readonly property bool playSoundEffects: true
   readonly property real globalUiScale: 1.0
-  readonly property real globalAnimationSpeed: 0.8
+  readonly property real globalAnimationSpeed: 1.0
 
   property font fontMono: Fonts.jetbrainsMono //Fonts.cartograph
   property font fontSans: Fonts.ibmPlexSans
@@ -114,6 +114,9 @@ Singleton {
     readonly property real growthRadius: 1.2                // Columns away from the pointer that should be scaled.
     readonly property real pushRadius: 2.15                 // Columns from the pointer beyond which icons don't move.
     readonly property real pushDistance: globalUiScale * 4  // Max sideways displacement (pixels)
+    readonly property real growthAnimDuration: globalAnimationSpeed * 500
+    readonly property real pushAnimDuration: globalAnimationSpeed * 800
+
   }
 
 
