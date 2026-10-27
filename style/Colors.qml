@@ -299,8 +299,8 @@ Singleton {
     shadow: '#000000',
     scrim: '#2e3440',
 
-    primary: '#948E74',
-    secondary: '#6E857B',
+    primary: '#D6A6B1',
+    secondary: '#A26471',
   },
 
 })
