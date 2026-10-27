@@ -40,7 +40,7 @@ Item {
     id: bgRect
     anchors.fill: parent
     radius: height
-    color: Config.widget.pillColor
+    color: Qt.alpha(Config.widget.pillColor, Config.widget.pillAlpha)
     // border.color: Colors.outline
 
     Row {

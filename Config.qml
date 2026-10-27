@@ -125,6 +125,7 @@ Singleton {
     readonly property color textColor: Colors.mOnSurface
     readonly property font textFont: Fonts.cartograph
     readonly property color pillColor: Colors.surfaceBright
+    readonly property real pillAlpha: 1.0
     readonly property int pillHeight: globalUiScale * 21
     readonly property int pillPaddingX: globalUiScale * 16
 
