@@ -47,21 +47,21 @@ Scope {
       implicitWidth: cfg.triggerWidth
       color: 'transparent'
 
-     property var modelData
-      property bool hoverRevealed: false
+    property var modelData
+       property bool hoverRevealed: false
 
-      readonly property int workspaceId: HyprService.getWorkspaceForScreen(panel.screen)
-      readonly property bool workspaceIsBusy: HyprService.isWorkspaceTiled(workspaceId) || !HyprService.isWorkspaceFocused(workspaceId)
-      readonly property bool hidden: cfg.dynamicHiding && (workspaceIsBusy && !hoverRevealed)
-      readonly property bool hovered: dockMouse.containsMouse || triggerMouse.hovered
+       readonly property int workspaceId: HyprService.getWorkspaceForScreen(panel.screen)
+       readonly property bool workspaceIsBusy: HyprService.isWorkspaceTiled(workspaceId) || !HyprService.isWorkspaceFocused(workspaceId)
+       readonly property bool hidden: cfg.dynamicHiding && (workspaceIsBusy && !hoverRevealed)
+       readonly property bool hovered: dockMouse.containsMouse || triggerMouse.hovered
 
-      // Mouse x coordinate mapped to the left edge of the default-scaled icon row
-      property real contentRelativeMouseX: dockMouse.mouseX - shelf.x - iconRow.x
+       // Mouse x coordinate mapped to the left edge of the default-scaled icon row
+       property real contentRelativeMouseX: dockMouse.mouseX - shelf.x - iconRow.x
       
-      property real zoomStrength: dockMouse.containsMouse ? 1 : 0
-     
-      property real revealProgress: hidden ? 0 : 1
-      Behavior on revealProgress { NumberAnimation { easing.type: Easing.InOutCirc } }
+       property real zoomStrength: dockMouse.containsMouse ? 1 : 0
+      
+       property real revealProgress: hidden ? 0 : 1
+       Behavior on revealProgress { NumberAnimation { easing.type: Easing.InOutCirc } }
       
       // readonly property var _debug: {
       //   indexAt(dockMouse.mouseX, pinnedAppsRepeater)
