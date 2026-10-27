@@ -26,12 +26,13 @@ Singleton {
 
   property QtObject bar: QtObject { 
     // See `components/bar/WidgetRegistry.qml` for names of available widgets.
-    readonly property list<string> widgetsLeft: ['clock', '_debug']
+    readonly property list<string> widgetsLeft: ['clock', 'cputemp', 'packages']
     readonly property list<string> widgetsCenter: ['workspaces']
-    readonly property list<string> widgetsRight: ['brightness', 'audio', 'battery', 'session']
+    readonly property list<string> widgetsRight: ['network', 'brightness', 'audio', 'battery', 'session']
 
     // Behavior
     readonly property list<string> monitors: ['eDP-2', 'DP-10', 'DP-1', 'HDMI-1']
+    
     // If enabled the bar will switch between floating and edge-attached
     // states when there are tiled windows present on the workspace.
     readonly property bool dynamicFloating: true
@@ -53,7 +54,6 @@ Singleton {
 
     readonly property int widgetSpacing: globalUiScale * 5
     readonly property int widgetMarginsX: globalUiScale * 10
-
   }
 
 
@@ -79,7 +79,7 @@ Singleton {
     // Styling
     readonly property color bgColor: Colors.surface
     readonly property color borderColor: Colors.outline
-    readonly property real alpha: 0.75
+    readonly property real alpha: 0.7
 
     // Container dimensions
     readonly property int height: globalUiScale * 65
@@ -111,9 +111,9 @@ Singleton {
 
     // Properties for the focused icon scaling animation
     readonly property real maxGrowth: 1.4
-    readonly property real growthRadius: 1.10     // Columns away from the pointer that should be scaled.
-    readonly property real pushRadius: 2.15       // Columns from the pointer beyond which icons don't move.
-    readonly property real pushDistance: globalUiScale * 4  // peak sideways displacement (pixels)
+    readonly property real growthRadius: 1.2                // Columns away from the pointer that should be scaled.
+    readonly property real pushRadius: 2.15                 // Columns from the pointer beyond which icons don't move.
+    readonly property real pushDistance: globalUiScale * 4  // Max sideways displacement (pixels)
   }
 
 
@@ -134,15 +134,33 @@ Singleton {
       readonly property int criticalBlinkRate: globalAnimationSpeed * 300
     }
 
-    property QtObject brightness: QtObject {}
+    property QtObject brightness: QtObject {
+      readonly property string deviceClass: 'backlight'
+      readonly property string device: ''       // Empty = first device in the class
+      readonly property int pollInterval: 1000  // In ms; picks up changes made outside the shell
+      readonly property real scrollStep: 0.005  // Fraction of full brightness per scroll tick
+      readonly property real minBrightness: 0
+    }
 
     property QtObject clock: QtObject {
       readonly property string format: 'h:mm AP  •  ddd, MMM. d'
-      // All widgets that implement `Widget.qml` can be modified in this way.
+      // All implementors of `Widget.qml` can have textFont overridden in this way.
       readonly property font textFont: Fonts.ibmPlexSans  
     }
 
-    property QtObject network: QtObject {}
+    property QtObject cpuTemp: QtObject {
+      readonly property string sensorPath: '/sys/class/thermal/thermal_zone0/temp'
+      readonly property int pollInterval: 2000
+      readonly property int criticalThreshold: 85  // °C; widget text turns red at or above
+    }
+
+    property QtObject network: QtObject {
+      readonly property font textFont: Fonts.ibmPlexSans 
+      readonly property int pollInterval: 30000   
+      readonly property int eventDebounce: 250    // Delay after an `nmcli monitor` event before refreshing
+      readonly property int signalHigh: 50        // Strength above this shows full bars
+      readonly property int signalMedium: 25      // Strength above this shows medium bars
+    }
 
     property QtObject session: QtObject {}
 
@@ -150,11 +168,11 @@ Singleton {
 
     
     property QtObject workspaces: QtObject {
-      readonly property int iconHeight: globalUiScale * 10
+      readonly property int iconHeight: globalUiScale * 9
       readonly property int iconWidth: iconHeight
       readonly property int iconSpacing: globalUiScale * 4
       readonly property real focusedIconScaleX: 3.0
-      readonly property bool showWorkspaceId: true
+      readonly property bool showWorkspaceId: false
       readonly property bool showSpecialWorkspaces: false
     }
   }
