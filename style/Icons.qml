@@ -59,5 +59,7 @@ Singleton {
   readonly property string cloudDownload: '\uEA71'
 
   readonly property string clock: '\uf319' // clock-hour-4
+  readonly property string temperature: '\ueb38'
+  readonly property string flame: '\uec2c'
 }
 
