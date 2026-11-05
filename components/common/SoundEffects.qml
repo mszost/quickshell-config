@@ -18,7 +18,7 @@ Item {
     source: '../../assets/sounds/audio-volume-change.wav'
     muted: !Config.playSoundEffects
 
-    property int volume: AudioService.volumeAsInt * 0.5
+    volume: AudioService.volumeAsInt * 0.0025
     onVolumeChanged: {
       if (!cooldown.running) { // force wait of 100ms between each play
         play()

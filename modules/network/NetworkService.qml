@@ -9,7 +9,7 @@ import qs.style
 Singleton {
   id: root
 
-  readonly property QtObject cfg: Config.widget.network
+  readonly property QtObject cfg: Config.module.network
 
   // Public properties
   readonly property bool ethernet: _state.ethernet

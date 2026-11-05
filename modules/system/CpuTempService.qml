@@ -8,7 +8,7 @@ import qs
 Singleton {
   id: root
 
-  readonly property QtObject cfg: Config.widget.cpuTemp
+  readonly property QtObject cfg: Config.module.cpuTemp
 
   readonly property real celsius: rawMilliCelsius / 1000
   readonly property int celsiusAsInt: Math.round(celsius)
@@ -18,7 +18,7 @@ Singleton {
 
   FileView {
     id: sensor
-    path: root.cfg.sensorPath
+    path: cfg.sensorPath
     onLoaded: {
       const value = parseInt(text())
       if (!isNaN(value)) root.rawMilliCelsius = value
@@ -27,7 +27,7 @@ Singleton {
 
   // sysfs files don't emit change notifications, so they have to be polled.
   Timer {
-    interval: root.cfg.pollInterval
+    interval: cfg.pollInterval
     running: true
     repeat: true
     triggeredOnStart: true

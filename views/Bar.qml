@@ -6,6 +6,7 @@ import qs.style
 import qs.components.common
 import qs.components.bar
 import qs.modules.hyprland
+import qs.modules.core
 
 Scope {
   id: root
@@ -23,14 +24,14 @@ Scope {
 
       margins {
         top: shouldFloat ? Config.bar.floatingMarginY : Config.bar.marginY
+        bottom: shouldFloat ? Config.bar.floatingMarginY : Config.bar.marginY
         left: shouldFloat ? Config.bar.floatingMarginX : Config.bar.marginX
         right: shouldFloat ? Config.bar.floatingMarginX : Config.bar.marginX
       }
       
       property var modelData
 
-      property bool shouldFloat: Config.bar.dynamicFloating && 
-        !HyprService.isWorkspaceTiled(HyprService.getWorkspaceForScreen(panel.screen))
+      property bool shouldFloat: BarService.shouldFloat(screen)
 
       Behavior on margins.top { Anim { duration: shouldFloat ? Motion.veryFast : Motion.fast } }
       Behavior on margins.left { Anim { duration: shouldFloat ? Motion.fast : Motion.fast } }

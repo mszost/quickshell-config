@@ -7,7 +7,8 @@ import qs.style
 Singleton {
   id: root
 
-  readonly property string theme: 'creamy-forest'
+  readonly property string theme: 'cream'
+  // readonly property string theme: 'nord'
   readonly property bool playSoundEffects: true
   readonly property real globalUiScale: 1.0
   readonly property real globalAnimationSpeed: 1.0
@@ -26,21 +27,22 @@ Singleton {
 
   property QtObject bar: QtObject { 
     // See `components/bar/WidgetRegistry.qml` for names of available widgets.
-    readonly property list<string> widgetsLeft: ['clock', 'cputemp', 'packages']
+    readonly property list<string> widgetsLeft: ['clock', 'cputemp']
     readonly property list<string> widgetsCenter: ['workspaces']
     readonly property list<string> widgetsRight: ['network', 'brightness', 'audio', 'battery', 'session']
 
-    // Behavior
     readonly property list<string> monitors: ['eDP-2', 'DP-10', 'DP-1', 'HDMI-1']
     
-    // If enabled the bar will switch between floating and edge-attached
-    // states when there are tiled windows present on the workspace.
-    readonly property bool dynamicFloating: true
+    // dynamicFloating: bar will switch between floating and edge-attached 
+    //   states depending on the presence of tiled windows on the workspace.
+    // alwaysFloating: will override whatever dynamicFloating might is set to.
+    readonly property bool dynamicFloating: false
+    readonly property bool alwaysFloating: false
 
     // Styling
     readonly property color color: Colors.surface
-    readonly property real alpha: 0.8
-    readonly property real floatingAlpha: 0.4
+    readonly property real alpha: 0.5
+    readonly property real floatingAlpha: 0.3
 
     // Dimensions
     readonly property int height: globalUiScale * 31
@@ -79,7 +81,7 @@ Singleton {
     // Styling
     readonly property color bgColor: Colors.surface
     readonly property color borderColor: Colors.outline
-    readonly property real alpha: 0.7
+    readonly property real alpha: 0.5
 
     // Container dimensions
     readonly property int height: globalUiScale * 65
@@ -110,29 +112,46 @@ Singleton {
     readonly property real hoverZoneMargin: globalUiScale * 25
 
     // Properties for the focused icon scaling animation
-    readonly property real maxGrowth: 1.4
+    readonly property real maxGrowth: 1.35
     readonly property real growthRadius: 1.2                // Columns away from the pointer that should be scaled.
     readonly property real pushRadius: 2.15                 // Columns from the pointer beyond which icons don't move.
-    readonly property real pushDistance: globalUiScale * 4  // Max sideways displacement (pixels)
+    readonly property real pushDistance: globalUiScale * 3  // Max sideways displacement (pixels)
     readonly property real growthAnimDuration: globalAnimationSpeed * 500
-    readonly property real pushAnimDuration: globalAnimationSpeed * 800
+    readonly property real pushAnimDuration: globalAnimationSpeed * 500
 
   }
 
 
-  // ░█░█░▀█▀░█▀▄░█▀▀░█▀▀░▀█▀░█▀▀
-  // ░█▄█░░█░░█░█░█░█░█▀▀░░█░░▀▀█
-  // ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
+  // ░█▄█░█▀█░█▀▄░█░█░█░░░█▀▀░█▀▀
+  // ░█░█░█░█░█░█░█░█░█░░░█▀▀░▀▀█
+  // ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░▀▀▀░▀▀▀
 
   property QtObject widget: QtObject {
-    readonly property color textColor: Colors.mOnSurface
-    readonly property font textFont: Fonts.cartograph
+     readonly property color textColor: Colors.mOnSurface
+    // readonly property font textFont: Fonts.cartograph
     readonly property color pillColor: Colors.surfaceBright
     readonly property real pillAlpha: 1.0
     readonly property int pillHeight: globalUiScale * 21
     readonly property int pillPaddingX: globalUiScale * 16
 
-    property QtObject audio: QtObject {}
+    readonly property font textFont: Qt.font({ family: Fonts.cartographLoader.name, pixelSize: globalUiScale*12, weight: 500 })
+    readonly property font iconFont: Qt.font({ family: Fonts.tablerLoader.name,     pixelSize: globalUiScale*15, weight: 600 })
+  }
+
+
+  property QtObject module: QtObject { 
+    property QtObject audio: QtObject {
+       // device.description for names
+      readonly property var deviceSymbols: {
+        'Laptop Speakers': Icons.laptop,
+        'QC45': Icons.headphones,
+        'Aux': Icons.speaker,
+        'Buds': Icons.airpods,
+        'Buds 2': Icons.airpods,
+        'USB Audio Headphones': Icons.usb,
+        '_fallback': Icons.volume3 // used if the device has no mapping set above
+      }
+    }
 
     property QtObject battery: QtObject {
       readonly property int criticalBlinkRate: globalAnimationSpeed * 300
@@ -142,14 +161,14 @@ Singleton {
       readonly property string deviceClass: 'backlight'
       readonly property string device: ''       // Empty = first device in the class
       readonly property int pollInterval: 1000  // In ms; picks up changes made outside the shell
-      readonly property real scrollStep: 0.005  // Fraction of full brightness per scroll tick
+      readonly property real scrollStep: 0.01  // Fraction of full brightness per scroll tick
       readonly property real minBrightness: 0
     }
 
     property QtObject clock: QtObject {
       readonly property string format: 'h:mm AP  •  ddd, MMM. d'
       // All implementors of `Widget.qml` can have textFont overridden in this way.
-      readonly property font textFont: Fonts.ibmPlexSans  
+      readonly property font textFont: Qt.font({ family: Fonts.ibmPlexSansLoader.name, pixelSize: globalUiScale*12, weight: 500 }) 
     }
 
     property QtObject cpuTemp: QtObject {
@@ -166,10 +185,14 @@ Singleton {
       readonly property int signalMedium: 25      // Strength above this shows medium bars
     }
 
-    property QtObject session: QtObject {}
+    property QtObject session: QtObject {
+      readonly property string shutdownCmd: 'shutdown now'
+      readonly property string rebootCmd: 'reboot'
+      readonly property string suspentCmd: 'systemctl suspent'
+      readonly property string logoutCmd: 'hyprshutdown'
+    }
 
     property QtObject tray: QtObject {}
-
     
     property QtObject workspaces: QtObject {
       readonly property int iconHeight: globalUiScale * 9
@@ -179,6 +202,24 @@ Singleton {
       readonly property bool showWorkspaceId: false
       readonly property bool showSpecialWorkspaces: false
     }
+  }
+
+  // ░█▄█░█▀▀░█▀█░█░█░█▀▀
+  // ░█░█░█▀▀░█░█░█░█░▀▀█
+  // ░▀░▀░▀▀▀░▀░▀░▀▀▀░▀▀▀
+  property QtObject menu: QtObject {
+    readonly property int margins: globalUiScale * 16 // Margins around content within the PopupWindow
+    readonly property int radius: globalUiScale * 15
+
+    // readonly property color bgColor:  // Uses background color (including alpha) of the parent bar by default.
+    readonly property color blockBgColor: Colors.surfaceBright
+
+    readonly property int blockRadius: globalUiScale * 10
+
+    readonly property font titleBlockTextFont: Qt.font({ family: Fonts.rubikLoader.name, pixelSize: 16 * globalUiScale, weight: 600 })
+    readonly property font titleBlockIconFont: Qt.font({ family: Fonts.tablerLoader.name, pixelSize: 19 * globalUiScale, weight: 600 })
+
+    // readonly property int screenEdgesMargin: 50 // Minimum px buffer from left/right screen edges
   }
 }
 

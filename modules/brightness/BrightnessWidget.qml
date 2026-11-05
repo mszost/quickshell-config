@@ -12,8 +12,15 @@ Widget {
 
   // Scroll event handler
   mouseArea.onWheel: (wheelEvent) => {
-    const step = Config.widget.brightness.scrollStep
+    const step = Config.module.brightness.scrollStep
     if (wheelEvent.angleDelta.y > 0) BrightnessService.adjust(step)
     if (wheelEvent.angleDelta.y < 0) BrightnessService.adjust(-step)
+  }
+
+  mouseArea.onClicked: menu.open = !menu.open
+
+  BrightnessMenu {
+    id: menu
+    boundWidget: root
   }
 }

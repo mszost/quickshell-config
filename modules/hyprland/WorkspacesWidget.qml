@@ -14,7 +14,7 @@ Rectangle {
   color: Config.widget.pillColor
   
   // Shorthand for this widget's config object, because it's long
-  readonly property QtObject cfg: Config.widget.workspaces 
+  readonly property QtObject cfg: Config.module.workspaces 
 
   Row {
     id: wsRow

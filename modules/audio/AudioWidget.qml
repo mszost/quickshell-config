@@ -10,11 +10,12 @@ import qs.components.bar
 Widget {
   id: root
   spacing: 1
-  font: Config.widget.audio.textFont || Config.widget.textFont
+  font: Config.module.audio.textFont || Config.widget.textFont
   text: AudioService.isMuted ? 'Muted' : AudioService.volumeAsInt + '%'
   icon: AudioService.symbol
   
   colorStd: {
+    if (menu.open) return Colors.primary
     if (AudioService.volumeAsInt > 100) return Colors.red
     return Colors.mOnSurface
   }
@@ -24,5 +25,12 @@ Widget {
     let step = 0.02
     if (wheelEvent.angleDelta.y > 0) AudioService.setVolume(AudioService.volume + step)
     if (wheelEvent.angleDelta.y < 0) AudioService.setVolume(AudioService.volume - step)
+  }
+
+  mouseArea.onClicked: menu.open = !menu.open
+
+  AudioMenu {
+    id: menu
+    boundWidget: root
   }
 }

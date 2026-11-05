@@ -6,7 +6,7 @@ import qs.components.bar
 
 Widget {
   id: root
-  font: Config.widget.battery.textFont || Config.widget.textFont
+  font: Config.module.battery.textFont || Config.widget.textFont
   text: BatteryService.isAvailable ? BatteryService.percentage + '%' : ''
   icon: BatteryService.symbol
   animDuration: BatteryService.isCritical ? 200 : 100
@@ -18,7 +18,6 @@ Widget {
     if (BatteryService.isCritical)   return blinker.state ? Colors.red : Qt.alpha(Colors.red, 0.35) // 'white'
     return colorStd
   }
-
 
   Timer {
     id: blinker

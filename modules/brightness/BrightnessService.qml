@@ -9,7 +9,7 @@ import qs.style
 Singleton {
   id: root
 
-  readonly property QtObject cfg: Config.widget.brightness
+  readonly property QtObject cfg: Config.module.brightness
 
   // `brightnessctl` invocation prefix, scoped to the configured class/device.
   readonly property list<string> baseCommand: {

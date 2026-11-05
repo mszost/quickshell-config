@@ -47,20 +47,21 @@ Item {
       id: container
       anchors.centerIn: parent
       layoutDirection: Qt.LeftToRight
-      spacing: 2
+      spacing: 2 * Config.globalUiScale
 
       Text {
         id: icon
         anchors.verticalCenter: parent.verticalCenter
-        font.family: Fonts.tabler.family
-        font.pixelSize: Fonts.tabler.pixelSize
+        font.family: Config.widget.iconFont.family
+        font.pixelSize: Config.widget.iconFont.pixelSize
         color: root.colorAnimated
       }
 
       Text {
         id: label
         anchors.verticalCenter: parent.verticalCenter
-        font: Config.widget.textFont
+        font.family: Config.widget.textFont.family
+        font.pixelSize: Config.widget.textFont.pixelSize
         color: root.colorAnimated
       }
     }
