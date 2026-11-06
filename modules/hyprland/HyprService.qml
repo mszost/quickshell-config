@@ -63,20 +63,20 @@ Singleton {
   }
 
   // Desktop ids of apps that have an open window but aren't in `pinnedIds`,
-// in the order their windows appear in Hyprland's toplevel list.
-function unpinnedOpenApps(pinnedIds: var): var {
-  const result = []
-  for (const t of Hyprland.toplevels.values) {
-    const cls = (t.lastIpcObject.class ?? '').toLowerCase()
-    if (!cls) continue
-    const entry = DesktopEntries.applications.values.find(
-      e => [e.id, e.startupClass].some(c => c && c.toLowerCase() === cls)
-    )
-    if (!entry || pinnedIds.includes(entry.id) || result.includes(entry.id)) continue
-    result.push(entry.id)
+  // in the order their windows appear in Hyprland's toplevel list.
+  function unpinnedOpenApps(pinnedIds: var): var {
+    const result = []
+    for (const t of Hyprland.toplevels.values) {
+      const cls = (t.lastIpcObject.class ?? '').toLowerCase()
+      if (!cls) continue
+      const entry = DesktopEntries.applications.values.find(
+        e => [e.id, e.startupClass].some(c => c && c.toLowerCase() === cls)
+      )
+      if (!entry || pinnedIds.includes(entry.id) || result.includes(entry.id)) continue
+      result.push(entry.id)
+    }
+    return result
   }
-  return result
-}
 
   readonly property string focusedWindowTitle: Hyprland.activeToplevel?.title ?? ''
 
