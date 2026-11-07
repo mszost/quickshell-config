@@ -1,5 +1,3 @@
-pragma Singleton
-
 import QtQuick
 import Quickshell
 import qs.modules.audio
@@ -13,7 +11,7 @@ import qs.modules.system
 import qs.modules.time
 import qs.modules.tray
 
-Singleton {
+Scope {
   readonly property var map: ({
     _debug: _debug,
     audio: audio,

@@ -9,7 +9,6 @@ Widget {
   font: Config.module.battery.textFont || Config.widget.textFont
   text: BatteryService.isAvailable ? BatteryService.percentage + '%' : ''
   icon: BatteryService.symbol
-  animDuration: BatteryService.isCritical ? 200 : 100
 
   colorAnimated: {
     if (!BatteryService.isAvailable) return Colors.red
@@ -24,7 +23,7 @@ Widget {
     property bool state: false
     running: BatteryService.isCritical
     repeat: true
-    interval: Config.widget.battery.criticalBlinkRate
+    interval: Config.module.battery.criticalBlinkRate
     onTriggered: state = !state
     onRunningChanged: if (!running) state = false
   }

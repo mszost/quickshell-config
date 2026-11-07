@@ -60,27 +60,6 @@ Scope {
       
        property real zoomStrength: dockMouse.containsMouse ? 1 : 0
       
-       property real revealProgress: hidden ? 0 : 1
-       Behavior on revealProgress { NumberAnimation { easing.type: Easing.InOutCirc } }
-      
-      // readonly property var _debug: {
-      //   indexAt(dockMouse.mouseX, pinnedAppsRepeater)
-      // }
-
-      // function _indexAt(mouseX, repeater): any {
-      //   const local = mouseX - shelf.x - iconRow.x
-      //   let hoveredIndex = 0
-      //
-      //   for (let i=0; i<repeater.count; ++i) {
-      //     const icon = repeater.itemAt(i)
-      //     if (icon && local >= icon.x) {
-      //       hoveredIndex = i
-      //     }
-      //   }
-      //   let id = repeater.itemAt(hoveredIndex).entry.id
-      //   console.log(`index: ${hoveredIndex}; id: ${id}`)
-      // } 
-
       onHoveredChanged: {
         if (!cfg.dynamicHiding) { return }  // Ignore the hover event if hiding is disabled
         if (hovered) {
@@ -90,9 +69,15 @@ Scope {
           hideTimer.restart()
         }
       }
-
-      HoverHandler { id: triggerMouse }
       
+      HoverHandler { id: triggerMouse }
+
+      Reveal {
+        id: reveal
+        active: !panel.hidden
+        enter: cfg.revealMotion
+      }     
+
       Timer {
         id: hideTimer
         interval: cfg.hideDelay
@@ -107,8 +92,8 @@ Scope {
         radius: height
         color: Qt.alpha(cfg.triggerColor, alpha)
         
-        property real alpha: panel.revealProgress <= 0 ? cfg.triggerAlpha : 0.0
-        Behavior on alpha { Anim { duration: Motion.slow } }
+        property real alpha: reveal.progress <= 0 ? cfg.triggerAlpha : 0.0
+        Ease on alpha { preset: Motion.fade }
       }
 
       PopupWindow {
@@ -123,29 +108,17 @@ Scope {
           rect.width: panel.width
           rect.height: panel.height
         }
-        visible: panel.visible && panel.revealProgress > 0
+        // visible: panel.visible && panel.revealProgress > 0
+        visible: panel.visible && reveal.shown
         implicitWidth: root.totalDockWidth 
         implicitHeight: cfg.height + cfg.bottomMargin + cfg.hoverZoneMargin
         color: 'transparent'
-
-        // Rectangle {
-        //   id: _debugRectX
-        //   anchors {
-        //     verticalCenter: parent.verticalCenter
-        //     left: parent.left
-        //     leftMargin: dockMouse.mouseX
-        //   }
-        //   z: 2
-        //   height: popup.height
-        //   width: 1
-        //   color: 'magenta'
-        // }
 
         // Everything that visually moves lives in here; the PopupWindow itself is static
         Item {
           width: parent.width
           height: parent.height
-          y: (1 - panel.revealProgress) * root.displacement
+          y: (1 - reveal.progress) * root.displacement
 
           MouseArea {
             id: dockMouse

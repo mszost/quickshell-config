@@ -25,15 +25,17 @@ Item {
   property alias iconSize: icon.font.pixelSize
 
   property alias mouseArea: ma
-  
+
+  // Optional MenuWindow, toggled by clicking the widget.
+  property QtObject menu: null
+
   // Colors and animations
   property color colorStd: Colors.mOnSurface
   property color colorOnHover: Colors.primary //Colors.mOnSurfaceVariant
-  property color colorAnimated: ma.containsMouse ? root.colorOnHover : root.colorStd
+  property color colorAnimated: (ma.containsMouse || root.menu?.open) ? root.colorOnHover : root.colorStd
 
-  property alias animDuration: anim.duration
-  
-  Behavior on colorAnimated { ColorAnim { id: anim } }
+  property var motion: Motion.standard
+  Ease on colorAnimated { preset: root.motion }
 
   
   Rectangle {
@@ -73,7 +75,10 @@ Item {
     // anchors.margins: -8 
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
-    onClicked: root.clicked()
+    onClicked: {
+      root.menu?.toggle()
+      root.clicked()
+    }
   }
   signal clicked()
 }

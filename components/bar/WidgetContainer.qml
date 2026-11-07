@@ -9,12 +9,14 @@ Row {
   
   property var widgets: []
 
+  WidgetRegistry { id: registry }
+
   Repeater {
     model: section.widgets
 
     delegate: Loader {
       required property string modelData
-      sourceComponent: WidgetRegistry.map[modelData] ?? null
+      sourceComponent: registry.map[modelData] ?? null
 
       Component.onCompleted: {
         if (!sourceComponent)

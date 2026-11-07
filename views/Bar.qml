@@ -11,6 +11,8 @@ import qs.modules.core
 Scope {
   id: root
 
+  readonly property QtObject cfg: Config.bar
+
   Variants {
     model: Quickshell.screens
 
@@ -18,56 +20,63 @@ Scope {
       id: panel
       anchors { top: true; left: true; right: true }
       screen: modelData
-      visible: Config.bar.monitors.includes('*') || Config.bar.monitors.includes(modelData.name) 
-      implicitHeight: Config.bar.height
+      visible: cfg.monitors.includes('*') || cfg.monitors.includes(modelData.name) 
+      implicitHeight: cfg.height
       color: 'transparent'
 
       margins {
-        top: shouldFloat ? Config.bar.floatingMarginY : Config.bar.marginY
-        bottom: shouldFloat ? Config.bar.floatingMarginY : Config.bar.marginY
-        left: shouldFloat ? Config.bar.floatingMarginX : Config.bar.marginX
-        right: shouldFloat ? Config.bar.floatingMarginX : Config.bar.marginX
+        top: shouldFloat ? cfg.floatingMarginY : cfg.marginY
+        bottom: shouldFloat ? cfg.floatingMarginY : cfg.marginY
+        left: shouldFloat ? cfg.floatingMarginX : cfg.marginX
+        right: shouldFloat ? cfg.floatingMarginX : cfg.marginX
       }
       
       property var modelData
 
       property bool shouldFloat: BarService.shouldFloat(screen)
 
-      Behavior on margins.top { Anim { duration: shouldFloat ? Motion.veryFast : Motion.fast } }
-      Behavior on margins.left { Anim { duration: shouldFloat ? Motion.fast : Motion.fast } }
-      Behavior on margins.right { Anim { duration: shouldFloat ? Motion.fast : Motion.fast } }
+      // Behavior on margins.top { Anim { duration: shouldFloat ? Motion.veryFast : Motion.fast } }
+      // Behavior on margins.left { Anim { duration: shouldFloat ? Motion.fast : Motion.fast } }
+      // Behavior on margins.right { Anim { duration: shouldFloat ? Motion.fast : Motion.fast } }
+
+      Ease on margins.top { preset: targetValue === cfg.floatingMarginY ? Motion.standard : Motion.standard }
+      Ease on margins.left { preset: Motion.standard }
+      Ease on margins.right { preset: Motion.standard }
+
 
       Rectangle {
         id: bgRect
         anchors { fill: parent }
         antialiasing: true
-        radius: panel.shouldFloat ? Config.bar.floatingRadius : Config.bar.radius
-        color: Qt.alpha(Config.bar.color, panel.shouldFloat ? Config.bar.floatingAlpha : Config.bar.alpha)
-        border.color: panel.shouldFloat ? Qt.alpha(Colors.outline, Config.bar.alpha) : 'transparent'
+        radius: panel.shouldFloat ? cfg.floatingRadius : cfg.radius
+        color: BarService.bgColor(panel.screen)
+        border.color: panel.shouldFloat ? Qt.alpha(Colors.outline, cfg.alpha) : 'transparent'
 
-        Behavior on radius { Anim { duration: shouldFloat ? Motion.verySlow : Motion.veryFast } }
-        Behavior on color { ColorAnim { duration: Motion.veryFast } }
+        // Behavior on radius { Anim { duration: shouldFloat ? Motion.verySlow : Motion.veryFast } }
+        // Behavior on color { ColorAnim { duration: Motion.veryFast } }
+        Ease on radius { preset: targetValue === cfg.floatingRadius ? Motion.standard : Motion.standard }
+        Ease on color { preset: Motion.standard }
 
         WidgetContainer {
           anchors.centerIn: parent  
-          widgets: Config.bar.widgetsCenter
+          widgets: cfg.widgetsCenter
         }
 
         RowLayout {
           anchors { 
             fill: parent;
-            leftMargin: Config.bar.widgetMarginsX;
-            rightMargin: Config.bar.widgetMarginsX 
+            leftMargin: cfg.widgetMarginsX;
+            rightMargin: cfg.widgetMarginsX 
           }
 
           WidgetContainer {
             Layout.alignment: Qt.AlignLeft
-            widgets: Config.bar.widgetsLeft
+            widgets: cfg.widgetsLeft
           }
 
           WidgetContainer {
             Layout.alignment: Qt.AlignRight
-            widgets: Config.bar.widgetsRight 
+            widgets: cfg.widgetsRight 
           }
         }
       }

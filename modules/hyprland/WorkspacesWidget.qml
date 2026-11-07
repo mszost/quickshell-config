@@ -13,7 +13,6 @@ Rectangle {
   radius: height
   color: Config.widget.pillColor
   
-  // Shorthand for this widget's config object, because it's long
   readonly property QtObject cfg: Config.module.workspaces 
 
   Row {
@@ -36,22 +35,22 @@ Rectangle {
           else return Colors.surface
         }
         antialiasing: true
+ 
+        Ease on implicitWidth {}
+        Ease on color {}
 
-        Behavior on color { ColorAnim {} }
-        Behavior on implicitWidth { Anim { kind: Motion.Bounce } }
-
-        Text {
-          anchors.fill: parent
-          visible: { cfg.showWorkspaceId 
-            && (HyprService.isWorkspaceOccupied(modelData.id)
-            || HyprService.isWorkspaceFocused(modelData.id))
-          }
-          horizontalAlignment: Text.AlignHCenter
-          font.family: Config.fontMono.family
-          font.pixelSize: cfg.iconHeight * 0.7
-          font.weight: 700
-          text: modelData.id > 0 ? modelData.id : ''
-        }
+        // Text {
+        //   anchors.fill: parent
+        //   visible: { cfg.showWorkspaceId 
+        //     && (HyprService.isWorkspaceOccupied(modelData.id)
+        //     || HyprService.isWorkspaceFocused(modelData.id))
+        //   }
+          // horizontalAlignment: Text.AlignHCenter
+          // font.family: Config.fontMono.family
+          // font.pixelSize: cfg.iconHeight * 0.7
+          // font.weight: 700
+          // text: modelData.id > 0 ? modelData.id : ''
+        // }
       }
     }
   }
