@@ -4,6 +4,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Services.Pipewire
+import qs
 import qs.style
 
 Singleton {
@@ -21,7 +22,7 @@ Singleton {
     let nodes = Pipewire.nodes.values
     let deviceList = []
     for (let i=0; i<nodes.length; i++) {
-      if (nodes[i].isSink && nodes[i].description) {
+      if (nodes[i].isSink && !nodes[i].isStream && nodes[i].description) {
         deviceList.push(nodes[i])
       }
     }
@@ -33,7 +34,7 @@ Singleton {
     let deviceList = []
     for (let i=0; i<nodes.length; i++) {
       let node = nodes[i];
-      if (!node.isSink && node.description && node.audio) {
+      if (!node.isSink && !node.isStream && node.description && node.audio) {
         deviceList.push(node)
       }
     }
@@ -41,7 +42,6 @@ Singleton {
   }
 
   property PwNode activeSink: Pipewire.preferredDefaultAudioSink
-  readonly property string activeSinkId: Pipewire.defaultAudioSink?.id ?? ''
 
   property PwNode activeSource: Pipewire.preferredDefaultAudioSource
   readonly property string activeSourceId: Pipewire.defaultAudioSource?.id ?? ''
@@ -60,6 +60,10 @@ Singleton {
     }
   }
 
+  function adjustVolume(delta) {
+    setVolume(volume + delta)
+  }
+
   function toggleMute() {
     if (Pipewire.defaultAudioSink?.audio) {
       isMuted = !isMuted
@@ -68,6 +72,16 @@ Singleton {
 
   function setPreferredSink(node) {
     Pipewire.preferredDefaultAudioSink = node
+  }
+
+  function isActiveSink(node) {
+    return node === Pipewire.defaultAudioSink
+  }
+
+  // Icon configured for a device, by its description.
+  function symbolFor(node) {
+    const symbols = Config.module.audio.deviceSymbols
+    return symbols[node.description] ?? symbols['_fallback']
   }
 
   function setSourceVolume(val) {

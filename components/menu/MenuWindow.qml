@@ -1,70 +1,85 @@
-// A dropdown/popover window that serves as foundation for menus.
+// A dropdown window attached to a bar Widget. Foundation for all menus.
 
 import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 import qs
 import qs.style
+import qs.components.common
 import qs.modules.core
-import qs.components.bar
 
 Scope {
   id: root
 
-  required property Widget boundWidget
-  required property string module
-  required property int width
+  required property Item boundWidget
+  property int width: Config.menu.width
 
   default property alias content: column.data
-  readonly property var screen: QsWindow.window?.screen ?? null
-  
+
+  readonly property QtObject barWindow: boundWidget.QsWindow.window
+  readonly property var screen: barWindow?.screen ?? null
+  readonly property bool shouldFloat: BarService.shouldFloat(screen)
+  readonly property bool open: MenuService.activeMenu === root
+
   // Visually attached to the bottom of the bar, near the parent Widget's pill
   readonly property int yOffset: Config.widget.pillHeight + ((Config.bar.height - Config.widget.pillHeight) / 2)
-
-  readonly property int xOffset: -1 * (Config.bar.floatingRadius + Config.bar.floatingMarginX + 10)
-
+  readonly property int xOffset: {
+    const radius = shouldFloat ? Config.bar.floatingRadius : Config.bar.radius
+    const margin = shouldFloat ? Config.bar.floatingMarginX : Config.bar.marginX
+    return -1 * (radius + margin + Config.menu.anchorOffsetX)
+  }
   readonly property int displacement: -1 * popup.implicitHeight
 
-  property bool open: false
-  
-  property real revealProgress: open ? 1 : 0
-  Behavior on revealProgress { NumberAnimation { easing.type: Easing.InOutCirc; duration: 150 } }
+  function toggle() {
+    MenuService.toggle(root)
+  }
+
+  function close() {
+    MenuService.close(root)
+  }
 
   PopupWindow {
     id: popup
     anchor {
       item: root.boundWidget
-      // edges: Edges.Center
       gravity: Edges.Bottom | Edges.Center
       rect.y: root.yOffset
       rect.x: root.xOffset
     }
     implicitWidth: root.width
     implicitHeight: bgRect.implicitHeight
-    color: 'transparent'//Qt.alpha('lime', 0.1)
+    visible: reveal.shown
+    color: 'transparent'
 
-    visible: open || root.revealProgress > 0
+    // Read by MenuBlock, via the QsWindow attached property.
+    readonly property bool shouldFloat: root.shouldFloat
 
+    // The bar is included so that other widgets stay clickable while a menu is open.
     HyprlandFocusGrab {
       id: grab
-      windows: [popup]
+      windows: root.barWindow ? [popup, root.barWindow] : [popup]
       active: root.open
-      onActiveChanged: { if (!active) root.open = false }
+      onCleared: root.close()
+    }
+
+    Reveal {
+      id: reveal
+      active: root.open
+      enter: Config.menu.revealMotion
     }
 
     Rectangle {
       id: bgRect
+      y: root.displacement * (1 - reveal.progress) 
       implicitWidth: parent.width
       implicitHeight: column.height + (Config.menu.margins * 2)
       bottomLeftRadius: Config.menu.radius
       bottomRightRadius: Config.menu.radius
-      color: Config.menu.bgColor ?? BarService.bgColor(screen) 
-      border.color: Colors.outline
+      color: Config.menu.bgColor ?? BarService.bgColor(root.screen)
+      border.color: Config.menu.borderColor
+      focus: true
 
-      y: displacement * (1-revealProgress)
-      
-      focus: true 
-      Keys.onEscapePressed: root.open = false
+      Keys.onEscapePressed: root.close()
 
       Column {
         id: column
@@ -74,9 +89,8 @@ Scope {
           top: parent.top
           margins: Config.menu.margins
         }
-        spacing: 10 * Config.globalUiScale
+        spacing: Config.menu.contentSpacing
       }
     }
   }
 }
-

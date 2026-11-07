@@ -1,28 +1,32 @@
-// Generic container for popover subsections/blocks.
+// Generic container for menu subsections, with an optional label.
 
 import QtQuick
+import QtQuick.Controls
+import Quickshell
 import qs
 import qs.style
-import qs.modules.core
-
-import QtQuick.Controls 2.15
 
 Pane {
   id: root
   width: parent.width
+  padding: Config.menu.blockPadding
+  spacing: Config.menu.blockSpacing
 
-  property alias colSpacing: column.spacing
-  property alias bgColor: bgRect.color
+  property string label: ''
 
   background: Rectangle {
-    id: bgRect
     radius: Config.menu.blockRadius
-    color: Qt.alpha(Config.menu.blockBgColor, BarService.shouldFloat ? 0.7 : 1.0)
+    color: Qt.alpha(Config.menu.blockBgColor, root.QsWindow.window?.shouldFloat ? Config.menu.blockFloatingAlpha : Config.menu.blockAlpha)
   }
 
   contentItem: Column {
-    id: column
-    spacing: 4
+    spacing: root.spacing
+
+    Text {
+      visible: root.label !== ''
+      text: root.label
+      font: Config.menu.labelFont
+      color: Colors.primary
+    }
   }
 }
-

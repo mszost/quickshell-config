@@ -10,25 +10,20 @@ MenuBlock {
   property string icon
 
   RowLayout {
-    id: content
-    anchors {
-      left: parent.left
-      right: parent.right
-      margins: 2 * Config.globalUiScale
-    }
-    spacing: 2 * Config.globalUiScale
+    width: parent.width
+    spacing: Config.menu.titleSpacing
 
     Text {
       text: root.icon
+      font: Config.menu.titleBlockIconFont
       color: Colors.primary
-      font: Config.menu.titleBlockIconFont 
     }
 
     Text {
       Layout.fillWidth: true
       text: root.text
-      color: Colors.mOnSurface
       font: Config.menu.titleBlockTextFont
+      color: Colors.mOnSurface
     }
   }
 }

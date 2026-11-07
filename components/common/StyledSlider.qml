@@ -2,42 +2,48 @@ import QtQuick
 import QtQuick.Controls
 import qs
 import qs.style
+import qs.components.common
 
 Slider {
   id: root
+  implicitHeight: Config.menu.sliderHeight
+  padding: 0
 
-  // The interactable region of the slider is larger than it's visual height.
-  implicitHeight: 20 * Config.globalUiScale
-  readonly property int visualTrackHeight: 8 * Config.globalUiScale
-  
   handle: Rectangle {
+    id: handleRect
     x: root.leftPadding + root.visualPosition * (root.availableWidth - width)
     anchors.verticalCenter: parent.verticalCenter
-    implicitHeight: visualTrackHeight * 1.75
-    implicitWidth: height
+    implicitHeight: Config.menu.sliderTrackHeight * Config.menu.sliderHandleScale
+    implicitWidth: implicitHeight
     radius: height
-    color: root.pressed ? Colors.surfaceBright: Colors.surfaceDim
-    border.width: 2 * Config.globalUiScale
+    color: root.pressed ? Colors.surfaceBright : Colors.surfaceDim
+    border.width: Config.menu.sliderHandleBorder
     border.color: Colors.primary
-    Behavior on x { NumberAnimation { easing.type: Easing.OutBack } }
+    
+    // Does not animate when pressed so that the cursor tracks perfectly while dragging
+    Ease on x {
+      enabled: !root.pressed
+      preset: Config.menu.sliderMotion 
+    }
   }
 
   background: Rectangle {
     anchors.verticalCenter: parent.verticalCenter
-    height: visualTrackHeight
+    height: Config.menu.sliderTrackHeight
     radius: height
     color: Colors.surfaceDim
-    Behavior on width { NumberAnimation { easing.type: Easing.OutBack } }
-  }
 
-  Rectangle {
-    anchors.verticalCenter: parent.verticalCenter
-    height: visualTrackHeight
-    width: Math.min(Math.max(root.visualPosition * parent.width, 12), parent.width-1)
-    color: Colors.primary 
-    bottomLeftRadius: height
-    topLeftRadius: height
-    Behavior on width { NumberAnimation { easing.type: Easing.OutBack } }
+    // Follows the handle, which ends up drawn on top of it.
+    Rectangle {
+      anchors {
+        left: parent.left
+        top: parent.top
+        bottom: parent.bottom
+      }
+      width: handleRect.x + handleRect.width / 2
+      topLeftRadius: parent.radius
+      bottomLeftRadius: parent.radius
+      color: Colors.primary
+    }
   }
 }
-

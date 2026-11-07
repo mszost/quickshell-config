@@ -1,15 +1,9 @@
 import QtQuick
-import Quickshell
-import Quickshell.Widgets
 import qs
-import qs.style
 import qs.components.menu
-import qs.components.bar
 
-MenuWindow { 
+MenuWindow {
   id: root
-  module: 'brightness'  
-  width: 360 * Config.globalUiScale
 
   MenuTitle {
     text: 'Display'
@@ -17,14 +11,10 @@ MenuWindow {
   }
 
   MenuSlider {
-    blockLabel: 'Global Brightness'
-    valueText: `${Math.trunc(BrightnessService.brightness * 100)}%`
+    label: 'eDP-2'
+    valueText: `${BrightnessService.percent}%`
     value: BrightnessService.brightness
+    scrollStep: Config.module.brightness.scrollStep
     onMoved: (sliderValue) => BrightnessService.setBrightness(sliderValue)
-    onWheel: (wheel) => {
-      const step = Config.module.brightness.scrollStep
-      if (wheel.angleDelta.y > 0) BrightnessService.adjust(step)
-      if (wheel.angleDelta.y < 0) BrightnessService.adjust(-step)
-    }
   }
 }

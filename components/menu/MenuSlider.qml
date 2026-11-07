@@ -1,60 +1,44 @@
 import QtQuick
-import Quickshell.Widgets
+import QtQuick.Layouts
 import qs
 import qs.style
 import qs.components.common
 
 MenuBlock {
   id: root
-  colSpacing: 2 * Config.globalUiScale
-  bottomPadding: 10 * Config.globalUiScale // default looks too tall
+  spacing: Config.menu.sliderLabelSpacing
 
-  required property string blockLabel
   required property string valueText
   required property real value
+  required property real scrollStep
 
   signal moved(real sliderValue)
-  signal wheel(var wheel)
 
-  Row {
-    id: content
+  RowLayout {
+    width: parent.width
+    spacing: Config.menu.sliderSpacing
+
+    StyledSlider {
+      Layout.fillWidth: true
+      value: root.value
+      stepSize: root.scrollStep
+      wheelEnabled: true
+      onMoved: root.moved(value)
+    }
 
     Text {
-      id: rowLabel
-      text: root.blockLabel
-      font: Fonts.ibmPlexSans
-      color: Colors.primary
-    }
-  }
+      // Fixed width, so that the slider doesn't resize as the value changes.
+      Layout.preferredWidth: valueMetrics.advanceWidth
+      horizontalAlignment: Text.AlignRight
+      text: root.valueText
+      font: Config.menu.valueFont
+      color: Colors.mOnSurface
 
-  // Handles scrolling but allows clicks to pass through
-  WrapperMouseArea {
-    width: parent.width
-    acceptedButtons: Qt.NoButton  
-    onWheel: (wheel) => root.wheel(wheel)
-    
-    Row {
-      anchors.fill: parent
-      anchors.rightMargin: 6
-      spacing: 5 * Config.globalUiScale
-      
-      StyledSlider {
-        id: slider
-        anchors.verticalCenter: parent.verticalCenter
-        width: parent.width - valueLabel.width
-        value: root.value
-        onMoved: root.moved(value)
-      }
-      
-      Text {
-        id: valueLabel
-        anchors.verticalCenter: parent.verticalCenter
-        horizontalAlignment: Text.AlignHCenter
-        text: root.valueText
-        font: Fonts.jetbrainsMono
-        color: Colors.mOnSurface
+      TextMetrics {
+        id: valueMetrics
+        text: '100%'
+        font: Config.menu.valueFont
       }
     }
   }
 }
-

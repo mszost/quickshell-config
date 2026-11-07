@@ -1,8 +1,4 @@
 import QtQuick
-import QtQuick.Layouts
-import Quickshell
-import Quickshell.Hyprland
-import Quickshell.Services.Pipewire
 import qs
 import qs.style
 import qs.components.bar
@@ -13,24 +9,13 @@ Widget {
   font: Config.module.audio.textFont || Config.widget.textFont
   text: AudioService.isMuted ? 'Muted' : AudioService.volumeAsInt + '%'
   icon: AudioService.symbol
-  
-  colorStd: {
-    if (menu.open) return Colors.primary
-    if (AudioService.volumeAsInt > 100) return Colors.red
-    return Colors.mOnSurface
-  }
-  
+  colorStd: AudioService.volumeAsInt > 100 ? Colors.red : Colors.mOnSurface
+  menu: AudioMenu { boundWidget: root }
+
   // Scroll event handler
   mouseArea.onWheel: (wheelEvent) => {
-    let step = 0.02
-    if (wheelEvent.angleDelta.y > 0) AudioService.setVolume(AudioService.volume + step)
-    if (wheelEvent.angleDelta.y < 0) AudioService.setVolume(AudioService.volume - step)
-  }
-
-  mouseArea.onClicked: menu.open = !menu.open
-
-  AudioMenu {
-    id: menu
-    boundWidget: root
+    const step = Config.module.audio.scrollStep
+    if (wheelEvent.angleDelta.y > 0) AudioService.adjustVolume(step)
+    if (wheelEvent.angleDelta.y < 0) AudioService.adjustVolume(-step)
   }
 }
