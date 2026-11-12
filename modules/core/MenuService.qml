@@ -16,4 +16,12 @@ Singleton {
   function close(menu) {
     if (activeMenu === menu) activeMenu = null
   }
+
+  function closeActive() {
+    activeMenu = null
+  }
+
+  function isOpenOn(screen) {
+    return activeMenu !== null && activeMenu.screen === screen
+  }
 }
