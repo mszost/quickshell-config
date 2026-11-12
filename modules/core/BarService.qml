@@ -10,8 +10,8 @@ Singleton {
 
   function shouldFloat(screen) {
     if (!screen) return false
-    return Config.bar.alwaysFloating || Config.bar.dynamicFloating
-      && !HyprService.isWorkspaceTiled(HyprService.getWorkspaceForScreen(screen))
+    return Config.bar.alwaysFloating || (Config.bar.dynamicFloating
+      && !HyprService.isWorkspaceTiled(HyprService.getWorkspaceForScreen(screen)))
   }
 
   function bgColor(screen) {

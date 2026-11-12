@@ -21,13 +21,16 @@ Item {
 
   property alias textColor: label.color
   property alias iconColor: icon.color
-  property alias font: label.font
-  property alias iconSize: icon.font.pixelSize
+  property font font: Config.widget.textFont
+  property font iconFont: Config.widget.iconFont
 
   property alias mouseArea: ma
 
   // Optional MenuWindow, toggled by clicking the widget.
   property QtObject menu: null
+
+  // Scrolling over the widget emits `scrolled` with ±scrollStep. Disabled while 0.
+  property real scrollStep: 0
 
   // Colors and animations
   property color colorStd: Colors.mOnSurface
@@ -49,21 +52,19 @@ Item {
       id: container
       anchors.centerIn: parent
       layoutDirection: Qt.LeftToRight
-      spacing: 2 * Config.globalUiScale
+      spacing: Config.widget.iconSpacing
 
       Text {
         id: icon
         anchors.verticalCenter: parent.verticalCenter
-        font.family: Config.widget.iconFont.family
-        font.pixelSize: Config.widget.iconFont.pixelSize
+        font: root.iconFont
         color: root.colorAnimated
       }
 
       Text {
         id: label
         anchors.verticalCenter: parent.verticalCenter
-        font.family: Config.widget.textFont.family
-        font.pixelSize: Config.widget.textFont.pixelSize
+        font: root.font
         color: root.colorAnimated
       }
     }
@@ -79,7 +80,17 @@ Item {
       root.menu?.toggle()
       root.clicked()
     }
+    onWheel: (wheelEvent) => {
+      const dy = wheelEvent.angleDelta.y
+      if (root.scrollStep === 0 || dy === 0) {
+        wheelEvent.accepted = false
+        return
+      }
+      root.scrolled(dy > 0 ? root.scrollStep : -root.scrollStep)
+    }
   }
+
   signal clicked()
+  signal scrolled(real delta)
 }
 

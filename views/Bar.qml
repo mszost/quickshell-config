@@ -38,7 +38,7 @@ Scope {
 
       property bool shouldFloat: BarService.shouldFloat(screen)
 
-      Ease on margins.top { preset: targetValue === Config.bar.floatingMarginY ? Motion.standard : Motion.standard }
+      Ease on margins.top { preset: Motion.standard }
       Ease on margins.left { preset: Motion.standard }
       Ease on margins.right { preset: Motion.standard }
 
@@ -54,7 +54,7 @@ Scope {
 
         Keys.onEscapePressed: MenuService.closeActive()
 
-        Ease on radius { preset: targetValue === Config.bar.floatingRadius ? Motion.standard : Motion.standard }
+        Ease on radius { preset: Motion.standard }
         Ease on color { preset: Motion.standard }
 
         WidgetContainer {

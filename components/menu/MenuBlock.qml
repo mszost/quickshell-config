@@ -5,6 +5,7 @@ import QtQuick.Controls
 import Quickshell
 import qs
 import qs.style
+import qs.modules.core
 
 Pane {
   id: root
@@ -16,7 +17,7 @@ Pane {
 
   background: Rectangle {
     radius: Config.menu.blockRadius
-    color: Qt.alpha(Config.menu.blockBgColor, root.QsWindow.window?.shouldFloat ? Config.menu.blockFloatingAlpha : Config.menu.blockAlpha)
+    color: Qt.alpha(Config.menu.blockBgColor, BarService.shouldFloat(root.QsWindow.window?.screen ?? null) ? Config.menu.blockFloatingAlpha : Config.menu.blockAlpha)
   }
 
   contentItem: Column {

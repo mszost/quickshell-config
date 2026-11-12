@@ -20,7 +20,6 @@ WrapperMouseArea {
     if (active) return Colors.mOnSurface
     return Colors.mOnSurfaceVariant
   }
-  // Behavior on textColor { ColorAnim {} }
 
   Row {
     spacing: Config.menu.rowSpacing

@@ -47,19 +47,19 @@ Scope {
       implicitWidth: cfg.triggerWidth
       color: 'transparent'
 
-    property var modelData
-       property bool hoverRevealed: false
+      property var modelData
+      property bool hoverRevealed: false
 
-       readonly property int workspaceId: HyprService.getWorkspaceForScreen(panel.screen)
-       readonly property bool workspaceIsBusy: HyprService.isWorkspaceTiled(workspaceId) || !HyprService.isWorkspaceFocused(workspaceId)
-       readonly property bool hidden: cfg.dynamicHiding && (workspaceIsBusy && !hoverRevealed)
-       readonly property bool hovered: dockMouse.containsMouse || triggerMouse.hovered
+      readonly property int workspaceId: HyprService.getWorkspaceForScreen(panel.screen)
+      readonly property bool workspaceIsBusy: HyprService.isWorkspaceTiled(workspaceId) || !HyprService.isWorkspaceFocused(workspaceId)
+      readonly property bool hidden: cfg.dynamicHiding && (workspaceIsBusy && !hoverRevealed)
+      readonly property bool hovered: dockMouse.containsMouse || triggerMouse.hovered
 
-       // Mouse x coordinate mapped to the left edge of the default-scaled icon row
-       property real contentRelativeMouseX: dockMouse.mouseX - shelf.x - iconRow.x
-      
-       property real zoomStrength: dockMouse.containsMouse ? 1 : 0
-      
+      // Mouse x coordinate mapped to the left edge of the default-scaled icon row
+      property real contentRelativeMouseX: dockMouse.mouseX - shelf.x - iconRow.x
+
+      property real zoomStrength: dockMouse.containsMouse ? 1 : 0
+
       onHoveredChanged: {
         if (!cfg.dynamicHiding) { return }  // Ignore the hover event if hiding is disabled
         if (hovered) {
@@ -108,7 +108,6 @@ Scope {
           rect.width: panel.width
           rect.height: panel.height
         }
-        // visible: panel.visible && panel.revealProgress > 0
         visible: panel.visible && reveal.shown
         implicitWidth: root.totalDockWidth 
         implicitHeight: cfg.height + cfg.bottomMargin + cfg.hoverZoneMargin
@@ -171,7 +170,7 @@ Scope {
                 Rectangle {
                   id: line
                   anchors.centerIn: parent
-                  height: parent.height * 0.75
+                  height: parent.height * cfg.separatorLineHeight
                   width: cfg.separatorLineWidth
                   radius: width
                   color: Colors.outline

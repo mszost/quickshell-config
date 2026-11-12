@@ -20,6 +20,7 @@ Singleton {
 
   property real brightness: 0  // normalized 0-1
   property bool available: false
+  property string deviceName: ''
 
   readonly property int percent: Math.round(brightness * 100)
   readonly property string symbol: Icons.sun
@@ -44,6 +45,7 @@ Singleton {
       available = false
       return
     }
+    deviceName = fields[0]
     brightness = current / max
     available = true
   }

@@ -9,7 +9,7 @@ Item {
 
   Timer {
     id: cooldown
-    interval: 100
+    interval: Config.volumeSoundCooldown
     repeat: false
   }
 
@@ -18,9 +18,9 @@ Item {
     source: '../../assets/sounds/audio-volume-change.wav'
     muted: !Config.playSoundEffects
 
-    volume: AudioService.volumeAsInt * 0.0025
+    volume: AudioService.volume * Config.soundEffectVolume
     onVolumeChanged: {
-      if (!cooldown.running) { // force wait of 100ms between each play
+      if (!cooldown.running) {
         play()
         cooldown.start()
       }

@@ -6,7 +6,7 @@ import qs
 
 Singleton {
   function curve(ms, type, overshoot=1.70158) {
-    return { duration: ms * Config.globalAnimationSpeed, type, overshoot }
+    return { duration: ms / Config.globalAnimationSpeed, type, overshoot }
   }
 
   readonly property var standard: curve(200, Easing.InOutQuad)

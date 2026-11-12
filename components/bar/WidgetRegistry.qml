@@ -3,13 +3,12 @@ import Quickshell
 import qs.modules.audio
 import qs.modules.battery
 import qs.modules.brightness
-import qs.modules.core
+import qs.modules.debug
 import qs.modules.hyprland
 import qs.modules.network
 import qs.modules.session
 import qs.modules.system
 import qs.modules.time
-import qs.modules.tray
 
 Scope {
   readonly property var map: ({
@@ -32,7 +31,6 @@ Scope {
   Component { id: network;    NetworkWidget {}    }
   Component { id: session;    SessionWidget {}    }
   Component { id: cputemp;    CpuTempWidget {}    }
-  Component { id: tray;       TrayWidget {}       }
   Component { id: workspaces; WorkspacesWidget {} }
 }
 

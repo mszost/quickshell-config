@@ -51,9 +51,6 @@ Scope {
     visible: reveal.shown
     color: 'transparent'
 
-    // Read by MenuBlock, via the QsWindow attached property.
-    readonly property bool shouldFloat: root.shouldFloat
-
     // The bar is included so that other widgets stay clickable while a menu is open.
     HyprlandFocusGrab {
       id: grab

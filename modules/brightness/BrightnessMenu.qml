@@ -11,7 +11,7 @@ MenuWindow {
   }
 
   MenuSlider {
-    label: 'eDP-2'
+    label: Config.module.brightness.menuLabel || BrightnessService.deviceName
     valueText: `${BrightnessService.percent}%`
     value: BrightnessService.brightness
     scrollStep: Config.module.brightness.scrollStep

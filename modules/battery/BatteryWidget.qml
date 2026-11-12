@@ -6,7 +6,6 @@ import qs.components.bar
 
 Widget {
   id: root
-  font: Config.module.battery.textFont || Config.widget.textFont
   text: BatteryService.isAvailable ? BatteryService.percentage + '%' : ''
   icon: BatteryService.symbol
 
@@ -14,7 +13,7 @@ Widget {
     if (!BatteryService.isAvailable) return Colors.red
     if (mouseArea.containsMouse)     return colorOnHover
     if (BatteryService.isCharging)   return Colors.brightGreen
-    if (BatteryService.isCritical)   return blinker.state ? Colors.red : Qt.alpha(Colors.red, 0.35) // 'white'
+    if (BatteryService.isCritical)   return blinker.state ? Colors.red : Qt.alpha(Colors.red, Config.module.battery.criticalBlinkAlpha)
     return colorStd
   }
 

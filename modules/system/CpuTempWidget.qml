@@ -7,7 +7,7 @@ Widget {
   id: root
   text: CpuTempService.celsiusAsInt + '°C'
   icon: Icons.flame
-  spacing: 1
+  spacing: Config.widget.iconSpacingCompact
   colorStd: CpuTempService.isCritical ? Colors.red : Colors.mOnSurface
 }
 

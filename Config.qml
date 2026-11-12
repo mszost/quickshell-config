@@ -9,8 +9,10 @@ Singleton {
 
   readonly property string theme: 'gruvbox-material'
   readonly property bool playSoundEffects: true
+  readonly property real soundEffectVolume: 0.25  // Relative to the current output volume
+  readonly property int volumeSoundCooldown: 100  // Minimum ms between volume-change sounds
   readonly property real globalUiScale: 1.0
-  readonly property real globalAnimationSpeed: 1.0
+  readonly property real globalAnimationSpeed: 1.0  // Higher is faster; durations are divided by this
 
   property alias s: root.globalUiScale
 
@@ -61,6 +63,8 @@ Singleton {
     readonly property real pillAlpha: 1.0
     readonly property int pillHeight: s*21
     readonly property int pillPaddingX: s*16
+    readonly property int iconSpacing: s*2         // Gap between a widget's icon and its label
+    readonly property int iconSpacingCompact: s*1  // Used by widgets whose icon has its own padding
 
     readonly property font textFont: Qt.font({ family: Fonts.cartographLoader.name, pixelSize: s*12, weight: 500 })
     readonly property font iconFont: Qt.font({ family: Fonts.tablerLoader.name,     pixelSize: s*15, weight: 600 })
@@ -88,7 +92,8 @@ Singleton {
     }
 
     property QtObject battery: QtObject {
-      readonly property int criticalBlinkRate: globalAnimationSpeed * 300
+      readonly property int criticalBlinkRate: 300 / globalAnimationSpeed
+      readonly property real criticalBlinkAlpha: 0.35  // Text alpha during the dim half of the blink
     }
 
     property QtObject brightness: QtObject {
@@ -97,6 +102,7 @@ Singleton {
       readonly property int pollInterval: 1000  // In ms; picks up changes made outside the shell
       readonly property real scrollStep: 0.01   // Fraction of full brightness per scroll tick
       readonly property real minBrightness: 0
+      readonly property string menuLabel: 'eDP-2'  // Slider label in the menu. Empty = device name
     }
 
     property QtObject clock: QtObject {
@@ -122,7 +128,7 @@ Singleton {
     property QtObject session: QtObject {
       readonly property string shutdownCmd: 'shutdown now'
       readonly property string rebootCmd: 'reboot'
-      readonly property string suspentCmd: 'systemctl suspent'
+      readonly property string suspendCmd: 'systemctl suspend'
       readonly property string logoutCmd: 'hyprshutdown'
     }
 
@@ -153,7 +159,7 @@ Singleton {
     readonly property list<string> pinnedApps: [
       'kitty', 'org.kde.dolphin', 'zen', 'vivaldi-stable', 'obsidian',
       'code-oss', 'com.anthropic.Claude', 'org.darktable.darktable', 
-      'steam', 'vintage-story', 'org.keepassxc.KeePassXC',
+      'steam', 'org.keepassxc.KeePassXC',
     ]
     readonly property list<string> blacklistedApps: ['xdg-desktop-portal-gtk']
     readonly property string fallbackIcon: 'kitty'
@@ -189,7 +195,8 @@ Singleton {
     readonly property int maxDots: 4
     
     // Vertical line between the pinned and open-but-unpinned apps
-    readonly property int separatorLineWidth: 2  
+    readonly property int separatorLineWidth: s*2
+    readonly property real separatorLineHeight: 0.75  // Relative to the icon size
     
     // Properties for the focused icon scaling animation
     readonly property real maxGrowth: 1.35
@@ -221,7 +228,7 @@ Singleton {
 
     // Blocks
     readonly property color blockBgColor: Colors.surfaceBright
-    readonly property real blockAlpha: 1.0
+    readonly property real blockAlpha: 0.85
     readonly property real blockFloatingAlpha: 0.7
     readonly property int blockRadius: s*10
     readonly property int blockPadding: s*12
