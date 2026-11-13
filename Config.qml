@@ -102,7 +102,7 @@ Singleton {
       readonly property int pollInterval: 1000  // In ms; picks up changes made outside the shell
       readonly property real scrollStep: 0.01   // Fraction of full brightness per scroll tick
       readonly property real minBrightness: 0
-      readonly property string menuLabel: 'eDP-2'  // Slider label in the menu. Empty = device name
+      readonly property string menuLabel: ''  // Slider label in the menu. Empty = device name
     }
 
     property QtObject clock: QtObject {
@@ -143,7 +143,7 @@ Singleton {
       readonly property list<string> blacklist: ['vicinae']  // Item ids to hide (see `SystemTrayItem.id`)
       readonly property bool hidePassive: false     // Hide items that report themselves as passive/idle
 
-      readonly property int iconSize: s*15
+      readonly property int iconSize: s*14
       readonly property int iconSpacing: s*8
       readonly property real iconHoverAlpha: 0.7      // Icon opacity while hovered
 
@@ -253,11 +253,11 @@ Singleton {
     readonly property int blockSpacing: s*4
 
     readonly property int contentSpacing: s*10 // Gap between blocks
-    readonly property int titleSpacing: s*2    // Gap between title text and icon
+    readonly property int titleSpacing: s*3    // Gap between title text and icon
     readonly property int rowSpacing: s*5
 
     // Sliders
-    readonly property int sliderHeight: s*25         // Interactable height, larger than the track
+    readonly property int sliderHeight: s*30         // Interactable height, larger than the track
     readonly property int sliderTrackHeight: s*8
     readonly property int sliderSpacing: s*5         // Gap between the slider and its value
     readonly property int sliderLabelSpacing: s*2    // Gap between the label and the slider
