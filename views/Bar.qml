@@ -64,8 +64,8 @@ Scope {
 
         RowLayout {
           anchors { 
-            fill: parent;
-            leftMargin: Config.bar.widgetMarginsX;
+            fill: parent
+            leftMargin: Config.bar.widgetMarginsX
             rightMargin: Config.bar.widgetMarginsX 
           }
 

@@ -5,7 +5,7 @@ import qs
 
 Row {
   id: section
-  spacing: Config.bar.widgetSpacing
+  spacing: Config.widget.pillSpacing
   
   property var widgets: []
 

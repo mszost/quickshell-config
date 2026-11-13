@@ -18,16 +18,16 @@ Rectangle {
   Row {
     id: wsRow
     anchors.centerIn: parent
-    spacing: cfg.iconSpacing
+    spacing: cfg.dotSpacing
     
     Repeater {
       model: Hyprland.workspaces
 
       Rectangle {
-        id: wsIcon
+        id: wsDot
         visible: cfg.showSpecialWorkspaces || modelData.id > 0
-        implicitHeight: cfg.iconHeight
-        implicitWidth: HyprService.isWorkspaceFocused(modelData.id) ? cfg.iconWidth * cfg.focusedIconScaleX : cfg.iconWidth
+        implicitHeight: cfg.dotHeight
+        implicitWidth: HyprService.isWorkspaceFocused(modelData.id) ? cfg.dotWidth * cfg.focusedDotScaleX : cfg.dotWidth
         radius: height
         color: {
           if (HyprService.isWorkspaceFocused(modelData.id)) return Colors.primary  
