@@ -7,22 +7,16 @@ import Quickshell.Hyprland
 Singleton {
   id: root
 
+  function workspaceById(wsId: int): HyprlandWorkspace {
+    return Hyprland.workspaces.values.find(ws => ws.id === wsId) ?? null
+  }
+
   function isWorkspaceOccupied(wsId: int): bool {
-    for (let i = 0; i < Hyprland.workspaces.values.length; ++i) {
-      if (Hyprland.workspaces.values[i].id === wsId) {
-        return Hyprland.workspaces.values[i].toplevels.values.length > 0;
-      }
-    }
-    return false;
-  } 
+    return (workspaceById(wsId)?.toplevels.values.length ?? 0) > 0
+  }
 
   function isWorkspaceTiled(wsId: int): bool {
-    for (let i = 0; i < Hyprland.workspaces.values.length; ++i) {
-      if (Hyprland.workspaces.values[i].id === wsId) {
-        return Hyprland.workspaces.values[i].toplevels.values.some(w => w.lastIpcObject.floating === false);
-      }
-    }
-    return false;
+    return workspaceById(wsId)?.toplevels.values.some(w => w.lastIpcObject.floating === false) ?? false
   }
   
   function isWorkspaceFocused(wsId: int): bool {
@@ -53,36 +47,20 @@ Singleton {
     ) ?? DesktopEntries.heuristicLookup(windowClass) ?? null
   }
 
-  // Get the number of open windows (any workspace) belonging to a DesktopEntry
+  // Get the number of open windows (any workspace) belonging to a DesktopEntry.
+  // Uses entryForClass() so windows are matched the same way everywhere.
   function windowCountForApp(entry: DesktopEntry): int {
     if (!entry) return 0
-    const classes = [entry.id, entry.startupClass].filter(c => c).map(c => c.toLowerCase())
     return Hyprland.toplevels.values.filter(
-      t => classes.includes((t.lastIpcObject.class ?? '').toLowerCase())
+      t => entryForClass(t.lastIpcObject.class)?.id === entry.id
     ).length
-  }
-
-  // Desktop ids of apps that have an open window but aren't in `pinnedIds`,
-  // in the order their windows appear in Hyprland's toplevel list.
-  function unpinnedOpenApps(pinnedIds: var): var {
-    const result = []
-    for (const t of Hyprland.toplevels.values) {
-      const cls = (t.lastIpcObject.class ?? '').toLowerCase()
-      if (!cls) continue
-      const entry = DesktopEntries.applications.values.find(
-        e => [e.id, e.startupClass].some(c => c && c.toLowerCase() === cls)
-      )
-      if (!entry || pinnedIds.includes(entry.id) || result.includes(entry.id)) continue
-      result.push(entry.id)
-    }
-    return result
   }
 
   readonly property string focusedWindowTitle: Hyprland.activeToplevel?.title ?? ''
 
   // Refreshes Quickshell's window tracking when Hyprland fires an IPC event that suggests 
   // a potential change of the tiled/floating state of a workspace. Because lastIpcObject 
-  // does not update independently, this is required for isWsTiled() to work properly. 
+  // does not update independently, this is required for isWorkspaceTiled() to work properly. 
   Connections {
     target: Hyprland
 

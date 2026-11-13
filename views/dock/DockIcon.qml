@@ -3,7 +3,6 @@ import Quickshell
 import qs
 import qs.style
 import qs.components
-import qs.modules.hyprland
 
 Item {
   id: root
@@ -21,8 +20,8 @@ Item {
   required property real zoomStrength
   required property real iconSize
   
-  readonly property var entry: DesktopEntries.applications.values.find(e => e.id === modelData) ?? null
-  readonly property int windowCount: HyprService.windowCountForApp(entry)
+  readonly property var entry: DockService.entryForId(modelData)
+  readonly property int windowCount: DockService.windowCount(entry)
   
   readonly property alias cellSize: root.implicitWidth
   
@@ -94,9 +93,7 @@ Item {
     height: iconImage.height + cfg.dotGap + cfg.dotSize
     acceptedButtons: Qt.LeftButton
     cursorShape: Qt.PointingHandCursor
-    onClicked: {
-      root.entry?.execute()
-    }
+    onClicked: DockService.launch(root.entry)
   }
 }
 

@@ -1,34 +1,19 @@
 import QtQuick
 import Quickshell
-import Quickshell.Hyprland
 import qs
 import qs.style
 import qs.components
-import qs.modules.hyprland
 
 Scope { 
   id: root
 
   readonly property QtObject cfg: Config.dock
-  readonly property bool showSeparatorLine: root.unpinnedOpenApps.length > 0
+  readonly property bool showSeparatorLine: DockService.unpinnedOpenApps.length > 0
   readonly property real iconSize: cfg.height - (2 * cfg.iconRowPadding) - cfg.dotGap - cfg.dotSize
   readonly property real pinnedAppsWidth: cfg.pinnedApps.length * (iconSize + cfg.iconSpacing) + 2 * cfg.iconRowPadding
-  readonly property real openedAppsWidth: unpinnedOpenApps.length * (iconSize + cfg.iconSpacing) + 2 * cfg.iconRowPadding
+  readonly property real openedAppsWidth: DockService.unpinnedOpenApps.length * (iconSize + cfg.iconSpacing) + 2 * cfg.iconRowPadding
   readonly property real totalDockWidth: pinnedAppsWidth + openedAppsWidth + (showSeparatorLine ? cfg.separatorLineWidth : 0) + 2 * cfg.hoverZoneMargin
   readonly property real displacement: cfg.height + cfg.bottomMargin
-
-  readonly property list<string> unpinnedOpenApps: {
-    const seen = new Set()
-    for (const toplevel of Hyprland.toplevels.values) {
-      const entry = HyprService.entryForClass(toplevel.lastIpcObject.class)
-      if (entry && !cfg.pinnedApps.includes(entry.id)) {
-        if (!cfg.blacklistedApps.includes(entry.id)) { 
-          seen.add(entry.id)
-        }
-      }
-    }
-    return Array.from(seen)
-  }
 
   Variants {
     model: Quickshell.screens
@@ -39,7 +24,7 @@ Scope {
       id: panel
       anchors.bottom: true
       screen: modelData
-      visible: cfg.monitors.includes('*') || cfg.monitors.includes(modelData.name)
+      visible: DockService.isEnabledOn(modelData)
       exclusiveZone: 0
       implicitHeight: cfg.triggerHeight
       implicitWidth: cfg.triggerWidth
@@ -48,9 +33,7 @@ Scope {
       property var modelData
       property bool hoverRevealed: false
 
-      readonly property int workspaceId: HyprService.getWorkspaceForScreen(panel.screen)
-      readonly property bool workspaceIsBusy: HyprService.isWorkspaceTiled(workspaceId) || !HyprService.isWorkspaceFocused(workspaceId)
-      readonly property bool hidden: cfg.dynamicHiding && (workspaceIsBusy && !hoverRevealed)
+      readonly property bool hidden: DockService.shouldHide(panel.screen) && !hoverRevealed
       readonly property bool hovered: dockMouse.containsMouse || triggerMouse.hovered
 
       // Mouse x coordinate mapped to the left edge of the default-scaled icon row
@@ -177,7 +160,7 @@ Scope {
 
               Repeater {
                 id: openAppsRepeater
-                model: root.unpinnedOpenApps
+                model: DockService.unpinnedOpenApps
 
                 DockIcon {
                   iconSize: root.iconSize
