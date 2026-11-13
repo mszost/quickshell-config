@@ -91,9 +91,15 @@ Item {
       bottom: parent.bottom
     }
     height: iconImage.height + cfg.dotGap + cfg.dotSize
-    acceptedButtons: Qt.LeftButton
+    acceptedButtons: Qt.LeftButton | Qt.RightButton
     cursorShape: Qt.PointingHandCursor
-    onClicked: DockService.launch(root.entry)
+    onClicked: mouse => {
+      if (mouse.button === Qt.RightButton) {
+        DockService.launch(root.entry)
+      } else {
+        DockService.activate(root.entry)
+      }
+    }
   }
 }
 

@@ -45,7 +45,34 @@ Singleton {
     return HyprService.windowCountForApp(entry)
   }
 
+  // Starts a new instance of the app, regardless of whether one is already running
   function launch(entry: DesktopEntry) {
     entry?.execute()
+  }
+
+  // Primary action: focus one of the app's windows, or launch it if none are open
+  function activate(entry: DesktopEntry) {
+    const target = windowToFocus(HyprService.windowsForApp(entry))
+    if (target) {
+      HyprService.focusWindow(target)
+    } else {
+      launch(entry)
+    }
+  }
+
+  // Of an app's windows, those eligible for focus. Scratchpad windows are only used when the app has no others.
+  function focusCandidates(windows: var): var {
+    const regular = windows.filter(t => !HyprService.isOnSpecialWorkspace(t))
+    return regular.length > 0 ? regular : windows
+  }
+
+  // Picks which of an app's windows to focus (null if it has none). Normally the most recently used one.
+  // If the app already has focus, the least recently used one instead: each click then brings
+  // up the window that's been waiting longest, cycling through all of them in turn.
+  function windowToFocus(windows: var): HyprlandToplevel {
+    const ordered = HyprService.sortByFocusHistory(focusCandidates(windows))
+    if (ordered.length === 0) return null
+    const appIsFocused = windows.some(t => HyprService.isWindowFocused(t))
+    return appIsFocused ? ordered[ordered.length - 1] : ordered[0]
   }
 }

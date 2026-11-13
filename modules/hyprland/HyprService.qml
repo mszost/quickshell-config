@@ -47,25 +47,64 @@ Singleton {
     ) ?? DesktopEntries.heuristicLookup(windowClass) ?? null
   }
 
-  // Get the number of open windows (any workspace) belonging to a DesktopEntry.
+  // Get every open window (any workspace) belonging to a DesktopEntry.
   // Uses entryForClass() so windows are matched the same way everywhere.
-  function windowCountForApp(entry: DesktopEntry): int {
-    if (!entry) return 0
+  function windowsForApp(entry: DesktopEntry): var {
+    if (!entry) return []
     return Hyprland.toplevels.values.filter(
       t => entryForClass(t.lastIpcObject.class)?.id === entry.id
-    ).length
+    )
+  }
+
+  // Get the number of open windows (any workspace) belonging to a DesktopEntry.
+  function windowCountForApp(entry: DesktopEntry): int {
+    return windowsForApp(entry).length
+  }
+
+  // Whether a window lives on a special (scratchpad) workspace. Special workspaces have negative ids.
+  function isOnSpecialWorkspace(toplevel: HyprlandToplevel): bool {
+    return (toplevel?.workspace?.id ?? toplevel?.lastIpcObject.workspace?.id ?? 0) < 0
+  }
+
+  // Whether a window currently has keyboard focus. `activated` is only set by focus-change
+  // events, so it's unknown until focus first changes after startup; Hyprland's focus history covers that gap.
+  function isWindowFocused(toplevel: HyprlandToplevel): bool {
+    return (toplevel?.activated || toplevel?.lastIpcObject.focusHistoryID === 0) ?? false
+  }
+
+  // Returns a copy of `toplevels` ordered from most to least recently focused.
+  // Windows without a reported focus history are placed last.
+  function sortByFocusHistory(toplevels: var): var {
+    const rank = t => t.lastIpcObject.focusHistoryID ?? Number.MAX_SAFE_INTEGER
+    return Array.from(toplevels).sort((a, b) => rank(a) - rank(b))
+  }
+
+  // Moves keyboard focus to a window, switching workspace/monitor (or revealing its special workspace) as needed.
+  function focusWindow(toplevel: HyprlandToplevel) {
+    if (!toplevel?.address) return
+    const selector = windowSelector(toplevel)
+    // Lua configs evaluate dispatch requests as Lua; hyprlang configs use the classic dispatcher syntax.
+    Hyprland.dispatch(Hyprland.usingLua
+      ? `hl.dsp.focus({ window = "${selector}" })`
+      : `focuswindow ${selector}`)
+  }
+
+  // Hyprland window selector string that uniquely targets a window, e.g. "address:0x55c4c1423f40"
+  function windowSelector(toplevel: HyprlandToplevel): string {
+    return `address:0x${toplevel.address.replace(/^0x/, '')}`
   }
 
   readonly property string focusedWindowTitle: Hyprland.activeToplevel?.title ?? ''
 
-  // Refreshes Quickshell's window tracking when Hyprland fires an IPC event that suggests 
-  // a potential change of the tiled/floating state of a workspace. Because lastIpcObject 
-  // does not update independently, this is required for isWorkspaceTiled() to work properly. 
+  // Refreshes Quickshell's window tracking when Hyprland fires an IPC event that suggests
+  // a potential change of the tiled/floating state of a workspace, or of the window focus order.
+  // Because lastIpcObject does not update independently, this is required for
+  // isWorkspaceTiled() and sortByFocusHistory() to work properly.
   Connections {
     target: Hyprland
 
     function onRawEvent(event, data) {
-      if (['changefloatingmode', 'movewindow', 'openwindow'].includes(event.name)) {
+      if (['changefloatingmode', 'movewindow', 'openwindow', 'activewindowv2'].includes(event.name)) {
         Hyprland.refreshToplevels() 
       }
     }
