@@ -8,6 +8,7 @@ import qs.modules.network
 import qs.modules.session
 import qs.modules.system
 import qs.modules.time
+import qs.modules.tray
 
 Scope {
   readonly property var map: ({
@@ -18,6 +19,7 @@ Scope {
     session: session,
     cputemp: cputemp,
     network: network,
+    tray: tray,
     workspaces: workspaces
   })
 
@@ -28,6 +30,7 @@ Scope {
   Component { id: network;    NetworkWidget {}    }
   Component { id: session;    SessionWidget {}    }
   Component { id: cputemp;    CpuTempWidget {}    }
+  Component { id: tray;       TrayWidget {}       }
   Component { id: workspaces; WorkspacesWidget {} }
 }
 

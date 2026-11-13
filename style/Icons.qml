@@ -61,5 +61,12 @@ Singleton {
   readonly property string clock: '\uf319' // clock-hour-4
   readonly property string temperature: '\ueb38'
   readonly property string flame: '\uec2c'
+
+  readonly property string chevronRight: '\uea61'
+  readonly property string chevronLeft: '\uea60'
+  readonly property string square: '\ueb2c'
+  readonly property string squareCheck: '\ueb28'
+  readonly property string circle: '\uea6b'
+  readonly property string circleDot: '\uefb1'
 }
 

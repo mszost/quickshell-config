@@ -13,6 +13,7 @@ Scope {
 
   required property Item boundWidget
   property int width: Config.menu.width
+  property int margins: Config.menu.margins  // Around the content blocks
 
   default property alias content: column.data
 
@@ -69,7 +70,7 @@ Scope {
       id: bgRect
       y: root.displacement * (1 - reveal.progress) 
       implicitWidth: parent.width
-      implicitHeight: column.height + (Config.menu.margins * 2)
+      implicitHeight: column.height + (root.margins * 2)
       bottomLeftRadius: Config.menu.radius
       bottomRightRadius: Config.menu.radius
       color: Config.menu.bgColor ?? BarService.bgColor(root.screen)
@@ -84,7 +85,7 @@ Scope {
           left: parent.left
           right: parent.right
           top: parent.top
-          margins: Config.menu.margins
+          margins: root.margins
         }
         spacing: Config.menu.contentSpacing
       }

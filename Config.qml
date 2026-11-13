@@ -29,7 +29,7 @@ Singleton {
     // See `components/bar/WidgetRegistry.qml` for names of available widgets.
     readonly property list<string> widgetsLeft: ['clock', 'cputemp']
     readonly property list<string> widgetsCenter: ['workspaces']
-    readonly property list<string> widgetsRight: ['network', 'brightness', 'audio', 'battery', 'session']
+    readonly property list<string> widgetsRight: ['tray', 'network', 'brightness', 'audio', 'battery', 'session']
 
     readonly property list<string> monitors: ['eDP-2', 'DP-10', 'DP-1', 'HDMI-1']
     
@@ -132,7 +132,26 @@ Singleton {
       readonly property string logoutCmd: 'hyprshutdown'
     }
 
-    property QtObject tray: QtObject {}
+    property QtObject tray: QtObject {
+      // Per-button action: 'menu' (dropdown), 'activate' (app's primary action, usually opens its window),
+      // 'secondary' (app-defined, often unused) or 'none'. 'menu' falls back to 'activate' for items
+      // without a menu, and 'activate' falls back to 'menu' for menu-only items.
+      readonly property string leftClick: 'menu'
+      readonly property string rightClick: 'activate'
+      readonly property string middleClick: 'secondary'
+
+      readonly property list<string> blacklist: ['vicinae']  // Item ids to hide (see `SystemTrayItem.id`)
+      readonly property bool hidePassive: false     // Hide items that report themselves as passive/idle
+
+      readonly property int iconSize: s*15
+      readonly property int iconSpacing: s*8
+      readonly property real iconHoverAlpha: 0.7      // Icon opacity while hovered
+
+      readonly property int menuWidth: s*240
+      readonly property int menuMargins: s*8         // Overrides Config.menu.margins
+      readonly property int entryIconSize: s*15        // Icons supplied by the app for individual entries
+      readonly property real disabledEntryAlpha: 0.5
+    }
     
     property QtObject workspaces: QtObject {
       readonly property int dotHeight: s*9
