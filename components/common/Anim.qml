@@ -8,8 +8,15 @@ PropertyAnimation {
 
   property var preset: Motion.standard
 
-  duration: preset.duration
-  easing.type: preset.type
-  easing.overshoot: preset.overshoot
+  // Fall back to the default if a preset name is undefined.
+  readonly property var resolved: {
+    if (preset) return preset
+    console.warn("Anim: undefined preset, using Motion.standard")
+    return Motion.standard
+  }
+
+  duration: resolved.duration
+  easing.type: resolved.type
+  easing.overshoot: resolved.overshoot
 }
 
