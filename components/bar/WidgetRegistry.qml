@@ -3,7 +3,6 @@ import Quickshell
 import qs.modules.audio
 import qs.modules.battery
 import qs.modules.brightness
-import qs.modules.debug
 import qs.modules.hyprland
 import qs.modules.network
 import qs.modules.session
@@ -12,7 +11,6 @@ import qs.modules.time
 
 Scope {
   readonly property var map: ({
-    _debug: _debug,
     audio: audio,
     battery: battery,
     brightness: brightness,
@@ -23,7 +21,6 @@ Scope {
     workspaces: workspaces
   })
 
-  Component { id: _debug;     DebuggingWidget {}  }
   Component { id: audio;      AudioWidget {}      }
   Component { id: battery;    BatteryWidget {}    }
   Component { id: brightness; BrightnessWidget {} }
