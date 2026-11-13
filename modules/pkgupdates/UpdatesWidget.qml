@@ -2,7 +2,7 @@
 
 import Quickshell.Hyprland
 import qs.style
-import qs.components.bar
+import qs.views.bar
 
 BarWidget { 
   id: root

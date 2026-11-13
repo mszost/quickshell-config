@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import qs
 import qs.style
-import qs.components.common
+import qs.components
 import qs.modules.hyprland
 
 Item {

@@ -15,7 +15,7 @@ Item {
 
   // Play on volume change
   SoundEffect {
-    source: '../../assets/sounds/audio-volume-change.wav'
+    source: '../assets/sounds/audio-volume-change.wav'
     muted: !Config.playSoundEffects
 
     volume: AudioService.volume * Config.soundEffectVolume

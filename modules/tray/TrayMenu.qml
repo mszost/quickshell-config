@@ -5,7 +5,7 @@ import Quickshell
 import Quickshell.Services.SystemTray
 import qs
 import qs.style
-import qs.components.menu
+import qs.views.menu
 
 MenuWindow {
   id: root

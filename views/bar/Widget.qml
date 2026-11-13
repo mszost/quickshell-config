@@ -1,7 +1,7 @@
 import QtQuick
 import qs
 import qs.style
-import qs.components.common
+import qs.components
 
 Item {
   id: root

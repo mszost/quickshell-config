@@ -1,5 +1,5 @@
 import qs.style
-import qs.components.bar
+import qs.views.bar
 
 Widget {
   id: root

@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell.Services.Pipewire
 import qs
-import qs.components.menu
+import qs.views.menu
 
 MenuWindow {
   id: root

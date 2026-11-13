@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Layouts
 import qs
 import qs.style
-import qs.components.common
 
 MenuBlock {
   id: root

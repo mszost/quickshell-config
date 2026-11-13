@@ -1,6 +1,6 @@
 import QtQuick
 import qs
-import qs.components.bar
+import qs.views.bar
 import qs.style
 
 Widget {

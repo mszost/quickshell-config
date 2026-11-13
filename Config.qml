@@ -26,7 +26,7 @@ Singleton {
   // ░▀▀░░▀░▀░▀░▀
 
   property QtObject bar: QtObject { 
-    // See `components/bar/WidgetRegistry.qml` for names of available widgets.
+    // See `views/bar/WidgetRegistry.qml` for names of available widgets.
     readonly property list<string> widgetsLeft: ['clock', 'cputemp']
     readonly property list<string> widgetsCenter: ['workspaces']
     readonly property list<string> widgetsRight: ['tray', 'network', 'brightness', 'audio', 'battery', 'session']

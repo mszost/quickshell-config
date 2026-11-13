@@ -1,7 +1,7 @@
 import QtQuick
 import qs
 
-// Instantiates one or more widgets. Implemented by views/Bar.qml 
+// Instantiates one or more widgets. Implemented by views/bar/Bar.qml 
 
 Row {
   id: section

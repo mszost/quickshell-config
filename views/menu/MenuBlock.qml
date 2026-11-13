@@ -5,7 +5,7 @@ import QtQuick.Controls
 import Quickshell
 import qs
 import qs.style
-import qs.modules.core
+import qs.views.bar
 
 Pane {
   id: root

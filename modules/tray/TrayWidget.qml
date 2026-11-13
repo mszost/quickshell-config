@@ -5,7 +5,7 @@ import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import qs
 import qs.style
-import qs.components.common
+import qs.components
 
 Rectangle {
   id: root

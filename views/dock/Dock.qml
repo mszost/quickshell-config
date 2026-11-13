@@ -3,9 +3,7 @@ import Quickshell
 import Quickshell.Hyprland
 import qs
 import qs.style
-import qs.components.common
-import qs.components.dock
-import qs.modules.core
+import qs.components
 import qs.modules.hyprland
 
 Scope { 

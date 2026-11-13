@@ -5,8 +5,8 @@ import Quickshell
 import Quickshell.Hyprland
 import qs
 import qs.style
-import qs.components.common
-import qs.modules.core
+import qs.views.bar
+import qs.components
 
 Scope {
   id: root

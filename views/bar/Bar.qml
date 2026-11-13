@@ -4,10 +4,9 @@ import Quickshell
 import Quickshell.Wayland
 import qs
 import qs.style
-import qs.components.common
-import qs.components.bar
+import qs.components
 import qs.modules.hyprland
-import qs.modules.core
+import qs.views.menu
 
 Scope {
   id: root
