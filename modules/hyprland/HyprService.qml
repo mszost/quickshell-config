@@ -15,8 +15,12 @@ Singleton {
     return (workspaceById(wsId)?.toplevels.values.length ?? 0) > 0
   }
 
+  function tiledWindowCount(wsId: int): int {
+    return workspaceById(wsId)?.toplevels.values.filter(w => w.lastIpcObject.floating === false).length ?? 0
+  }
+
   function isWorkspaceTiled(wsId: int): bool {
-    return workspaceById(wsId)?.toplevels.values.some(w => w.lastIpcObject.floating === false) ?? false
+    return tiledWindowCount(wsId) > 0
   }
   
   function isWorkspaceFocused(wsId: int): bool {

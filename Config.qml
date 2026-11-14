@@ -33,10 +33,12 @@ Singleton {
 
     readonly property list<string> monitors: ['eDP-2', 'DP-10', 'DP-1', 'HDMI-1']
     
-    // dynamicFloating: bar switches between floating / edge-attached on presence of tiled windows on the workspace.
-    // alwaysFloating: optionally force the floating state regardless of the value of dynamicFloating 
-    readonly property bool dynamicFloating: false
-    readonly property bool alwaysFloating: true
+    // Bar switches between floating / edge-attached on presence of tiled windows on the workspace.
+    readonly property bool dynamicFloating: true
+    // Also float when >1 tiled window is present (pairs well with smart-gaps windowrule)
+    readonly property bool floatOnMultipleTiled: true
+    // Ignore windows and force the floating state at all times
+    readonly property bool alwaysFloating: false
 
     // Styling
     readonly property color color: Colors.surface
@@ -105,6 +107,22 @@ Singleton {
       readonly property string menuLabel: ''  // Slider label in the menu. Empty = device name
     }
 
+    // Blue light filter, controlled from the brightness menu.
+    property QtObject hyprsunset: QtObject {
+      readonly property int defaultTemperature: 3500
+      readonly property int minTemperature: 1000
+      readonly property int maxTemperature: 6500
+      readonly property real temperatureStep: 0.02 
+
+      readonly property int defaultGamma: 30
+      readonly property int minGamma: 10
+      readonly property int maxGamma: 100  // Passed as --gamma_max; up to 200
+      readonly property real gammaStep: 0.02         
+
+      readonly property real inactiveAlpha: 0.5  // Slider opacity in the menu while toggled off
+      readonly property int applyDelay: 300      // In ms; batches slider movement into one IPC call
+    }
+
     property QtObject clock: QtObject {
       readonly property string format: 'h:mm AP  •  ddd, MMM. d'
       // All implementors of `Widget.qml` can have textFont overwritten in this way.
@@ -141,23 +159,23 @@ Singleton {
       readonly property string middleClick: 'secondary'
 
       readonly property list<string> blacklist: ['vicinae']  // Item ids to hide (see `SystemTrayItem.id`)
-      readonly property bool hidePassive: false     // Hide items that report themselves as passive/idle
+      readonly property bool hidePassive: false              // Hide items that report themselves as passive/idle
 
       readonly property int iconSize: s*14
       readonly property int iconSpacing: s*8
       readonly property real iconHoverAlpha: 0.7      // Icon opacity while hovered
 
       readonly property int menuWidth: s*240
-      readonly property int menuMargins: s*8         // Overrides Config.menu.margins
+      readonly property int menuMargins: s*8           // Overrides Config.menu.margins
       readonly property int entryIconSize: s*15        // Icons supplied by the app for individual entries
       readonly property real disabledEntryAlpha: 0.5
     }
     
     property QtObject workspaces: QtObject {
-      readonly property int dotHeight: s*9
+      readonly property int dotHeight: s*8
       readonly property int dotWidth: dotHeight
       readonly property int dotSpacing: s*4
-      readonly property real focusedDotScaleX: 3.0  // Width of the focused dot is multiplied by this
+      readonly property real focusedDotScaleX: 3.0   // Width of the focused dot is multiplied by this
       readonly property bool showWorkspaceId: false  // Display each workspace's numerical id inside its dot
       readonly property bool showSpecialWorkspaces: false
     }
@@ -257,13 +275,20 @@ Singleton {
     readonly property int rowSpacing: s*5
 
     // Sliders
-    readonly property int sliderHeight: s*30         // Interactable height, larger than the track
+    readonly property int sliderHeight: s*25         // Interactable height, larger than the track
     readonly property int sliderTrackHeight: s*8
     readonly property int sliderSpacing: s*5         // Gap between the slider and its value
     readonly property int sliderLabelSpacing: s*2    // Gap between the label and the slider
     readonly property int sliderHandleBorder: s*2
     readonly property real sliderHandleScale: 1.725  // Handle size relative to the track height
     readonly property var sliderMotion: Motion.curve(300, Easing.OutCirc)
+
+    // Toggle switches
+    readonly property int switchWidth: s*36
+    readonly property int switchHandleSize: s*14
+    readonly property int switchHandleBorder: s*2
+    readonly property int switchTrackPadding: s*3    // Gap between the handle and the track edge
+    readonly property var switchMotion: Motion.curve(100, Easing.OutCirc)
 
     // Fonts
     readonly property font titleBlockTextFont: Qt.font({ family: Fonts.rubikLoader.name,       pixelSize: s*16, weight: 600 })

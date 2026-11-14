@@ -10,8 +10,10 @@ Singleton {
 
   function shouldFloat(screen) {
     if (!screen) return false
-    return Config.bar.alwaysFloating || (Config.bar.dynamicFloating
-      && !HyprService.isWorkspaceTiled(HyprService.getWorkspaceForScreen(screen)))
+    if (Config.bar.alwaysFloating) return true
+    if (!Config.bar.dynamicFloating) return false
+    const tiled = HyprService.tiledWindowCount(HyprService.getWorkspaceForScreen(screen))
+    return Config.bar.floatOnMultipleTiled ? tiled !== 1 : tiled === 0
   }
 
   function bgColor(screen) {
