@@ -10,6 +10,7 @@ MenuBlock {
   required property string valueText
   required property real value
   required property real scrollStep
+  property string valueWidthText: '100%'  // Widest expected value; reserves space for valueText
 
   signal moved(real sliderValue)
 
@@ -35,7 +36,7 @@ MenuBlock {
 
       TextMetrics {
         id: valueMetrics
-        text: '100%'
+        text: root.valueWidthText
         font: Config.menu.valueFont
       }
     }

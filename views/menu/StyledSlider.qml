@@ -9,6 +9,9 @@ Slider {
   implicitHeight: Config.menu.sliderHeight
   padding: 0
 
+  // Fades everything except the handle's fill, which stays opaque so the track doesn't show through.
+  property real fadeOpacity: 1
+
   handle: Rectangle {
     id: handleRect
     x: root.leftPadding + root.visualPosition * (root.availableWidth - width)
@@ -18,8 +21,8 @@ Slider {
     radius: height
     color: root.pressed ? Colors.surfaceBright : Colors.surfaceDim
     border.width: Config.menu.sliderHandleBorder
-    border.color: Colors.primary
-    
+    border.color: Qt.alpha(Colors.primary, root.fadeOpacity)
+
     // Does not animate when pressed so that the cursor tracks perfectly while dragging
     Ease on x {
       enabled: !root.pressed
@@ -30,6 +33,7 @@ Slider {
   background: Rectangle {
     anchors.verticalCenter: parent.verticalCenter
     height: Config.menu.sliderTrackHeight
+    opacity: root.fadeOpacity
     radius: height
     color: Colors.surfaceDim
 
