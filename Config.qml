@@ -13,6 +13,8 @@ Singleton {
   readonly property int volumeSoundCooldown: 100  // Minimum ms between volume-change sounds
   readonly property real globalUiScale: 1.0
   readonly property real globalAnimationSpeed: 1.0  // Higher is faster; durations are divided by this
+  readonly property string storePath: ''        // Persistent state file (see Store.qml). Empty = Quickshell's state dir
+  readonly property int storeSaveDelay: 500     // In ms; batches rapid state changes into one write
 
   property alias s: root.globalUiScale
 
@@ -175,9 +177,12 @@ Singleton {
       readonly property int dotHeight: s*8
       readonly property int dotWidth: dotHeight
       readonly property int dotSpacing: s*4
-      readonly property real focusedDotScaleX: 3.0   // Width of the focused dot is multiplied by this
+      readonly property real focusedDotScaleX: 3.25   // Width of the focused dot is multiplied by this
       readonly property bool showWorkspaceId: false  // Display each workspace's numerical id inside its dot
       readonly property bool showSpecialWorkspaces: false
+
+      readonly property var dotMotion: Motion.curve(400, Easing.InOutCirc)
+      readonly property var dotColor: Motion.curve(350, Easing.InOutCirc)
     }
   }
 
@@ -242,9 +247,9 @@ Singleton {
     readonly property real pushDistance: s*3  // Max sideways displacement (pixels)
 
     // Animation curves
-    readonly property var revealMotion: Motion.curve(250, Easing.InOutCirc) // Container slide-up from screen bottom
-    readonly property var zoomMotion:   Motion.curve(500, Easing.OutExpo)   // Icon scaling
-    readonly property var pushMotion:   Motion.curve(500, Easing.OutExpo)   // Icon horizontal displacement
+    readonly property var revealMotion: Motion.curve(300, Easing.InOutCirc) // Container slide-up from screen bottom
+    readonly property var zoomMotion:   Motion.curve(450, Easing.OutExpo)   // Icon scaling
+    readonly property var pushMotion:   Motion.curve(600, Easing.OutExpo)   // Icon horizontal displacement
   }
 
 
@@ -288,7 +293,7 @@ Singleton {
     readonly property int switchHandleSize: s*14
     readonly property int switchHandleBorder: s*2
     readonly property int switchTrackPadding: s*3    // Gap between the handle and the track edge
-    readonly property var switchMotion: Motion.curve(100, Easing.OutCirc)
+    readonly property var switchMotion: Motion.curve(280, Easing.OutBack)
 
     // Fonts
     readonly property font titleBlockTextFont: Qt.font({ family: Fonts.rubikLoader.name,       pixelSize: s*16, weight: 600 })
